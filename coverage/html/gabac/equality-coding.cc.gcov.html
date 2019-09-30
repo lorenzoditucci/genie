@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-09-30 12:43:08</td>
+            <td class="headerValue">2019-09-30 12:43:53</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">5</td>
@@ -117,16 +117,16 @@
 <span class="lineNum">      55 </span><span class="lineCov">    2097172 :     while (r.isValid()) {</span>
 <span class="lineNum">      56 </span><span class="lineCov">    1048584 :         uint64_t symbol = r.get();</span>
 <span class="lineNum">      57 </span><span class="lineCov">    1048584 :         if (symbol == previousSymbol) {</span>
-<span class="lineNum">      58 </span><span class="lineCov">      26905 :             equalityFlags-&gt;push_back(1);</span>
+<span class="lineNum">      58 </span><span class="lineCov">      26887 :             equalityFlags-&gt;push_back(1);</span>
 <span class="lineNum">      59 </span>            :         } else {
-<span class="lineNum">      60 </span><span class="lineCov">    1021679 :             equalityFlags-&gt;push_back(0);</span>
-<span class="lineNum">      61 </span><span class="lineCov">    1021679 :             if (symbol &gt; previousSymbol) {</span>
-<span class="lineNum">      62 </span><span class="lineCov">     511180 :                 w.set(symbol - 1);</span>
+<span class="lineNum">      60 </span><span class="lineCov">    1021697 :             equalityFlags-&gt;push_back(0);</span>
+<span class="lineNum">      61 </span><span class="lineCov">    1021697 :             if (symbol &gt; previousSymbol) {</span>
+<span class="lineNum">      62 </span><span class="lineCov">     510768 :                 w.set(symbol - 1);</span>
 <span class="lineNum">      63 </span>            :             } else {
-<span class="lineNum">      64 </span><span class="lineCov">     510499 :                 w.set(symbol);</span>
+<span class="lineNum">      64 </span><span class="lineCov">     510929 :                 w.set(symbol);</span>
 <span class="lineNum">      65 </span>            :             }
-<span class="lineNum">      66 </span><span class="lineCov">    1021679 :             w.inc();</span>
-<span class="lineNum">      67 </span><span class="lineCov">    1021679 :             previousSymbol = symbol;</span>
+<span class="lineNum">      66 </span><span class="lineCov">    1021697 :             w.inc();</span>
+<span class="lineNum">      67 </span><span class="lineCov">    1021697 :             previousSymbol = symbol;</span>
 <span class="lineNum">      68 </span>            :         }
 <span class="lineNum">      69 </span><span class="lineCov">    1048584 :         r.inc();</span>
 <span class="lineNum">      70 </span>            :     }
@@ -169,12 +169,12 @@
 <span class="lineNum">     107 </span>            : 
 <span class="lineNum">     108 </span><span class="lineCov">    2097178 :     while (rflag.isValid()) {</span>
 <span class="lineNum">     109 </span><span class="lineCov">    1048586 :         if (rflag.get() == 0) {</span>
-<span class="lineNum">     110 </span><span class="lineCov">    1021680 :             uint64_t val = rval.get();</span>
-<span class="lineNum">     111 </span><span class="lineCov">    1021680 :             rval.inc();</span>
-<span class="lineNum">     112 </span><span class="lineCov">    1021680 :             if (val &gt;= previousSymbol) {</span>
-<span class="lineNum">     113 </span><span class="lineCov">     511181 :                 previousSymbol = val + 1;</span>
+<span class="lineNum">     110 </span><span class="lineCov">    1021698 :             uint64_t val = rval.get();</span>
+<span class="lineNum">     111 </span><span class="lineCov">    1021698 :             rval.inc();</span>
+<span class="lineNum">     112 </span><span class="lineCov">    1021698 :             if (val &gt;= previousSymbol) {</span>
+<span class="lineNum">     113 </span><span class="lineCov">     510769 :                 previousSymbol = val + 1;</span>
 <span class="lineNum">     114 </span>            :             } else {
-<span class="lineNum">     115 </span><span class="lineCov">     510499 :                 previousSymbol = val;</span>
+<span class="lineNum">     115 </span><span class="lineCov">     510929 :                 previousSymbol = val;</span>
 <span class="lineNum">     116 </span>            :             }
 <span class="lineNum">     117 </span>            :         }
 <span class="lineNum">     118 </span>            : 

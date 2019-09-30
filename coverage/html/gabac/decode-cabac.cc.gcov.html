@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-09-30 12:43:08</td>
+            <td class="headerValue">2019-09-30 12:43:53</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -170,13 +170,13 @@
 <span class="lineNum">     108 </span><span class="lineCov">       6144 :             uint64_t symbol = (reader.*func)(binarizationParameter, previousSymbol &lt;&lt; 2u);</span>
 <span class="lineNum">     109 </span><span class="lineCov">       6144 :             r.set(symbol);</span>
 <span class="lineNum">     110 </span><span class="lineCov">       6144 :             if (int64_t(symbol) &lt; 0) {</span>
-<span class="lineNum">     111 </span><span class="lineCov">        487 :                 symbol = uint64_t(-int64_t(symbol));</span>
+<span class="lineNum">     111 </span><span class="lineCov">        498 :                 symbol = uint64_t(-int64_t(symbol));</span>
 <span class="lineNum">     112 </span>            :             }
 <span class="lineNum">     113 </span><span class="lineCov">       6144 :             if (symbol &gt; 3) {</span>
-<span class="lineNum">     114 </span><span class="lineCov">       3973 :                 previousSymbol = 3;</span>
+<span class="lineNum">     114 </span><span class="lineCov">       3977 :                 previousSymbol = 3;</span>
 <span class="lineNum">     115 </span>            :             } else {
-<span class="lineNum">     116 </span><span class="lineCov">       2171 :                 assert(symbol &lt;= std::numeric_limits&lt;unsigned int&gt;::max());</span>
-<span class="lineNum">     117 </span><span class="lineCov">       2171 :                 previousSymbol = static_cast&lt;unsigned int&gt;(symbol);</span>
+<span class="lineNum">     116 </span><span class="lineCov">       2167 :                 assert(symbol &lt;= std::numeric_limits&lt;unsigned int&gt;::max());</span>
+<span class="lineNum">     117 </span><span class="lineCov">       2167 :                 previousSymbol = static_cast&lt;unsigned int&gt;(symbol);</span>
 <span class="lineNum">     118 </span>            :             }
 <span class="lineNum">     119 </span><span class="lineCov">       6144 :             r.inc();</span>
 <span class="lineNum">     120 </span>            :         }
@@ -189,13 +189,13 @@
 <span class="lineNum">     127 </span><span class="lineCov">       6144 :             r.set(symbol);</span>
 <span class="lineNum">     128 </span><span class="lineCov">       6144 :             previousPreviousSymbol = previousSymbol;</span>
 <span class="lineNum">     129 </span><span class="lineCov">       6144 :             if (int64_t(symbol) &lt; 0) {</span>
-<span class="lineNum">     130 </span><span class="lineCov">        516 :                 symbol = uint64_t(-int64_t(symbol));</span>
+<span class="lineNum">     130 </span><span class="lineCov">        512 :                 symbol = uint64_t(-int64_t(symbol));</span>
 <span class="lineNum">     131 </span>            :             }
 <span class="lineNum">     132 </span><span class="lineCov">       6144 :             if (symbol &gt; 3) {</span>
-<span class="lineNum">     133 </span><span class="lineCov">       3981 :                 previousSymbol = 3;</span>
+<span class="lineNum">     133 </span><span class="lineCov">       3975 :                 previousSymbol = 3;</span>
 <span class="lineNum">     134 </span>            :             } else {
-<span class="lineNum">     135 </span><span class="lineCov">       2163 :                 assert(symbol &lt;= std::numeric_limits&lt;unsigned int&gt;::max());</span>
-<span class="lineNum">     136 </span><span class="lineCov">       2163 :                 previousSymbol = static_cast&lt;unsigned int&gt;(symbol);</span>
+<span class="lineNum">     135 </span><span class="lineCov">       2169 :                 assert(symbol &lt;= std::numeric_limits&lt;unsigned int&gt;::max());</span>
+<span class="lineNum">     136 </span><span class="lineCov">       2169 :                 previousSymbol = static_cast&lt;unsigned int&gt;(symbol);</span>
 <span class="lineNum">     137 </span>            :             }
 <span class="lineNum">     138 </span><span class="lineCov">       6144 :             r.inc();</span>
 <span class="lineNum">     139 </span>            :         }

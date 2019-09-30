@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-09-30 12:43:08</td>
+            <td class="headerValue">2019-09-30 12:43:53</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">9</td>
@@ -79,64 +79,64 @@
 <span class="lineNum">      17 </span>            : 
 <a name="18"><span class="lineNum">      18 </span>            : BinaryArithmeticEncoder::~BinaryArithmeticEncoder() = default;</a>
 <span class="lineNum">      19 </span>            : 
-<span class="lineNum">      20 </span><span class="lineCov">     246318 : inline void BinaryArithmeticEncoder::encodeBin(unsigned int bin, ContextModel* const contextModel) {</span>
-<span class="lineNum">      21 </span><span class="lineCov">     246318 :     assert((bin == 0) || (bin == 1));</span>
-<span class="lineNum">      22 </span><span class="lineCov">     246318 :     assert(contextModel != nullptr);</span>
+<span class="lineNum">      20 </span><span class="lineCov">     247601 : inline void BinaryArithmeticEncoder::encodeBin(unsigned int bin, ContextModel* const contextModel) {</span>
+<span class="lineNum">      21 </span><span class="lineCov">     247601 :     assert((bin == 0) || (bin == 1));</span>
+<span class="lineNum">      22 </span><span class="lineCov">     247601 :     assert(contextModel != nullptr);</span>
 <span class="lineNum">      23 </span>            : 
-<span class="lineNum">      24 </span><span class="lineCov">     246318 :     unsigned int lps = cabactables::lpsTable[contextModel-&gt;getState()][(m_range &gt;&gt; 6u) &amp; 3u];</span>
-<span class="lineNum">      25 </span><span class="lineCov">     246318 :     m_range -= lps;</span>
-<span class="lineNum">      26 </span><span class="lineCov">     246318 :     if (bin != contextModel-&gt;getMps()) {</span>
-<span class="lineNum">      27 </span><span class="lineCov">      62020 :         unsigned int numBits = cabactables::renormTable[(lps &gt;&gt; 3u)];</span>
-<span class="lineNum">      28 </span><span class="lineCov">      62020 :         m_low = (m_low + m_range) &lt;&lt; numBits;</span>
-<span class="lineNum">      29 </span><span class="lineCov">      62020 :         m_range = lps &lt;&lt; numBits;</span>
-<span class="lineNum">      30 </span><span class="lineCov">      62020 :         contextModel-&gt;updateLps();</span>
-<span class="lineNum">      31 </span><span class="lineCov">      62020 :         m_numBitsLeft -= numBits;</span>
+<span class="lineNum">      24 </span><span class="lineCov">     247601 :     unsigned int lps = cabactables::lpsTable[contextModel-&gt;getState()][(m_range &gt;&gt; 6u) &amp; 3u];</span>
+<span class="lineNum">      25 </span><span class="lineCov">     247601 :     m_range -= lps;</span>
+<span class="lineNum">      26 </span><span class="lineCov">     247601 :     if (bin != contextModel-&gt;getMps()) {</span>
+<span class="lineNum">      27 </span><span class="lineCov">      62152 :         unsigned int numBits = cabactables::renormTable[(lps &gt;&gt; 3u)];</span>
+<span class="lineNum">      28 </span><span class="lineCov">      62152 :         m_low = (m_low + m_range) &lt;&lt; numBits;</span>
+<span class="lineNum">      29 </span><span class="lineCov">      62152 :         m_range = lps &lt;&lt; numBits;</span>
+<span class="lineNum">      30 </span><span class="lineCov">      62152 :         contextModel-&gt;updateLps();</span>
+<span class="lineNum">      31 </span><span class="lineCov">      62152 :         m_numBitsLeft -= numBits;</span>
 <span class="lineNum">      32 </span>            :     } else {
-<span class="lineNum">      33 </span><span class="lineCov">     184298 :         contextModel-&gt;updateMps();</span>
-<span class="lineNum">      34 </span><span class="lineCov">     184298 :         if (m_range &gt;= 256) {</span>
-<span class="lineNum">      35 </span><span class="lineCov">     127216 :             return;</span>
+<span class="lineNum">      33 </span><span class="lineCov">     185449 :         contextModel-&gt;updateMps();</span>
+<span class="lineNum">      34 </span><span class="lineCov">     185449 :         if (m_range &gt;= 256) {</span>
+<span class="lineNum">      35 </span><span class="lineCov">     128310 :             return;</span>
 <span class="lineNum">      36 </span>            :         }
-<span class="lineNum">      37 </span><span class="lineCov">      57082 :         m_low &lt;&lt;= 1;</span>
-<span class="lineNum">      38 </span><span class="lineCov">      57082 :         m_range &lt;&lt;= 1;</span>
-<span class="lineNum">      39 </span><span class="lineCov">      57082 :         m_numBitsLeft -= 1;</span>
+<span class="lineNum">      37 </span><span class="lineCov">      57139 :         m_low &lt;&lt;= 1;</span>
+<span class="lineNum">      38 </span><span class="lineCov">      57139 :         m_range &lt;&lt;= 1;</span>
+<span class="lineNum">      39 </span><span class="lineCov">      57139 :         m_numBitsLeft -= 1;</span>
 <span class="lineNum">      40 </span>            :     }
-<span class="lineNum">      41 </span><span class="lineCov">     119102 :     if (m_numBitsLeft &lt; 12) {</span>
-<span class="lineNum">      42 </span><span class="lineCov">      18152 :         writeOut();</span>
+<span class="lineNum">      41 </span><span class="lineCov">     119291 :     if (m_numBitsLeft &lt; 12) {</span>
+<span class="lineNum">      42 </span><span class="lineCov">      18178 :         writeOut();</span>
 <span class="lineNum">      43 </span>            :     }
 <a name="44"><span class="lineNum">      44 </span>            : }</a>
 <span class="lineNum">      45 </span>            : 
-<span class="lineNum">      46 </span><span class="lineCov">      20467 : void BinaryArithmeticEncoder::encodeBinEP(unsigned int bin) {</span>
-<span class="lineNum">      47 </span><span class="lineCov">      20467 :     assert((bin == 0) || (bin == 1));</span>
+<span class="lineNum">      46 </span><span class="lineCov">      20721 : void BinaryArithmeticEncoder::encodeBinEP(unsigned int bin) {</span>
+<span class="lineNum">      47 </span><span class="lineCov">      20721 :     assert((bin == 0) || (bin == 1));</span>
 <span class="lineNum">      48 </span>            : 
-<span class="lineNum">      49 </span><span class="lineCov">      20467 :     m_low &lt;&lt;= 1;</span>
-<span class="lineNum">      50 </span><span class="lineCov">      20467 :     if (bin &gt; 0) {</span>
-<span class="lineNum">      51 </span><span class="lineCov">      17422 :         m_low += m_range;</span>
+<span class="lineNum">      49 </span><span class="lineCov">      20721 :     m_low &lt;&lt;= 1;</span>
+<span class="lineNum">      50 </span><span class="lineCov">      20721 :     if (bin &gt; 0) {</span>
+<span class="lineNum">      51 </span><span class="lineCov">      17687 :         m_low += m_range;</span>
 <span class="lineNum">      52 </span>            :     }
-<span class="lineNum">      53 </span><span class="lineCov">      20467 :     m_numBitsLeft -= 1;</span>
-<span class="lineNum">      54 </span><span class="lineCov">      20467 :     if (m_numBitsLeft &lt; 12) {</span>
-<span class="lineNum">      55 </span><span class="lineCov">       2560 :         writeOut();</span>
+<span class="lineNum">      53 </span><span class="lineCov">      20721 :     m_numBitsLeft -= 1;</span>
+<span class="lineNum">      54 </span><span class="lineCov">      20721 :     if (m_numBitsLeft &lt; 12) {</span>
+<span class="lineNum">      55 </span><span class="lineCov">       2596 :         writeOut();</span>
 <span class="lineNum">      56 </span>            :     }
-<a name="57"><span class="lineNum">      57 </span><span class="lineCov">      20467 : }</span></a>
+<a name="57"><span class="lineNum">      57 </span><span class="lineCov">      20721 : }</span></a>
 <span class="lineNum">      58 </span>            : 
-<span class="lineNum">      59 </span><span class="lineCov">      24794 : void BinaryArithmeticEncoder::encodeBinsEP(unsigned int bins, unsigned int numBins) {</span>
-<span class="lineNum">      60 </span><span class="lineCov">      39834 :     while (numBins &gt; 8) {</span>
-<span class="lineNum">      61 </span><span class="lineCov">      15040 :         numBins -= 8;</span>
-<span class="lineNum">      62 </span><span class="lineCov">      15040 :         unsigned int pattern = bins &gt;&gt; numBins;</span>
-<span class="lineNum">      63 </span><span class="lineCov">      15040 :         m_low &lt;&lt;= 8;</span>
-<span class="lineNum">      64 </span><span class="lineCov">      15040 :         m_low += (m_range * pattern);</span>
-<span class="lineNum">      65 </span><span class="lineCov">      15040 :         bins -= (pattern &lt;&lt; numBins);</span>
-<span class="lineNum">      66 </span><span class="lineCov">      15040 :         m_numBitsLeft -= 8;</span>
-<span class="lineNum">      67 </span><span class="lineCov">      15040 :         if (m_numBitsLeft &lt; 12) {</span>
-<span class="lineNum">      68 </span><span class="lineCov">      15016 :             writeOut();</span>
+<span class="lineNum">      59 </span><span class="lineCov">      24784 : void BinaryArithmeticEncoder::encodeBinsEP(unsigned int bins, unsigned int numBins) {</span>
+<span class="lineNum">      60 </span><span class="lineCov">      39835 :     while (numBins &gt; 8) {</span>
+<span class="lineNum">      61 </span><span class="lineCov">      15051 :         numBins -= 8;</span>
+<span class="lineNum">      62 </span><span class="lineCov">      15051 :         unsigned int pattern = bins &gt;&gt; numBins;</span>
+<span class="lineNum">      63 </span><span class="lineCov">      15051 :         m_low &lt;&lt;= 8;</span>
+<span class="lineNum">      64 </span><span class="lineCov">      15051 :         m_low += (m_range * pattern);</span>
+<span class="lineNum">      65 </span><span class="lineCov">      15051 :         bins -= (pattern &lt;&lt; numBins);</span>
+<span class="lineNum">      66 </span><span class="lineCov">      15051 :         m_numBitsLeft -= 8;</span>
+<span class="lineNum">      67 </span><span class="lineCov">      15051 :         if (m_numBitsLeft &lt; 12) {</span>
+<span class="lineNum">      68 </span><span class="lineCov">      15027 :             writeOut();</span>
 <span class="lineNum">      69 </span>            :         }
 <span class="lineNum">      70 </span>            :     }
-<span class="lineNum">      71 </span><span class="lineCov">       9754 :     m_low &lt;&lt;= numBins;</span>
-<span class="lineNum">      72 </span><span class="lineCov">       9754 :     m_low += (m_range * bins);</span>
-<span class="lineNum">      73 </span><span class="lineCov">       9754 :     m_numBitsLeft -= numBins;</span>
-<span class="lineNum">      74 </span><span class="lineCov">       9754 :     if (m_numBitsLeft &lt; 12) {</span>
-<span class="lineNum">      75 </span><span class="lineCov">       6079 :         writeOut();</span>
+<span class="lineNum">      71 </span><span class="lineCov">       9733 :     m_low &lt;&lt;= numBins;</span>
+<span class="lineNum">      72 </span><span class="lineCov">       9733 :     m_low += (m_range * bins);</span>
+<span class="lineNum">      73 </span><span class="lineCov">       9733 :     m_numBitsLeft -= numBins;</span>
+<span class="lineNum">      74 </span><span class="lineCov">       9733 :     if (m_numBitsLeft &lt; 12) {</span>
+<span class="lineNum">      75 </span><span class="lineCov">       6131 :         writeOut();</span>
 <span class="lineNum">      76 </span>            :     }
-<a name="77"><span class="lineNum">      77 </span><span class="lineCov">       9754 : }</span></a>
+<a name="77"><span class="lineNum">      77 </span><span class="lineCov">       9733 : }</span></a>
 <span class="lineNum">      78 </span>            : 
 <span class="lineNum">      79 </span><span class="lineCov">         24 : void BinaryArithmeticEncoder::encodeBinTrm(unsigned int bin) {</span>
 <span class="lineNum">      80 </span>            :     // Encode the least-significant bit of bin as a terminating bin
@@ -194,31 +194,31 @@
 <span class="lineNum">     132 </span><span class="lineCov">         24 :     m_bitOutputStream.write(m_low &gt;&gt; 8u, (24u - m_numBitsLeft));</span>
 <a name="133"><span class="lineNum">     133 </span><span class="lineCov">         24 : }</span></a>
 <span class="lineNum">     134 </span>            : 
-<span class="lineNum">     135 </span><span class="lineCov">      41830 : void BinaryArithmeticEncoder::writeOut() {</span>
-<span class="lineNum">     136 </span><span class="lineCov">      41830 :     unsigned int leadByte = m_low &gt;&gt; (24u - m_numBitsLeft);</span>
-<span class="lineNum">     137 </span><span class="lineCov">      41830 :     m_numBitsLeft += 8;</span>
-<span class="lineNum">     138 </span><span class="lineCov">      41830 :     m_low &amp;= 0xffffffffu &gt;&gt; m_numBitsLeft;</span>
-<span class="lineNum">     139 </span><span class="lineCov">      41830 :     if (leadByte == 0xff) {</span>
-<span class="lineNum">     140 </span><span class="lineCov">       1355 :         m_numBufferedBytes += 1;</span>
+<span class="lineNum">     135 </span><span class="lineCov">      41955 : void BinaryArithmeticEncoder::writeOut() {</span>
+<span class="lineNum">     136 </span><span class="lineCov">      41955 :     unsigned int leadByte = m_low &gt;&gt; (24u - m_numBitsLeft);</span>
+<span class="lineNum">     137 </span><span class="lineCov">      41955 :     m_numBitsLeft += 8;</span>
+<span class="lineNum">     138 </span><span class="lineCov">      41955 :     m_low &amp;= 0xffffffffu &gt;&gt; m_numBitsLeft;</span>
+<span class="lineNum">     139 </span><span class="lineCov">      41955 :     if (leadByte == 0xff) {</span>
+<span class="lineNum">     140 </span><span class="lineCov">       1456 :         m_numBufferedBytes += 1;</span>
 <span class="lineNum">     141 </span>            :     } else {
-<span class="lineNum">     142 </span><span class="lineCov">      40475 :         if (m_numBufferedBytes &gt; 0) {</span>
-<span class="lineNum">     143 </span><span class="lineCov">      40451 :             auto carry = static_cast&lt;unsigned char&gt;(leadByte &gt;&gt; 8u);</span>
-<span class="lineNum">     144 </span><span class="lineCov">      40451 :             unsigned char byte = m_bufferedByte + carry;</span>
+<span class="lineNum">     142 </span><span class="lineCov">      40499 :         if (m_numBufferedBytes &gt; 0) {</span>
+<span class="lineNum">     143 </span><span class="lineCov">      40475 :             auto carry = static_cast&lt;unsigned char&gt;(leadByte &gt;&gt; 8u);</span>
+<span class="lineNum">     144 </span><span class="lineCov">      40475 :             unsigned char byte = m_bufferedByte + carry;</span>
 <span class="lineNum">     145 </span>            : 
-<span class="lineNum">     146 </span><span class="lineCov">      40451 :             m_bufferedByte = static_cast&lt;unsigned char&gt;(leadByte &amp; 0xffu);</span>
-<span class="lineNum">     147 </span><span class="lineCov">      40451 :             m_bitOutputStream.write(byte, 8);</span>
+<span class="lineNum">     146 </span><span class="lineCov">      40475 :             m_bufferedByte = static_cast&lt;unsigned char&gt;(leadByte &amp; 0xffu);</span>
+<span class="lineNum">     147 </span><span class="lineCov">      40475 :             m_bitOutputStream.write(byte, 8);</span>
 <span class="lineNum">     148 </span>            : 
-<span class="lineNum">     149 </span><span class="lineCov">      40451 :             byte = static_cast&lt;unsigned char&gt;(0xff) + carry;</span>
-<span class="lineNum">     150 </span><span class="lineCov">      43161 :             while (m_numBufferedBytes &gt; 1) {</span>
-<span class="lineNum">     151 </span><span class="lineCov">       1355 :                 m_bitOutputStream.write(byte, 8);</span>
-<span class="lineNum">     152 </span><span class="lineCov">       1355 :                 m_numBufferedBytes -= 1;</span>
+<span class="lineNum">     149 </span><span class="lineCov">      40475 :             byte = static_cast&lt;unsigned char&gt;(0xff) + carry;</span>
+<span class="lineNum">     150 </span><span class="lineCov">      43387 :             while (m_numBufferedBytes &gt; 1) {</span>
+<span class="lineNum">     151 </span><span class="lineCov">       1456 :                 m_bitOutputStream.write(byte, 8);</span>
+<span class="lineNum">     152 </span><span class="lineCov">       1456 :                 m_numBufferedBytes -= 1;</span>
 <span class="lineNum">     153 </span>            :             }
 <span class="lineNum">     154 </span>            :         } else {
 <span class="lineNum">     155 </span><span class="lineCov">         24 :             m_numBufferedBytes = 1;</span>
 <span class="lineNum">     156 </span><span class="lineCov">         24 :             m_bufferedByte = static_cast&lt;unsigned char&gt;(leadByte &amp; 0xffu);</span>
 <span class="lineNum">     157 </span>            :         }
 <span class="lineNum">     158 </span>            :     }
-<span class="lineNum">     159 </span><span class="lineCov">      41830 : }</span>
+<span class="lineNum">     159 </span><span class="lineCov">      41955 : }</span>
 <span class="lineNum">     160 </span>            : 
 <span class="lineNum">     161 </span>            : }  // namespace gabac
 </pre>
