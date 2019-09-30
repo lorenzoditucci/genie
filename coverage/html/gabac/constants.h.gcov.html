@@ -1,0 +1,194 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - gabac/constants.h</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">gabac</a> - constants.h<span style="font-size: 80%;"> (source / <a href="constants.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntryLo">50.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-09-30 12:43:08</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntryLo">50.0 %</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /**</a>
+<span class="lineNum">       2 </span>            :  * @file
+<span class="lineNum">       3 </span>            :  * @copyright This file is part of GABAC. See LICENSE and/or
+<span class="lineNum">       4 </span>            :  * https://github.com/mitogen/gabac for more details.
+<span class="lineNum">       5 </span>            :  */
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : #ifndef GABAC_CONSTANTS_H_
+<span class="lineNum">       8 </span>            : #define GABAC_CONSTANTS_H_
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : #include &lt;functional&gt;
+<span class="lineNum">      11 </span>            : #include &lt;string&gt;
+<span class="lineNum">      12 </span>            : #include &lt;vector&gt;
+<span class="lineNum">      13 </span>            : 
+<span class="lineNum">      14 </span>            : namespace gabac {
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : class DataBlock;
+<span class="lineNum">      17 </span>            : 
+<span class="lineNum">      18 </span>            : /**
+<span class="lineNum">      19 </span>            :  * @brief Supported transformations
+<span class="lineNum">      20 </span>            :  */
+<span class="lineNum">      21 </span>            : enum class SequenceTransformationId {
+<span class="lineNum">      22 </span>            :     no_transform = 0,    /**&lt; @brief Do nothing */
+<span class="lineNum">      23 </span>            :     equality_coding = 1, /**&lt; @brief Find equal values sequentially */
+<span class="lineNum">      24 </span>            :     match_coding = 2,    /**&lt; @brief Find larger sequence matches */
+<span class="lineNum">      25 </span>            :     rle_coding = 3,      /**&lt; @brief Find run lengths */
+<span class="lineNum">      26 </span>            :     lut_transform = 4,   /**&lt; @brief Remap symbols based on probability */
+<span class="lineNum">      27 </span>            :     diff_coding = 5,     /**&lt; @brief Use differences between symbol values instead
+<span class="lineNum">      28 </span>            :                             of symbols */
+<span class="lineNum">      29 </span>            :     cabac_coding = 6     /**&lt; @brief Entropy coding based on cabac */
+<span class="lineNum">      30 </span>            : };
+<span class="lineNum">      31 </span>            : 
+<span class="lineNum">      32 </span>            : /**
+<span class="lineNum">      33 </span>            :  * @brief Supported binarization
+<span class="lineNum">      34 </span>            :  */
+<span class="lineNum">      35 </span>            : enum class BinarizationId {
+<span class="lineNum">      36 </span>            :     BI = 0,  /**&lt; @brief Binary */
+<span class="lineNum">      37 </span>            :     TU = 1,  /**&lt; @brief Truncated Unary */
+<span class="lineNum">      38 </span>            :     EG = 2,  /**&lt; @brief Exponential Golomb */
+<span class="lineNum">      39 </span>            :     SEG = 3, /**&lt; @brief Signed Exponential Golomb */
+<span class="lineNum">      40 </span>            :     TEG = 4, /**&lt; @brief Truncated Exponential Golomb */
+<span class="lineNum">      41 </span>            :     STEG = 5 /**&lt; @brief Signed Truncated Exponential Golomb */
+<span class="lineNum">      42 </span>            : };
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : /**
+<span class="lineNum">      45 </span>            :  * @brief Supported cabac contexts
+<span class="lineNum">      46 </span>            :  */
+<span class="lineNum">      47 </span>            : enum class ContextSelectionId {
+<span class="lineNum">      48 </span>            :     bypass = 0,                  /**&lt; @brief Do not use arithmetic coding */
+<span class="lineNum">      49 </span>            :     adaptive_coding_order_0 = 1, /**&lt; @brief Current symbol only */
+<span class="lineNum">      50 </span>            :     adaptive_coding_order_1 = 2, /**&lt; @brief Use current + previous symbol */
+<span class="lineNum">      51 </span>            :     adaptive_coding_order_2 = 3  /**&lt; @brief Use current + previous + before previous symbol */
+<span class="lineNum">      52 </span>            : };
+<span class="lineNum">      53 </span>            : 
+<span class="lineNum">      54 </span>            : /**
+<span class="lineNum">      55 </span>            :  * @brief Transformation signature
+<span class="lineNum">      56 </span>            :  */
+<span class="lineNum">      57 </span>            : using SequenceTransform = std::function&lt;void(const std::vector&lt;uint64_t&gt;&amp; param, std::vector&lt;gabac::DataBlock&gt;* const)&gt;;
+<span class="lineNum">      58 </span>            : 
+<span class="lineNum">      59 </span>            : /**
+<span class="lineNum">      60 </span>            :  * @brief Get property based on binarization parameter
+<span class="lineNum">      61 </span>            :  */
+<span class="lineNum">      62 </span>            : using SignedBinarizationBorder = std::function&lt;uint64_t(uint64_t parameter)&gt;;
+<span class="lineNum">      63 </span>            : 
+<span class="lineNum">      64 </span>            : /**
+<a name="65"><span class="lineNum">      65 </span>            :  * @brief Transformation meta data available to applications using gabac</a>
+<span class="lineNum">      66 </span>            :  */
+<span class="lineNum">      67 </span><span class="lineNoCov">          0 : struct TransformationProperties {</span>
+<span class="lineNum">      68 </span>            :     std::string name;                     /**&lt; @brief Name of transformation */
+<span class="lineNum">      69 </span>            :     std::vector&lt;std::string&gt; paramNames;  /**&lt; @brief Name of every parameter */
+<span class="lineNum">      70 </span>            :     std::vector&lt;std::string&gt; streamNames; /**&lt; @brief Name of every stream */
+<span class="lineNum">      71 </span>            :     std::vector&lt;uint8_t&gt; wordsizes;       /**&lt; @brief Wordsizes of every stream. Zero
+<span class="lineNum">      72 </span>            :                                              means word size of input data */
+<span class="lineNum">      73 </span>            :     SequenceTransform transform;          /**&lt; @brief Function pointer to transformation */
+<span class="lineNum">      74 </span>            :     SequenceTransform inverseTransform;   /**&lt; @brief Function pointer to inverse
+<span class="lineNum">      75 </span>            :                                              transformation */
+<span class="lineNum">      76 </span>            : };
+<span class="lineNum">      77 </span>            : 
+<span class="lineNum">      78 </span>            : /**
+<a name="79"><span class="lineNum">      79 </span>            :  * @brief Meta information about all binarizations.</a>
+<span class="lineNum">      80 </span>            :  */
+<span class="lineNum">      81 </span><span class="lineCov">         18 : struct BinarizationProperties {</span>
+<span class="lineNum">      82 </span>            :     std::string name;             /**&lt; @brief Name of binarization */
+<span class="lineNum">      83 </span>            :     int64_t paramMin;             /**&lt; @brief Minimum value for parameter */
+<span class="lineNum">      84 </span>            :     int64_t paramMax;             /**&lt; @brief Maximum value for parameter */
+<span class="lineNum">      85 </span>            :     bool isSigned;                /**&lt; @brief If this supports signed symbols */
+<span class="lineNum">      86 </span>            :     SignedBinarizationBorder min; /**&lt; @brief Minimum supported symbol with a particular parameter */
+<span class="lineNum">      87 </span>            :     SignedBinarizationBorder max; /**&lt; @brief Maximum supported symbol with a particular parameter */
+<span class="lineNum">      88 </span>            : 
+<span class="lineNum">      89 </span>            :     /**
+<span class="lineNum">      90 </span>            :      * @brief Check if a stream is supported by this binarization with some
+<span class="lineNum">      91 </span>            :      * parameter
+<span class="lineNum">      92 </span>            :      * @param minv Minimum symbol of stream
+<span class="lineNum">      93 </span>            :      * @param maxv Maximum symbol of stream
+<span class="lineNum">      94 </span>            :      * @param parameter Binarization parameter
+<span class="lineNum">      95 </span>            :      * @return True if the stream is supported
+<span class="lineNum">      96 </span>            :      * @note For signed binarization you can convert negative values to
+<span class="lineNum">      97 </span>            :      * uint64_t. It will be converted back internally
+<span class="lineNum">      98 </span>            :      */
+<span class="lineNum">      99 </span>            :     bool sbCheck(uint64_t minv, uint64_t maxv, uint64_t parameter) const;
+<span class="lineNum">     100 </span>            : };
+<span class="lineNum">     101 </span>            : 
+<span class="lineNum">     102 </span>            : /**
+<span class="lineNum">     103 </span>            :  * @brief Get the meta information of one transformation
+<span class="lineNum">     104 </span>            :  * @param id Transformation ID
+<span class="lineNum">     105 </span>            :  * @return Properties object
+<span class="lineNum">     106 </span>            :  */
+<span class="lineNum">     107 </span>            : const TransformationProperties&amp; getTransformation(const gabac::SequenceTransformationId&amp; id);
+<span class="lineNum">     108 </span>            : 
+<span class="lineNum">     109 </span>            : /**
+<span class="lineNum">     110 </span>            :  * @brief Get the meta information of one binarization
+<span class="lineNum">     111 </span>            :  * @param id Binarization ID
+<span class="lineNum">     112 </span>            :  * @return Properties object
+<span class="lineNum">     113 </span>            :  */
+<span class="lineNum">     114 </span>            : const BinarizationProperties&amp; getBinarization(const gabac::BinarizationId&amp; id);
+<span class="lineNum">     115 </span>            : 
+<span class="lineNum">     116 </span>            : }  // namespace gabac
+<span class="lineNum">     117 </span>            : 
+<span class="lineNum">     118 </span>            : #endif  // GABAC_CONSTANTS_H_
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

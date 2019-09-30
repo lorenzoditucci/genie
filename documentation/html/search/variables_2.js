@@ -1,0 +1,26 @@
+var searchData=
+[
+  ['candidatebinarizationparameters',['candidateBinarizationParameters',['../structgabac_1_1_analysis_configuration.html#a34ac674ca404d09fb4e46fbc1bc154bd',1,'gabac::AnalysisConfiguration']]],
+  ['candidatecontextselectionids',['candidateContextSelectionIds',['../structgabac_1_1_analysis_configuration.html#a1ed3351961f124dd68a19bdec9d3aaee',1,'gabac::AnalysisConfiguration']]],
+  ['candidatediffparameters',['candidateDiffParameters',['../structgabac_1_1_analysis_configuration.html#a3cefd1ca6ea5cc5644cc40c5ec32bc2c',1,'gabac::AnalysisConfiguration']]],
+  ['candidatelutcodingparameters',['candidateLUTCodingParameters',['../structgabac_1_1_analysis_configuration.html#a15ba89cd7195e77f25f2af948eb1a138',1,'gabac::AnalysisConfiguration']]],
+  ['candidatelutorder',['candidateLutOrder',['../structgabac_1_1_analysis_configuration.html#a3a5c1b53261e2f35d0289701fda3edf8',1,'gabac::AnalysisConfiguration']]],
+  ['candidatematchcodingparameters',['candidateMatchCodingParameters',['../structgabac_1_1_analysis_configuration.html#ab676513d6740c197000d46d93ecbd765',1,'gabac::AnalysisConfiguration']]],
+  ['candidaterlecodingparameters',['candidateRLECodingParameters',['../structgabac_1_1_analysis_configuration.html#aea8e7feb470ce59262c74534a203b60b',1,'gabac::AnalysisConfiguration']]],
+  ['candidatesequencetransformationids',['candidateSequenceTransformationIds',['../structgabac_1_1_analysis_configuration.html#a041e88cde016f8c2a516276a2fac2a14',1,'gabac::AnalysisConfiguration']]],
+  ['candidatesignedbinarizationids',['candidateSignedBinarizationIds',['../structgabac_1_1_analysis_configuration.html#a96d43d6379d21db63a9ff848be93108a',1,'gabac::AnalysisConfiguration']]],
+  ['candidateunsignedbinarizationids',['candidateUnsignedBinarizationIds',['../structgabac_1_1_analysis_configuration.html#ad43fbd50de43692ea4a2d3e9e4f0ef90',1,'gabac::AnalysisConfiguration']]],
+  ['candidatewordsizes',['candidateWordsizes',['../structgabac_1_1_analysis_configuration.html#a893e944d7ebbf0632899c3ee48131bd4',1,'gabac::AnalysisConfiguration']]],
+  ['cigar',['cigar',['../structutil_1_1_sam_record.html#a68cd7355106623cd0e3bb96f1e542e87',1,'util::SamRecord']]],
+  ['context_5fset_5flength',['CONTEXT_SET_LENGTH',['../namespacegabac_1_1contexttables.html#a70482c316f16d33999040a95a7db7810',1,'gabac::contexttables']]],
+  ['contextselectionid',['contextSelectionId',['../structgabac_1_1_transformed_sequence_configuration.html#a4e554cdab14fa177d868e01a195a7efd',1,'gabac::TransformedSequenceConfiguration']]],
+  ['count_5fsame_5frec',['count_same_rec',['../structspring_1_1pe__statistics.html#af52a1b25022c433a5fd09582e07ddf5b',1,'spring::pe_statistics']]],
+  ['count_5fsplit_5fdiff_5fau',['count_split_diff_AU',['../structspring_1_1pe__statistics.html#aba3da18e7aab6b8a2ec6cb987873fc81',1,'spring::pe_statistics']]],
+  ['count_5fsplit_5fsame_5fau',['count_split_same_AU',['../structspring_1_1pe__statistics.html#a85f1995a3232f2dd7743734392dfef9b',1,'spring::pe_statistics']]],
+  ['cp',['cp',['../structspring_1_1se__data.html#a39f6d16c6b725ddda425d950fcf56252',1,'spring::se_data']]],
+  ['curr',['curr',['../structgabac_1_1_block_stepper.html#a2fcff6b1f9258d1e654f4bb880973c4c',1,'gabac::BlockStepper']]],
+  ['currconfig',['currConfig',['../structgabac_1_1_traversal_info.html#a04e2b043afbb82a91e2b764f787df5e8',1,'gabac::TraversalInfo']]],
+  ['currsequencesize',['currSequenceSize',['../structgabac_1_1_traversal_info.html#ad1451147592bc34781240fcb397b097b',1,'gabac::TraversalInfo']]],
+  ['currstreamindex',['currStreamIndex',['../structgabac_1_1_traversal_info.html#adeb8a91b048aa45e98ef69a1f236e825',1,'gabac::TraversalInfo']]],
+  ['currtotalsize',['currTotalSize',['../structgabac_1_1_traversal_info.html#a0943da194c68cea0276bf795cb9ddf85',1,'gabac::TraversalInfo']]]
+];

@@ -1,0 +1,27 @@
+var searchData=
+[
+  ['name',['name',['../structformat_1_1_genomic_descriptor_properties.html#abbd5460f5803d3b26361ccb559dbecb0',1,'format::GenomicDescriptorProperties::name()'],['../structgabac_1_1_transformation_properties.html#a2ee90ba515bc87878556ce6dcaf137e5',1,'gabac::TransformationProperties::name()'],['../structgabac_1_1_binarization_properties.html#a91026baccfd599bff2b6cec1cf6a6d8f',1,'gabac::BinarizationProperties::name()']]],
+  ['nextstatelps',['nextStateLps',['../namespacegabac_1_1cabactables.html#a42f3cf52bd4b92593c9500c90856b8e1',1,'gabac::cabactables']]],
+  ['nextstatemps',['nextStateMps',['../namespacegabac_1_1cabactables.html#af83667a34bef72601cc62abd7ad670f9',1,'gabac::cabactables']]],
+  ['noise_5farr',['noise_arr',['../structspring_1_1se__data.html#a7199349df61af8240f576bda1fcf2a52',1,'spring::se_data']]],
+  ['noise_5flen_5farr',['noise_len_arr',['../structspring_1_1se__data.html#af9be8cf386ee097f911efeeef467bf79',1,'spring::se_data']]],
+  ['noisepos_5farr',['noisepos_arr',['../structspring_1_1se__data.html#adfdb377627c6674d87aec9fc82ae73d1',1,'spring::se_data']]],
+  ['num_5fblocks',['num_blocks',['../structspring_1_1compression__params.html#a0b080ddd5251108714eca43d80d84c27',1,'spring::compression_params']]],
+  ['num_5fdescriptors',['NUM_DESCRIPTORS',['../namespaceformat.html#a6f35f35a3e6f37877d84e98411fb3940',1,'format']]],
+  ['num_5fdict_5fencoder',['NUM_DICT_ENCODER',['../namespacespring.html#afb8fc5acd5c03b9fed33e8960beb6f94',1,'spring']]],
+  ['num_5fdict_5freorder',['NUM_DICT_REORDER',['../namespacespring.html#ab138cb6be7abe393633ceda47a3a1dae',1,'spring']]],
+  ['num_5freads',['num_reads',['../structspring_1_1compression__params.html#a0d3f89d82fc7b2351a77bb31acb6c342',1,'spring::compression_params']]],
+  ['num_5freads_5fclean',['num_reads_clean',['../structspring_1_1compression__params.html#a14b56455ac10a5869adb6c4992afc534',1,'spring::compression_params']]],
+  ['num_5freads_5fper_5fblock',['num_reads_per_block',['../structspring_1_1compression__params.html#a63738374bc5b1b34c94b7de1fc8f30f2',1,'spring::compression_params::num_reads_per_block()'],['../namespacespring.html#a28d857fdfe7d0f519027b08ad13a0f97',1,'spring::NUM_READS_PER_BLOCK()']]],
+  ['num_5freads_5fper_5fblock_5fureads',['NUM_READS_PER_BLOCK_UREADS',['../namespacespring.html#a2d74622f23e479e9089f0aa99ba0b56e',1,'spring']]],
+  ['num_5fthr',['num_thr',['../structspring_1_1encoder__global.html#a564757e3a23886ac49f9cd1ef8763b70',1,'spring::encoder_global::num_thr()'],['../structspring_1_1reorder__global.html#afc325af6379847d7024375772edb63ad',1,'spring::reorder_global::num_thr()'],['../structspring_1_1compression__params.html#a1c523e3dec2239f0bd1db7e037d01a3f',1,'spring::compression_params::num_thr()']]],
+  ['number_5fsubsequences',['number_subsequences',['../structformat_1_1_genomic_descriptor_properties.html#a2019caaff89573c4b04c4739f27960c7',1,'format::GenomicDescriptorProperties']]],
+  ['numconfigs',['numConfigs',['../structgabac_1_1_traversal_info.html#a182621d076c499d395d8eeb0262d5597',1,'gabac::TraversalInfo']]],
+  ['numdict',['numdict',['../structspring_1_1reorder__global.html#a302cc2dfdd0e51835fc9a4c055fe74fb',1,'spring::reorder_global']]],
+  ['numdict_5fs',['numdict_s',['../structspring_1_1encoder__global.html#aceab7fbbf1a52a4ce0aa0f4e05641b00',1,'spring::encoder_global']]],
+  ['numkeys',['numkeys',['../classspring_1_1bbhashdict.html#a2846332c0bdbc2f5683f6b15568871bb',1,'spring::bbhashdict']]],
+  ['numreads',['numreads',['../structspring_1_1encoder__global.html#adeb2820a781e19d453ae92c763df6639',1,'spring::encoder_global::numreads()'],['../structspring_1_1reorder__global.html#ae572a05eaff5789ebee91ebe8820e86e',1,'spring::reorder_global::numreads()']]],
+  ['numreads_5farray',['numreads_array',['../structspring_1_1reorder__global.html#a11279c61a932d7baee5af07b7685c35b',1,'spring::reorder_global']]],
+  ['numreads_5fn',['numreads_N',['../structspring_1_1encoder__global.html#a1d15770bbdb5249760a13220ae53cc11',1,'spring::encoder_global']]],
+  ['numreads_5fs',['numreads_s',['../structspring_1_1encoder__global.html#a81266edfb0101989ae0f24b833958429',1,'spring::encoder_global']]]
+];

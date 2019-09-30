@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['qname',['qname',['../structutil_1_1_sam_record.html#af7326c8dc1b07a733581326bbe4102f5',1,'util::SamRecord']]],
+  ['qual',['qual',['../structutil_1_1_sam_record.html#abd69dad03158cea7b3855b39d6ffd15d',1,'util::SamRecord']]],
+  ['quality_5farr',['quality_arr',['../structspring_1_1decoded__desc__t.html#a36280e2d51fd632e72759b42d64d07b9',1,'spring::decoded_desc_t']]],
+  ['qualityscores',['qualityScores',['../structutil_1_1_fastq_record.html#a81099c86b3d614063dc866e0b06811cc',1,'util::FastqRecord']]],
+  ['quantize_5fquality',['quantize_quality',['../namespacespring.html#aaa0faaefca585361d7e986f50d5216a6',1,'spring']]],
+  ['qv',['qv',['../namespaceformat.html#a2e4c8a47d9ddda0ad222f9804b52f463a919e190d3a24095d669e5bb66899abac',1,'format']]],
+  ['qv_5fcodebook_2ecc',['qv_codebook.cc',['../qv__codebook_8cc.html',1,'']]],
+  ['qv_5fcodebook_2eh',['qv_codebook.h',['../qv__codebook_8h.html',1,'']]],
+  ['qv_5fcoding_5fconfig_2ecc',['qv_coding_config.cc',['../qv__coding__config_8cc.html',1,'']]],
+  ['qv_5fcoding_5fconfig_2eh',['qv_coding_config.h',['../qv__coding__config_8h.html',1,'']]],
+  ['qv_5fcoding_5fconfig_5f1_2ecc',['qv_coding_config_1.cc',['../qv__coding__config__1_8cc.html',1,'']]],
+  ['qv_5fcoding_5fconfig_5f1_2eh',['qv_coding_config_1.h',['../qv__coding__config__1_8h.html',1,'']]],
+  ['qv_5fcoding_5fmode',['qv_coding_mode',['../classformat_1_1_qv_coding_config.html#a9d66ca674a49c621d2de6988ce5adff0',1,'format::QvCodingConfig']]],
+  ['qv_5freverse_5fflag',['qv_reverse_flag',['../classformat_1_1_qv_coding_config.html#aa7f872240d01953c3b8f2974698bfecc',1,'format::QvCodingConfig']]],
+  ['qvcodebook',['QvCodebook',['../classformat_1_1qv__coding1_1_1_qv_codebook.html#a3095d59c2036cbf65b036f498c9a19c4',1,'format::qv_coding1::QvCodebook']]],
+  ['qvcodebook',['QvCodebook',['../classformat_1_1qv__coding1_1_1_qv_codebook.html',1,'format::qv_coding1']]],
+  ['qvcodingconfig',['QvCodingConfig',['../classformat_1_1_qv_coding_config.html',1,'format']]],
+  ['qvcodingconfig',['QvCodingConfig',['../classformat_1_1_qv_coding_config.html#a68c0070f65a86d64df5b75e37f0163a2',1,'format::QvCodingConfig']]],
+  ['qvcodingconfig1',['QvCodingConfig1',['../classformat_1_1qv__coding1_1_1_qv_coding_config1.html',1,'format::qv_coding1']]],
+  ['qvcodingconfig1',['QvCodingConfig1',['../classformat_1_1qv__coding1_1_1_qv_coding_config1.html#a5dbc97a34133532c5fbc908b56ecc9b9',1,'format::qv_coding1::QvCodingConfig1::QvCodingConfig1()'],['../classformat_1_1qv__coding1_1_1_qv_coding_config1.html#ab809099a50d546608fdaf9661b0c2f32',1,'format::qv_coding1::QvCodingConfig1::QvCodingConfig1(QvpsPresetId _qvps_preset_ID, bool _reverse_flag)']]],
+  ['qvcodingmode',['QvCodingMode',['../classformat_1_1_qv_coding_config.html#ab56ccdd12cf95e974dff1228d7d79844',1,'format::QvCodingConfig']]],
+  ['qvpspresetid',['QvpsPresetId',['../classformat_1_1qv__coding1_1_1_qv_coding_config1.html#a244b34776d9f351a9d1c97cbf49e4bd1',1,'format::qv_coding1::QvCodingConfig1']]]
+];

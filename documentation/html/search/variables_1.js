@@ -1,0 +1,21 @@
+var searchData=
+[
+  ['basedir',['basedir',['../structspring_1_1encoder__global.html#a253fa6f7252f26e72920bd541a6390bf',1,'spring::encoder_global::basedir()'],['../structspring_1_1reorder__global.html#ad81b7a9842d3555cb27a076e9cead6bc',1,'spring::reorder_global::basedir()']]],
+  ['basemask',['basemask',['../structspring_1_1encoder__global__b.html#a89814084452a06386a29df7e00a6757d',1,'spring::encoder_global_b::basemask()'],['../structspring_1_1reorder__global.html#aed98dc93abfb6c71d60a7efb699b5f07',1,'spring::reorder_global::basemask()']]],
+  ['bestconfig',['bestConfig',['../structgabac_1_1_traversal_info.html#ab615b012eb47edd5ad3d87b8c9cd4be6',1,'gabac::TraversalInfo']]],
+  ['bestseqconfig',['bestSeqConfig',['../structgabac_1_1_traversal_info.html#a3a615a0ba2e9eefdc7573f4a089786a4',1,'gabac::TraversalInfo']]],
+  ['bestsequencesize',['bestSequenceSize',['../structgabac_1_1_traversal_info.html#ab695c4bca8dc3e4500bb44195148410b',1,'gabac::TraversalInfo']]],
+  ['besttotalsize',['bestTotalSize',['../structgabac_1_1_traversal_info.html#afc9534ffad4f410745d4f43f2132f739',1,'gabac::TraversalInfo']]],
+  ['bin_5fsize_5fcombine_5fpairs',['BIN_SIZE_COMBINE_PAIRS',['../namespacespring.html#a13881b6f223e492dc899cca41d64d6fb',1,'spring']]],
+  ['binarizationid',['binarizationId',['../structgabac_1_1_transformed_sequence_configuration.html#a37f78c7742976d4c0085cd5835ac7bb1',1,'gabac::TransformedSequenceConfiguration']]],
+  ['binarizationparameters',['binarizationParameters',['../structgabac_1_1_transformed_sequence_configuration.html#a7bfbe6411c14d917e57ff264419a6063',1,'gabac::TransformedSequenceConfiguration']]],
+  ['bitset',['bitset',['../classspring_1_1boomphf_1_1level.html#ad642069002d9d61b9ca7f22e5d1b61e8',1,'spring::boomphf::level']]],
+  ['block_5fend',['block_end',['../structspring_1_1pe__block__data.html#aa11c7d0b9563c43290104065e92f492e',1,'spring::pe_block_data']]],
+  ['block_5fnum',['block_num',['../structspring_1_1pe__block__data.html#a000fadf4e858ff3ad33012ff3f5636b3',1,'spring::pe_block_data::block_num()'],['../structspring_1_1subseq__data.html#a91c0ec15729900b82d08c7cea7cd0bdc',1,'spring::subseq_data::block_num()']]],
+  ['block_5fseq_5fend',['block_seq_end',['../structspring_1_1pe__block__data.html#a644b34bfe5f925f6c9ac84f6185f71a0',1,'spring::pe_block_data']]],
+  ['block_5fseq_5fstart',['block_seq_start',['../structspring_1_1pe__block__data.html#ab5402d80c078d26bd24e1f0cf93526b5',1,'spring::pe_block_data']]],
+  ['block_5fstart',['block_start',['../structspring_1_1pe__block__data.html#a505266df288ac516cccb5d0c71a5d996',1,'spring::pe_block_data']]],
+  ['blocksize',['blocksize',['../structgabac__io__config.html#a1582d0d4e8541ceab288e5cfc6bfb9b3',1,'gabac_io_config::blocksize()'],['../structgabac_1_1_i_o_configuration.html#a7d4d2d09719542dd32f97b409408c0a4',1,'gabac::IOConfiguration::blocksize()']]],
+  ['boophf',['boophf',['../structspring_1_1boomphf_1_1thread__args.html#a98c27d3fcccd94d6300e5a197e969af4',1,'spring::boomphf::thread_args']]],
+  ['bphf',['bphf',['../classspring_1_1bbhashdict.html#a37ecdfbb458db09789bdbc69b382f586',1,'spring::bbhashdict']]]
+];

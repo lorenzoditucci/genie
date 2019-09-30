@@ -1,0 +1,644 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - gabac/data-block.h</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">gabac</a> - data-block.h<span style="font-size: 80%;"> (source / <a href="data-block.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">44</td>
+            <td class="headerCovTableEntry">53</td>
+            <td class="headerCovTableEntryMed">83.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-09-30 12:43:08</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">21</td>
+            <td class="headerCovTableEntry">22</td>
+            <td class="headerCovTableEntryHi">95.5 %</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /**</a>
+<span class="lineNum">       2 </span>            :  * @file
+<span class="lineNum">       3 </span>            :  * @copyright This file is part of GABAC. See LICENSE and/or
+<span class="lineNum">       4 </span>            :  * https://github.com/mitogen/gabac for more details.
+<span class="lineNum">       5 </span>            :  */
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : #ifndef GABAC_DATA_BLOCK_H_
+<span class="lineNum">       8 </span>            : #define GABAC_DATA_BLOCK_H_
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : #include &lt;cstring&gt;
+<span class="lineNum">      11 </span>            : #include &lt;string&gt;
+<span class="lineNum">      12 </span>            : #include &lt;utility&gt;
+<span class="lineNum">      13 </span>            : #include &lt;vector&gt;
+<span class="lineNum">      14 </span>            : 
+<span class="lineNum">      15 </span>            : #include &quot;exceptions.h&quot;
+<span class="lineNum">      16 </span>            : 
+<span class="lineNum">      17 </span>            : namespace gabac {
+<span class="lineNum">      18 </span>            : 
+<span class="lineNum">      19 </span>            : struct BlockStepper;
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : /**
+<span class="lineNum">      22 </span>            :  * @brief Word size aware data structure similar to a std::vector. Memory
+<a name="23"><span class="lineNum">      23 </span>            :  * efficient.</a>
+<span class="lineNum">      24 </span>            :  */
+<span class="lineNum">      25 </span><span class="lineCov">        293 : class DataBlock {</span>
+<span class="lineNum">      26 </span>            :    private:
+<span class="lineNum">      27 </span>            :     uint8_t wordSize;
+<span class="lineNum">      28 </span>            : 
+<span class="lineNum">      29 </span>            :     std::vector&lt;uint8_t&gt; data;
+<span class="lineNum">      30 </span>            : 
+<span class="lineNum">      31 </span>            :    public:
+<span class="lineNum">      32 </span>            :     /**
+<span class="lineNum">      33 </span>            :      * @brief Creates a blockStepper for this DataBlock.
+<span class="lineNum">      34 </span>            :      * @warning It will become invalid once you add or remove elements from the
+<span class="lineNum">      35 </span>            :      * data block.
+<span class="lineNum">      36 </span>            :      * @todo This has to be refactored. There should be a BlockStepper_Const.
+<span class="lineNum">      37 </span>            :      * Currently it is possible to alter a const datablock via blockstepper
+<span class="lineNum">      38 </span>            :      * which should not be possible.
+<span class="lineNum">      39 </span>            :      * @return BlockStepper
+<span class="lineNum">      40 </span>            :      */
+<span class="lineNum">      41 </span>            :     BlockStepper getReader() const;
+<span class="lineNum">      42 </span>            : 
+<span class="lineNum">      43 </span>            :     /**
+<span class="lineNum">      44 </span>            :      * @brief Compare data and word size
+<span class="lineNum">      45 </span>            :      * @param d Other block
+<span class="lineNum">      46 </span>            :      * @return True if equal
+<span class="lineNum">      47 </span>            :      */
+<span class="lineNum">      48 </span>            :     bool operator==(const DataBlock &amp;d) const;
+<span class="lineNum">      49 </span>            : 
+<span class="lineNum">      50 </span>            :     /**
+<span class="lineNum">      51 </span>            :      * @brief Set contents to values from a list. Does not affect the word size.
+<span class="lineNum">      52 </span>            :      * @param il List
+<span class="lineNum">      53 </span>            :      * @return This data block.
+<span class="lineNum">      54 </span>            :      */
+<span class="lineNum">      55 </span>            :     DataBlock &amp;operator=(const std::initializer_list&lt;uint64_t&gt; &amp;il);
+<span class="lineNum">      56 </span>            : 
+<span class="lineNum">      57 </span>            :     /**
+<span class="lineNum">      58 </span>            :      * @brief Extract one symbol
+<span class="lineNum">      59 </span>            :      * @param index Position of symbol in block
+<span class="lineNum">      60 </span>            :      * @return Symbol widened to 64 bits
+<span class="lineNum">      61 </span>            :      */
+<span class="lineNum">      62 </span>            :     uint64_t get(size_t index) const;
+<span class="lineNum">      63 </span>            : 
+<span class="lineNum">      64 </span>            :     /**
+<span class="lineNum">      65 </span>            :      * Calculates the biggest symbol in this block
+<span class="lineNum">      66 </span>            :      * @return Maximum
+<span class="lineNum">      67 </span>            :      */
+<span class="lineNum">      68 </span>            :     uint64_t getMaximum() const;
+<span class="lineNum">      69 </span>            : 
+<span class="lineNum">      70 </span>            :     /**
+<span class="lineNum">      71 </span>            :      * Calculates the biggest possible word size for this block
+<span class="lineNum">      72 </span>            :      * @return Maximum
+<span class="lineNum">      73 </span>            :      */
+<span class="lineNum">      74 </span>            :     uint8_t getMaxWordSize() const;
+<span class="lineNum">      75 </span>            : 
+<span class="lineNum">      76 </span>            :     /**
+<span class="lineNum">      77 </span>            :      * @brief Pack symbol into stream.
+<span class="lineNum">      78 </span>            :      * @param index Position in stream
+<span class="lineNum">      79 </span>            :      * @param val Value (will be narrowed to word size)
+<span class="lineNum">      80 </span>            :      */
+<span class="lineNum">      81 </span>            :     void set(size_t index, uint64_t val);
+<span class="lineNum">      82 </span>            : 
+<span class="lineNum">      83 </span>            :     /**
+<span class="lineNum">      84 </span>            :      * @brief A proxy object abstracting the get/set access using regular
+<span class="lineNum">      85 </span>            :      * operators. This way it is possible to use for example range based for
+<span class="lineNum">      86 </span>            :      * loops or std algorithms with iterators.
+<span class="lineNum">      87 </span>            :      * @note Even though this is convenient you should avoid it. It's slow.
+<span class="lineNum">      88 </span>            :      * @warning Adding or removing elements from the data block this object is
+<span class="lineNum">      89 </span>            :      * referring to leads to undefined behaviour. Don't do it as long as a proxy
+<span class="lineNum">      90 </span>            :      * object is existent.
+<span class="lineNum">      91 </span>            :      * @tparam T Type of data block
+<span class="lineNum">      92 </span>            :      */
+<span class="lineNum">      93 </span>            :     template &lt;typename T&gt;
+<span class="lineNum">      94 </span>            :     class ProxyCore {
+<span class="lineNum">      95 </span>            :        private:
+<span class="lineNum">      96 </span>            :         T stream;
+<span class="lineNum">      97 </span>            :         size_t position;
+<span class="lineNum">      98 </span>            : 
+<span class="lineNum">      99 </span>            :        public:
+<span class="lineNum">     100 </span>            :         /**
+<span class="lineNum">     101 </span>            :          * @brief Create access proxy
+<span class="lineNum">     102 </span>            :          * @param str Block we are referring to
+<span class="lineNum">     103 </span>            :          * @param pos Element index inside the data block
+<span class="lineNum">     104 </span>            :          */
+<span class="lineNum">     105 </span>            :         ProxyCore(T str, size_t pos);
+<span class="lineNum">     106 </span>            : 
+<span class="lineNum">     107 </span>            :         /**
+<span class="lineNum">     108 </span>            :          * @brief Conversion to uint64_t - executes get() of data block
+<span class="lineNum">     109 </span>            :          * @return str.get(pos);
+<span class="lineNum">     110 </span>            :          */
+<span class="lineNum">     111 </span>            :         explicit operator uint64_t() const;
+<span class="lineNum">     112 </span>            : 
+<span class="lineNum">     113 </span>            :         /**
+<span class="lineNum">     114 </span>            :          * @brief Assign uint64_t - executes set() of data block
+<span class="lineNum">     115 </span>            :          * @param val New value
+<span class="lineNum">     116 </span>            :          * @return *this, so that you can execute additional operations on this
+<span class="lineNum">     117 </span>            :          * element.
+<span class="lineNum">     118 </span>            :          */
+<span class="lineNum">     119 </span>            :         ProxyCore &amp;operator=(uint64_t val);
+<span class="lineNum">     120 </span>            :     };
+<span class="lineNum">     121 </span>            : 
+<span class="lineNum">     122 </span>            :     using Proxy = ProxyCore&lt;DataBlock *&gt;;            /**&lt; Standard proxy */
+<span class="lineNum">     123 </span>            :     using ConstProxy = ProxyCore&lt;const DataBlock *&gt;; /**&lt; Standard proxy for const */
+<span class="lineNum">     124 </span>            : 
+<span class="lineNum">     125 </span>            :     /**
+<span class="lineNum">     126 </span>            :      * @brief Iterator for data blocks. Like for proxy object: only use if
+<span class="lineNum">     127 </span>            :      * BlockStepper does not work.
+<span class="lineNum">     128 </span>            :      * @tparam T Data block type
+<span class="lineNum">     129 </span>            :      */
+<span class="lineNum">     130 </span>            :     template &lt;typename T&gt;
+<span class="lineNum">     131 </span>            :     class IteratorCore {
+<span class="lineNum">     132 </span>            :        private:
+<span class="lineNum">     133 </span>            :         T stream;
+<span class="lineNum">     134 </span>            :         size_t position;
+<span class="lineNum">     135 </span>            : 
+<span class="lineNum">     136 </span>            :        public:
+<span class="lineNum">     137 </span>            :         /**
+<span class="lineNum">     138 </span>            :          * @brief Create iterator
+<span class="lineNum">     139 </span>            :          * @param str Data block
+<span class="lineNum">     140 </span>            :          * @param pos Index in data block.
+<span class="lineNum">     141 </span>            :          */
+<span class="lineNum">     142 </span>            :         IteratorCore(T str, size_t pos);
+<span class="lineNum">     143 </span>            : 
+<span class="lineNum">     144 </span>            :         /**
+<span class="lineNum">     145 </span>            :          * @brief Fast forward
+<span class="lineNum">     146 </span>            :          * @param offset Index offset
+<span class="lineNum">     147 </span>            :          * @return *this
+<span class="lineNum">     148 </span>            :          */
+<span class="lineNum">     149 </span>            :         IteratorCore operator+(size_t offset) const;
+<span class="lineNum">     150 </span>            : 
+<span class="lineNum">     151 </span>            :         /**
+<span class="lineNum">     152 </span>            :          * @brief Rewind
+<span class="lineNum">     153 </span>            :          * @param offset Index offset
+<span class="lineNum">     154 </span>            :          * @return *this
+<span class="lineNum">     155 </span>            :          */
+<span class="lineNum">     156 </span>            :         IteratorCore operator-(size_t offset) const;
+<span class="lineNum">     157 </span>            : 
+<span class="lineNum">     158 </span>            :         /**
+<span class="lineNum">     159 </span>            :          * @brief Calculate offset between iterators
+<span class="lineNum">     160 </span>            :          * @param offset Other iterator
+<span class="lineNum">     161 </span>            :          * @return Index offset
+<span class="lineNum">     162 </span>            :          */
+<span class="lineNum">     163 </span>            :         size_t operator-(const IteratorCore &amp;offset) const { return position - offset.position; }
+<span class="lineNum">     164 </span>            : 
+<span class="lineNum">     165 </span>            :         /**
+<span class="lineNum">     166 </span>            :          * @brief Increment prefix
+<span class="lineNum">     167 </span>            :          * @return *this
+<span class="lineNum">     168 </span>            :          */
+<span class="lineNum">     169 </span>            :         IteratorCore &amp;operator++();
+<span class="lineNum">     170 </span>            : 
+<span class="lineNum">     171 </span>            :         /**
+<span class="lineNum">     172 </span>            :          * @brief Decrement prefix
+<span class="lineNum">     173 </span>            :          * @return *this
+<span class="lineNum">     174 </span>            :          */
+<span class="lineNum">     175 </span>            :         IteratorCore &amp;operator--();
+<span class="lineNum">     176 </span>            : 
+<span class="lineNum">     177 </span>            :         /**
+<span class="lineNum">     178 </span>            :          * @brief Increment postfix
+<span class="lineNum">     179 </span>            :          * @return *this
+<span class="lineNum">     180 </span>            :          */
+<span class="lineNum">     181 </span>            :         const IteratorCore operator++(int);
+<span class="lineNum">     182 </span>            : 
+<span class="lineNum">     183 </span>            :         /**
+<span class="lineNum">     184 </span>            :          * @brief Increment postfix
+<span class="lineNum">     185 </span>            :          * @return *this
+<span class="lineNum">     186 </span>            :          */
+<span class="lineNum">     187 </span>            :         const IteratorCore operator--(int);
+<span class="lineNum">     188 </span>            : 
+<span class="lineNum">     189 </span>            :         /**
+<span class="lineNum">     190 </span>            :          * @brief Return index
+<span class="lineNum">     191 </span>            :          * @return Saved index
+<span class="lineNum">     192 </span>            :          */
+<span class="lineNum">     193 </span>            :         size_t getOffset() const;
+<span class="lineNum">     194 </span>            : 
+<span class="lineNum">     195 </span>            :         /**
+<span class="lineNum">     196 </span>            :          * @brief Return DataBlock
+<span class="lineNum">     197 </span>            :          * @return Saved block
+<span class="lineNum">     198 </span>            :          */
+<span class="lineNum">     199 </span>            :         T getStream() const;
+<span class="lineNum">     200 </span>            : 
+<span class="lineNum">     201 </span>            :         /**
+<span class="lineNum">     202 </span>            :          * @brief Dereference to Proxy object
+<span class="lineNum">     203 </span>            :          * @return Newly created proxy
+<span class="lineNum">     204 </span>            :          */
+<span class="lineNum">     205 </span>            :         ProxyCore&lt;T&gt; operator*() const;
+<span class="lineNum">     206 </span>            : 
+<span class="lineNum">     207 </span>            :         /**
+<span class="lineNum">     208 </span>            :          * @brief Compare
+<span class="lineNum">     209 </span>            :          * @param c other Iterator
+<span class="lineNum">     210 </span>            :          * @return True if block and index equal
+<span class="lineNum">     211 </span>            :          */
+<span class="lineNum">     212 </span>            :         bool operator==(const IteratorCore &amp;c) const;
+<span class="lineNum">     213 </span>            : 
+<span class="lineNum">     214 </span>            :         /**
+<span class="lineNum">     215 </span>            :          * @brief Compare
+<span class="lineNum">     216 </span>            :          * @param c other Iterator
+<span class="lineNum">     217 </span>            :          * @return False if block and index equal
+<span class="lineNum">     218 </span>            :          */
+<span class="lineNum">     219 </span>            :         bool operator!=(const IteratorCore &amp;c) const;
+<span class="lineNum">     220 </span>            : 
+<span class="lineNum">     221 </span>            :         using iterator_category = std::random_access_iterator_tag; /**&lt; @brief Iterator category for
+<span class="lineNum">     222 </span>            :                                                                       STL */
+<span class="lineNum">     223 </span>            :         using reference = ProxyCore&lt;T&gt;;                            /**&lt; @brief Reference type for STL */
+<span class="lineNum">     224 </span>            :         using pointer = ProxyCore&lt;T&gt; *;                            /**&lt; @brief Pointer type for STL */
+<span class="lineNum">     225 </span>            :         using value_type = ProxyCore&lt;T&gt;;                           /**&lt; @brief Value type for STL */
+<span class="lineNum">     226 </span>            :         using difference_type = size_t;                            /**&lt; @brief Difference type for STL */
+<span class="lineNum">     227 </span>            :     };
+<span class="lineNum">     228 </span>            : 
+<span class="lineNum">     229 </span>            :     using Iterator = IteratorCore&lt;DataBlock *&gt;;            /**&lt; @brief Default iterator */
+<span class="lineNum">     230 </span>            :     using ConstIterator = IteratorCore&lt;const DataBlock *&gt;; /**&lt; @brief Default const iterator */
+<span class="lineNum">     231 </span>            : 
+<span class="lineNum">     232 </span>            :     /**
+<span class="lineNum">     233 </span>            :      * @brief Get number of elements
+<span class="lineNum">     234 </span>            :      * @return Size of data blocks in elements
+<span class="lineNum">     235 </span>            :      */
+<span class="lineNum">     236 </span>            :     size_t size() const;
+<span class="lineNum">     237 </span>            : 
+<span class="lineNum">     238 </span>            :     /**
+<span class="lineNum">     239 </span>            :      * @brief Reserve more memory without expanding the actual data. Similar to
+<span class="lineNum">     240 </span>            :      * vector.
+<span class="lineNum">     241 </span>            :      * @param size New memory size in elements
+<span class="lineNum">     242 </span>            :      */
+<span class="lineNum">     243 </span>            :     void reserve(size_t size);
+<span class="lineNum">     244 </span>            : 
+<span class="lineNum">     245 </span>            :     /**
+<span class="lineNum">     246 </span>            :      * @brief Free unused memory without shrinking the actual data. Similar to
+<span class="lineNum">     247 </span>            :      * vector.
+<span class="lineNum">     248 </span>            :      */
+<span class="lineNum">     249 </span>            :     void shrink_to_fit();
+<span class="lineNum">     250 </span>            : 
+<span class="lineNum">     251 </span>            :     /**
+<span class="lineNum">     252 </span>            :      * @brief Delete all elements. Sets the size to zero.
+<span class="lineNum">     253 </span>            :      */
+<span class="lineNum">     254 </span>            :     void clear();
+<span class="lineNum">     255 </span>            : 
+<span class="lineNum">     256 </span>            :     /**
+<span class="lineNum">     257 </span>            :      * @brief Sets the size to a specified number of elements.
+<span class="lineNum">     258 </span>            :      * If you are shrinking, the last elements are discarded.
+<span class="lineNum">     259 </span>            :      * @param size New size in elements
+<span class="lineNum">     260 </span>            :      */
+<span class="lineNum">     261 </span>            :     void resize(size_t size);
+<span class="lineNum">     262 </span>            : 
+<span class="lineNum">     263 </span>            :     /**
+<span class="lineNum">     264 </span>            :      * @brief Check if there are elements in the block.
+<span class="lineNum">     265 </span>            :      * @return True if no elements
+<span class="lineNum">     266 </span>            :      */
+<span class="lineNum">     267 </span>            :     bool empty() const;
+<span class="lineNum">     268 </span>            : 
+<span class="lineNum">     269 </span>            :     /**
+<span class="lineNum">     270 </span>            :      * @brief Begin const iterator
+<span class="lineNum">     271 </span>            :      * @return Const iterator to first element.
+<span class="lineNum">     272 </span>            :      */
+<span class="lineNum">     273 </span>            :     ConstIterator begin() const;
+<span class="lineNum">     274 </span>            : 
+<span class="lineNum">     275 </span>            :     /**
+<span class="lineNum">     276 </span>            :      * @brief Begin iterator
+<span class="lineNum">     277 </span>            :      * @return iterator to first element.
+<span class="lineNum">     278 </span>            :      */
+<span class="lineNum">     279 </span>            :     Iterator begin();
+<span class="lineNum">     280 </span>            : 
+<span class="lineNum">     281 </span>            :     /**
+<span class="lineNum">     282 </span>            :      * @brief End const iterator
+<span class="lineNum">     283 </span>            :      * @return Const iterator to behind the last element.
+<span class="lineNum">     284 </span>            :      */
+<span class="lineNum">     285 </span>            :     ConstIterator end() const;
+<span class="lineNum">     286 </span>            : 
+<span class="lineNum">     287 </span>            :     /**
+<span class="lineNum">     288 </span>            :      * @brief End iterator
+<span class="lineNum">     289 </span>            :      * @return iterator to behind the last element.
+<span class="lineNum">     290 </span>            :      */
+<span class="lineNum">     291 </span>            :     Iterator end();
+<span class="lineNum">     292 </span>            : 
+<span class="lineNum">     293 </span>            :     /**
+<span class="lineNum">     294 </span>            :      * @brief Append a new symbol
+<span class="lineNum">     295 </span>            :      * @param val Value of symbol
+<span class="lineNum">     296 </span>            :      */
+<span class="lineNum">     297 </span>            :     void push_back(uint64_t val);
+<span class="lineNum">     298 </span>            : 
+<span class="lineNum">     299 </span>            :     /**
+<span class="lineNum">     300 </span>            :      * @brief Append a new symbol
+<span class="lineNum">     301 </span>            :      * @param val Value of symbol
+<span class="lineNum">     302 </span>            :      */
+<span class="lineNum">     303 </span>            :     void emplace_back(uint64_t val);
+<span class="lineNum">     304 </span>            : 
+<span class="lineNum">     305 </span>            :     /**
+<span class="lineNum">     306 </span>            :      * @brief Get raw const pointer to memory block
+<span class="lineNum">     307 </span>            :      * @return Pointer
+<span class="lineNum">     308 </span>            :      */
+<span class="lineNum">     309 </span>            :     const void *getData() const;
+<span class="lineNum">     310 </span>            : 
+<span class="lineNum">     311 </span>            :     /**
+<span class="lineNum">     312 </span>            :      * @brief Get raw pointer to memory block
+<span class="lineNum">     313 </span>            :      * @return Pointer
+<span class="lineNum">     314 </span>            :      */
+<span class="lineNum">     315 </span>            :     void *getData();
+<span class="lineNum">     316 </span>            : 
+<span class="lineNum">     317 </span>            :     /**
+<span class="lineNum">     318 </span>            :      * @brief Get size of one symbol in bytes
+<span class="lineNum">     319 </span>            :      * @return bytes of one symbol
+<span class="lineNum">     320 </span>            :      */
+<span class="lineNum">     321 </span>            :     uint8_t getWordSize() const;
+<span class="lineNum">     322 </span>            : 
+<span class="lineNum">     323 </span>            :     /**
+<span class="lineNum">     324 </span>            :      * @brief Sets the size of one symbol, changing the number of elments
+<span class="lineNum">     325 </span>            :      * @param size New size in bytes
+<span class="lineNum">     326 </span>            :      */
+<span class="lineNum">     327 </span>            :     void setWordSize(uint8_t size);
+<span class="lineNum">     328 </span>            : 
+<span class="lineNum">     329 </span>            :     /**
+<span class="lineNum">     330 </span>            :      * @brief Gets the size of the underlying data in bytes.
+<span class="lineNum">     331 </span>            :      * wordsize * numberOfElements
+<a name="332"><span class="lineNum">     332 </span>            :      * @return Data size in bytes</a>
+<span class="lineNum">     333 </span>            :      */
+<span class="lineNum">     334 </span><span class="lineCov">      24576 :     size_t getRawSize() const { return getWordSize() * size(); }</span>
+<span class="lineNum">     335 </span>            : 
+<span class="lineNum">     336 </span>            :     /**
+<span class="lineNum">     337 </span>            :      * @brief Swap the contents of two data blocks without copying of data.
+<span class="lineNum">     338 </span>            :      * @param d The other block.
+<span class="lineNum">     339 </span>            :      */
+<span class="lineNum">     340 </span>            :     void swap(DataBlock *d);
+<span class="lineNum">     341 </span>            : 
+<span class="lineNum">     342 </span>            :     /**
+<span class="lineNum">     343 </span>            :      * @brief Insert elements into the data block
+<span class="lineNum">     344 </span>            :      * @tparam IT1 Type of iterator 1
+<span class="lineNum">     345 </span>            :      * @tparam IT2 Type of Iterator 2
+<span class="lineNum">     346 </span>            :      * @param pos Where to insert
+<span class="lineNum">     347 </span>            :      * @param start Where the source buffer starts
+<span class="lineNum">     348 </span>            :      * @param end Where the source buffer ends
+<span class="lineNum">     349 </span>            :      */
+<span class="lineNum">     350 </span>            :     template &lt;typename IT1, typename IT2&gt;
+<span class="lineNum">     351 </span>            :     void insert(const IT1 &amp;pos, const IT2 &amp;start, const IT2 &amp;end);
+<span class="lineNum">     352 </span>            : 
+<span class="lineNum">     353 </span>            :     /**
+<span class="lineNum">     354 </span>            :      * @brief Create Data block
+<span class="lineNum">     355 </span>            :      * @param size initial size in elements
+<span class="lineNum">     356 </span>            :      * @param wsize size of one element in bytes
+<span class="lineNum">     357 </span>            :      */
+<span class="lineNum">     358 </span>            :     explicit DataBlock(size_t size = 0, size_t wsize = 1);
+<span class="lineNum">     359 </span>            : 
+<span class="lineNum">     360 </span>            :     /**
+<span class="lineNum">     361 </span>            :      * @brief Create Data block from vector
+<span class="lineNum">     362 </span>            :      * @tparam T Should be an integral type
+<span class="lineNum">     363 </span>            :      * @param vec Vector to process
+<span class="lineNum">     364 </span>            :      */
+<span class="lineNum">     365 </span>            :     template &lt;typename T&gt;
+<span class="lineNum">     366 </span>            :     explicit DataBlock(std::vector&lt;T&gt; *vec);
+<span class="lineNum">     367 </span>            : 
+<span class="lineNum">     368 </span>            :     /**
+<span class="lineNum">     369 </span>            :      * @brief Create Data block from vector.
+<span class="lineNum">     370 </span>            :      * This is an optimization, as you can move byte vectors
+<span class="lineNum">     371 </span>            :      * into data blocks without any copy.
+<span class="lineNum">     372 </span>            :      * @param vec Other vector
+<span class="lineNum">     373 </span>            :      */
+<span class="lineNum">     374 </span>            :     explicit DataBlock(std::vector&lt;uint8_t&gt; *vec);
+<span class="lineNum">     375 </span>            : 
+<span class="lineNum">     376 </span>            :     /**
+<span class="lineNum">     377 </span>            :      * @brief Create data block from string.
+<span class="lineNum">     378 </span>            :      * @param vec String treated like a vector here.
+<span class="lineNum">     379 </span>            :      */
+<span class="lineNum">     380 </span>            :     explicit DataBlock(std::string *vec);
+<span class="lineNum">     381 </span>            : 
+<span class="lineNum">     382 </span>            :     /**
+<span class="lineNum">     383 </span>            :      * @brief Create data block from a memory buffer. Will copy the data.
+<span class="lineNum">     384 </span>            :      * @param d Start of buffer
+<span class="lineNum">     385 </span>            :      * @param size Number of elements
+<span class="lineNum">     386 </span>            :      * @param word_size Size of one element
+<span class="lineNum">     387 </span>            :      */
+<span class="lineNum">     388 </span>            :     explicit DataBlock(const uint8_t *d, size_t size, uint8_t word_size);
+<a name="389"><span class="lineNum">     389 </span>            : };</a>
+<span class="lineNum">     390 </span>            : 
+<span class="lineNum">     391 </span><span class="lineCov">   66938038 : inline uint64_t DataBlock::get(size_t index) const {</span>
+<span class="lineNum">     392 </span><span class="lineCov">   66938038 :     switch (wordSize) {</span>
+<span class="lineNum">     393 </span>            :         case 1:
+<span class="lineNum">     394 </span><span class="lineCov">   10485761 :             return *(data.data() + index);</span>
+<span class="lineNum">     395 </span>            :         case 2:
+<span class="lineNum">     396 </span><span class="lineNoCov">          0 :             return *reinterpret_cast&lt;const uint16_t *&gt;(data.data() + (index &lt;&lt; 1u));</span>
+<span class="lineNum">     397 </span>            :         case 4:
+<span class="lineNum">     398 </span><span class="lineNoCov">          0 :             return *reinterpret_cast&lt;const uint32_t *&gt;(data.data() + (index &lt;&lt; 2u));</span>
+<span class="lineNum">     399 </span>            :         case 8:
+<span class="lineNum">     400 </span><span class="lineCov">   56452277 :             return *reinterpret_cast&lt;const uint64_t *&gt;(data.data() + (index &lt;&lt; 3u));</span>
+<span class="lineNum">     401 </span>            :         default:
+<span class="lineNum">     402 </span><span class="lineNoCov">          0 :             return 0;</span>
+<span class="lineNum">     403 </span>            :     }
+<a name="404"><span class="lineNum">     404 </span>            : }</a>
+<span class="lineNum">     405 </span>            : 
+<span class="lineNum">     406 </span><span class="lineCov">    5298584 : inline void DataBlock::set(size_t index, uint64_t val) {</span>
+<span class="lineNum">     407 </span><span class="lineCov">    5298584 :     switch (wordSize) {</span>
+<span class="lineNum">     408 </span>            :         case 1:
+<span class="lineNum">     409 </span><span class="lineCov">    1048793 :             *(data.data() + index) = static_cast&lt;uint8_t&gt;(val);</span>
+<span class="lineNum">     410 </span><span class="lineCov">    1048793 :             return;</span>
+<span class="lineNum">     411 </span>            :         case 2:
+<span class="lineNum">     412 </span><span class="lineNoCov">          0 :             *reinterpret_cast&lt;uint16_t *&gt;(data.data() + (index &lt;&lt; 1u)) = static_cast&lt;uint16_t&gt;(val);</span>
+<span class="lineNum">     413 </span><span class="lineNoCov">          0 :             return;</span>
+<span class="lineNum">     414 </span>            :         case 4:
+<span class="lineNum">     415 </span><span class="lineCov">         30 :             *reinterpret_cast&lt;uint32_t *&gt;(data.data() + (index &lt;&lt; 2u)) = static_cast&lt;uint32_t&gt;(val);</span>
+<span class="lineNum">     416 </span><span class="lineCov">         30 :             return;</span>
+<span class="lineNum">     417 </span>            :         case 8:
+<span class="lineNum">     418 </span><span class="lineCov">    4249761 :             *reinterpret_cast&lt;uint64_t *&gt;(data.data() + (index &lt;&lt; 3u)) = static_cast&lt;uint64_t&gt;(val);</span>
+<span class="lineNum">     419 </span><span class="lineCov">    4249761 :             return;</span>
+<span class="lineNum">     420 </span>            :         default:
+<span class="lineNum">     421 </span><span class="lineNoCov">          0 :             return;</span>
+<span class="lineNum">     422 </span>            :     }
+<span class="lineNum">     423 </span>            : }
+<span class="lineNum">     424 </span>            : 
+<a name="425"><span class="lineNum">     425 </span>            : inline DataBlock::ConstIterator DataBlock::begin() const { return {this, 0}; }</a>
+<span class="lineNum">     426 </span>            : 
+<span class="lineNum">     427 </span><span class="lineCov">         33 : inline DataBlock::Iterator DataBlock::begin() { return {this, 0}; }</span>
+<span class="lineNum">     428 </span>            : 
+<a name="429"><span class="lineNum">     429 </span>            : inline DataBlock::ConstIterator DataBlock::end() const { return {this, data.size() / wordSize}; }</a>
+<span class="lineNum">     430 </span>            : 
+<a name="431"><span class="lineNum">     431 </span><span class="lineCov">         33 : inline DataBlock::Iterator DataBlock::end() { return {this, data.size() / wordSize}; }</span></a>
+<span class="lineNum">     432 </span>            : 
+<span class="lineNum">     433 </span><span class="lineCov">    3768821 : inline void DataBlock::push_back(uint64_t val) {</span>
+<span class="lineNum">     434 </span>            :     /*
+<span class="lineNum">     435 </span>            :       set(data.size() / wordSize - 1, val);*/
+<span class="lineNum">     436 </span><span class="lineCov">    3768821 :     data.resize(data.size() + wordSize);</span>
+<span class="lineNum">     437 </span><span class="lineCov">    3768821 :     switch (wordSize) {</span>
+<span class="lineNum">     438 </span>            :         case 1:
+<span class="lineNum">     439 </span><span class="lineCov">    1606479 :             *reinterpret_cast&lt;uint8_t *&gt;(data.end().base() - 1) = static_cast&lt;uint8_t&gt;(val);</span>
+<span class="lineNum">     440 </span><span class="lineCov">    1606479 :             return;</span>
+<span class="lineNum">     441 </span>            :         case 2:
+<span class="lineNum">     442 </span><span class="lineNoCov">          0 :             *reinterpret_cast&lt;uint16_t *&gt;(data.end().base() - 2) = static_cast&lt;uint16_t&gt;(val);</span>
+<span class="lineNum">     443 </span><span class="lineNoCov">          0 :             return;</span>
+<span class="lineNum">     444 </span>            :         case 4:
+<span class="lineNum">     445 </span><span class="lineCov">      30726 :             *reinterpret_cast&lt;uint32_t *&gt;(data.end().base() - 4) = static_cast&lt;uint32_t&gt;(val);</span>
+<span class="lineNum">     446 </span><span class="lineCov">      30726 :             return;</span>
+<span class="lineNum">     447 </span>            :         case 8:
+<span class="lineNum">     448 </span><span class="lineCov">    2131616 :             *reinterpret_cast&lt;uint64_t *&gt;(data.end().base() - 8) = static_cast&lt;uint64_t&gt;(val);</span>
+<span class="lineNum">     449 </span><span class="lineCov">    2131616 :             return;</span>
+<span class="lineNum">     450 </span>            :         default:
+<span class="lineNum">     451 </span><span class="lineNoCov">          0 :             break;</span>
+<span class="lineNum">     452 </span>            :     }
+<a name="453"><span class="lineNum">     453 </span>            : }</a>
+<span class="lineNum">     454 </span>            : 
+<span class="lineNum">     455 </span><span class="lineCov">     557895 : inline void DataBlock::emplace_back(uint64_t val) { push_back(val); }</span>
+<span class="lineNum">     456 </span>            : 
+<a name="457"><span class="lineNum">     457 </span>            : inline const void *DataBlock::getData() const { return data.data(); }</a>
+<span class="lineNum">     458 </span>            : 
+<a name="459"><span class="lineNum">     459 </span><span class="lineCov">      41875 : inline void *DataBlock::getData() { return data.data(); }</span></a>
+<span class="lineNum">     460 </span>            : 
+<span class="lineNum">     461 </span><span class="lineCov">     150273 : inline uint8_t DataBlock::getWordSize() const { return wordSize; }</span>
+<span class="lineNum">     462 </span>            : 
+<span class="lineNum">     463 </span>            : inline void DataBlock::setWordSize(uint8_t size) {
+<span class="lineNum">     464 </span>            :     wordSize = size;
+<span class="lineNum">     465 </span>            :     if (data.size() % size) {
+<span class="lineNum">     466 </span>            :         GABAC_DIE(&quot;Could not resize&quot;);
+<span class="lineNum">     467 </span>            :     }
+<span class="lineNum">     468 </span>            : }
+<a name="469"><span class="lineNum">     469 </span>            : </a>
+<span class="lineNum">     470 </span>            : template &lt;typename T&gt;
+<span class="lineNum">     471 </span><span class="lineCov">    5298184 : inline DataBlock::ProxyCore&lt;T&gt;::ProxyCore(T str, size_t pos) : stream(str), position(pos) {}</span>
+<span class="lineNum">     472 </span>            : 
+<span class="lineNum">     473 </span>            : template &lt;typename T&gt;
+<span class="lineNum">     474 </span>            : inline DataBlock::ProxyCore&lt;T&gt;::operator uint64_t() const {
+<span class="lineNum">     475 </span>            :     return stream-&gt;get(position);
+<span class="lineNum">     476 </span>            : }
+<a name="477"><span class="lineNum">     477 </span>            : </a>
+<span class="lineNum">     478 </span>            : template &lt;typename T&gt;
+<span class="lineNum">     479 </span><span class="lineCov">    5298184 : inline DataBlock::ProxyCore&lt;T&gt; &amp;DataBlock::ProxyCore&lt;T&gt;::operator=(uint64_t val) {</span>
+<span class="lineNum">     480 </span><span class="lineCov">    5298184 :     stream-&gt;set(position, val);</span>
+<span class="lineNum">     481 </span><span class="lineCov">    5298184 :     return *this;</span>
+<span class="lineNum">     482 </span>            : }
+<a name="483"><span class="lineNum">     483 </span>            : </a>
+<span class="lineNum">     484 </span>            : template &lt;typename T&gt;
+<span class="lineNum">     485 </span><span class="lineCov">    5298250 : DataBlock::IteratorCore&lt;T&gt;::IteratorCore(T str, size_t pos) : stream(str), position(pos) {}</span>
+<a name="486"><span class="lineNum">     486 </span>            : </a>
+<span class="lineNum">     487 </span>            : template &lt;typename T&gt;
+<span class="lineNum">     488 </span><span class="lineCov">    5298184 : inline DataBlock::IteratorCore&lt;T&gt; DataBlock::IteratorCore&lt;T&gt;::operator+(size_t offset) const {</span>
+<span class="lineNum">     489 </span><span class="lineCov">    5298184 :     return IteratorCore(stream, position + offset);</span>
+<span class="lineNum">     490 </span>            : }
+<span class="lineNum">     491 </span>            : 
+<span class="lineNum">     492 </span>            : template &lt;typename T&gt;
+<span class="lineNum">     493 </span>            : inline DataBlock::IteratorCore&lt;T&gt; DataBlock::IteratorCore&lt;T&gt;::operator-(size_t offset) const {
+<span class="lineNum">     494 </span>            :     return IteratorCore(stream, position - offset);
+<span class="lineNum">     495 </span>            : }
+<a name="496"><span class="lineNum">     496 </span>            : </a>
+<span class="lineNum">     497 </span>            : template &lt;typename T&gt;
+<span class="lineNum">     498 </span><span class="lineCov">    5298184 : inline DataBlock::IteratorCore&lt;T&gt; &amp;DataBlock::IteratorCore&lt;T&gt;::operator++() {</span>
+<span class="lineNum">     499 </span><span class="lineCov">    5298184 :     *this = *this + 1;</span>
+<span class="lineNum">     500 </span><span class="lineCov">    5298184 :     return *this;</span>
+<span class="lineNum">     501 </span>            : }
+<span class="lineNum">     502 </span>            : 
+<span class="lineNum">     503 </span>            : template &lt;typename T&gt;
+<span class="lineNum">     504 </span>            : inline DataBlock::IteratorCore&lt;T&gt; &amp;DataBlock::IteratorCore&lt;T&gt;::operator--() {
+<span class="lineNum">     505 </span>            :     *this = *this + 1;
+<span class="lineNum">     506 </span>            :     return *this;
+<span class="lineNum">     507 </span>            : }
+<span class="lineNum">     508 </span>            : 
+<span class="lineNum">     509 </span>            : template &lt;typename T&gt;
+<span class="lineNum">     510 </span>            : inline const DataBlock::IteratorCore&lt;T&gt; DataBlock::IteratorCore&lt;T&gt;::operator++(int) {
+<span class="lineNum">     511 </span>            :     IteratorCore ret = *this;
+<span class="lineNum">     512 </span>            :     ++(*this);
+<span class="lineNum">     513 </span>            :     return ret;
+<span class="lineNum">     514 </span>            : }
+<span class="lineNum">     515 </span>            : 
+<span class="lineNum">     516 </span>            : template &lt;typename T&gt;
+<span class="lineNum">     517 </span>            : inline const DataBlock::IteratorCore&lt;T&gt; DataBlock::IteratorCore&lt;T&gt;::operator--(int) {
+<span class="lineNum">     518 </span>            :     IteratorCore ret = *this;
+<span class="lineNum">     519 </span>            :     ++(*this);
+<span class="lineNum">     520 </span>            :     return ret;
+<span class="lineNum">     521 </span>            : }
+<span class="lineNum">     522 </span>            : 
+<span class="lineNum">     523 </span>            : template &lt;typename T&gt;
+<span class="lineNum">     524 </span>            : inline size_t DataBlock::IteratorCore&lt;T&gt;::getOffset() const {
+<span class="lineNum">     525 </span>            :     return position;
+<span class="lineNum">     526 </span>            : }
+<span class="lineNum">     527 </span>            : 
+<span class="lineNum">     528 </span>            : template &lt;typename T&gt;
+<span class="lineNum">     529 </span>            : inline T DataBlock::IteratorCore&lt;T&gt;::getStream() const {
+<span class="lineNum">     530 </span>            :     return stream;
+<span class="lineNum">     531 </span>            : }
+<a name="532"><span class="lineNum">     532 </span>            : </a>
+<span class="lineNum">     533 </span>            : template &lt;typename T&gt;
+<span class="lineNum">     534 </span><span class="lineCov">    5298184 : inline DataBlock::ProxyCore&lt;T&gt; DataBlock::IteratorCore&lt;T&gt;::operator*() const {</span>
+<span class="lineNum">     535 </span><span class="lineCov">    5298184 :     return {stream, position};</span>
+<span class="lineNum">     536 </span>            : }
+<a name="537"><span class="lineNum">     537 </span>            : </a>
+<span class="lineNum">     538 </span>            : template &lt;typename T&gt;
+<span class="lineNum">     539 </span><span class="lineCov">    5298217 : inline bool DataBlock::IteratorCore&lt;T&gt;::operator==(const IteratorCore &amp;c) const {</span>
+<span class="lineNum">     540 </span><span class="lineCov">    5298217 :     return this-&gt;stream == c.stream &amp;&amp; this-&gt;position == c.position;</span>
+<span class="lineNum">     541 </span>            : }
+<a name="542"><span class="lineNum">     542 </span>            : </a>
+<span class="lineNum">     543 </span>            : template &lt;typename T&gt;
+<span class="lineNum">     544 </span><span class="lineCov">    5298217 : inline bool DataBlock::IteratorCore&lt;T&gt;::operator!=(const IteratorCore &amp;c) const {</span>
+<span class="lineNum">     545 </span><span class="lineCov">    5298217 :     return !(*this == c);</span>
+<span class="lineNum">     546 </span>            : }
+<span class="lineNum">     547 </span>            : 
+<span class="lineNum">     548 </span>            : template &lt;typename IT1, typename IT2&gt;
+<span class="lineNum">     549 </span>            : void DataBlock::insert(const IT1 &amp;pos, const IT2 &amp;start, const IT2 &amp;end) {
+<span class="lineNum">     550 </span>            :     if (pos.getStream() != this || start.getStream() != end.getStream()) {
+<span class="lineNum">     551 </span>            :         return;
+<span class="lineNum">     552 </span>            :     }
+<span class="lineNum">     553 </span>            :     data.insert(data.begin() + pos.getOffset(), start.getStream()-&gt;data.begin() + start.getOffset(),
+<span class="lineNum">     554 </span>            :                 end.getStream()-&gt;data.begin() + end.getOffset());
+<span class="lineNum">     555 </span>            : }
+<span class="lineNum">     556 </span>            : 
+<span class="lineNum">     557 </span>            : template &lt;typename T&gt;
+<span class="lineNum">     558 </span>            : DataBlock::DataBlock(std::vector&lt;T&gt; *vec) : wordSize(sizeof(T)) {
+<span class="lineNum">     559 </span>            :     size_t size = vec-&gt;size() * sizeof(T);
+<span class="lineNum">     560 </span>            :     this-&gt;data.resize(size);
+<span class="lineNum">     561 </span>            :     this-&gt;data.shrink_to_fit();
+<span class="lineNum">     562 </span>            :     std::memcpy(this-&gt;data.data(), vec-&gt;data(), size);
+<span class="lineNum">     563 </span>            :     vec-&gt;clear();
+<span class="lineNum">     564 </span>            : }
+<span class="lineNum">     565 </span>            : 
+<span class="lineNum">     566 </span>            : }  // namespace gabac
+<span class="lineNum">     567 </span>            : 
+<span class="lineNum">     568 </span>            : #endif  // GABAC_DATA_BLOCK_H_
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

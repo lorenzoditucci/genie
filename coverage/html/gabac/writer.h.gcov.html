@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - gabac/writer.h</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">gabac</a> - writer.h<span style="font-size: 80%;"> (source / <a href="writer.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-09-30 12:43:08</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /**</a>
+<span class="lineNum">       2 </span>            :  * @file
+<span class="lineNum">       3 </span>            :  * @copyright This file is part of GABAC. See LICENSE and/or
+<span class="lineNum">       4 </span>            :  * https://github.com/mitogen/gabac for more details.
+<span class="lineNum">       5 </span>            :  */
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : #ifndef GABAC_WRITER_H_
+<span class="lineNum">       8 </span>            : #define GABAC_WRITER_H_
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : #include &lt;cstddef&gt;
+<span class="lineNum">      11 </span>            : #include &lt;cstdint&gt;
+<span class="lineNum">      12 </span>            : #include &lt;vector&gt;
+<span class="lineNum">      13 </span>            : 
+<span class="lineNum">      14 </span>            : #include &quot;binary-arithmetic-encoder.h&quot;
+<span class="lineNum">      15 </span>            : #include &quot;util/bitwriter.h&quot;
+<span class="lineNum">      16 </span>            : #include &quot;streams.h&quot;
+<span class="lineNum">      17 </span>            : 
+<span class="lineNum">      18 </span>            : namespace gabac {
+<span class="lineNum">      19 </span>            : 
+<a name="20"><span class="lineNum">      20 </span>            : class DataBlock;</a>
+<span class="lineNum">      21 </span>            : 
+<span class="lineNum">      22 </span><span class="lineCov">         24 : class Writer {</span>
+<span class="lineNum">      23 </span>            :    public:
+<span class="lineNum">      24 </span>            :     explicit Writer(OBufferStream *bitstream);
+<span class="lineNum">      25 </span>            : 
+<span class="lineNum">      26 </span>            :     ~Writer();
+<span class="lineNum">      27 </span>            : 
+<span class="lineNum">      28 </span>            :     void start(size_t numSymbols);
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            :     void reset();
+<span class="lineNum">      31 </span>            : 
+<span class="lineNum">      32 </span>            :     void writeAsBIbypass(uint64_t input, unsigned int cLength);
+<span class="lineNum">      33 </span>            : 
+<span class="lineNum">      34 </span>            :     void writeAsBIcabac(uint64_t input, unsigned int cLength, unsigned int offset);
+<span class="lineNum">      35 </span>            : 
+<span class="lineNum">      36 </span>            :     void writeAsTUbypass(uint64_t input, unsigned int cMax);
+<span class="lineNum">      37 </span>            : 
+<span class="lineNum">      38 </span>            :     void writeAsTUcabac(uint64_t input, unsigned int cMax, unsigned int offset);
+<span class="lineNum">      39 </span>            : 
+<span class="lineNum">      40 </span>            :     void writeAsEGbypass(uint64_t input, unsigned int dummy);
+<span class="lineNum">      41 </span>            : 
+<span class="lineNum">      42 </span>            :     void writeAsEGcabac(uint64_t input, unsigned int dummy, unsigned int offset);
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            :     void writeAsSEGbypass(uint64_t input, unsigned int dummy);
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            :     void writeAsSEGcabac(uint64_t input, unsigned int dummy, unsigned int offset);
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span>            :     void writeAsTEGbypass(uint64_t input, unsigned int cTruncExpGolParam);
+<span class="lineNum">      49 </span>            : 
+<span class="lineNum">      50 </span>            :     void writeAsTEGcabac(uint64_t input, unsigned int cTruncExpGolParam, unsigned int offset);
+<span class="lineNum">      51 </span>            : 
+<span class="lineNum">      52 </span>            :     void writeAsSTEGbypass(uint64_t input, unsigned int cSignedTruncExpGolParam);
+<span class="lineNum">      53 </span>            : 
+<span class="lineNum">      54 </span>            :     void writeAsSTEGcabac(uint64_t input, unsigned int cSignedTruncExpGolParam, unsigned int offset);
+<span class="lineNum">      55 </span>            : 
+<span class="lineNum">      56 </span>            :     void writeNumSymbols(unsigned int numSymbols);
+<span class="lineNum">      57 </span>            : 
+<span class="lineNum">      58 </span>            :    private:
+<span class="lineNum">      59 </span>            :     util::BitWriter m_bitOutputStream;
+<span class="lineNum">      60 </span>            : 
+<span class="lineNum">      61 </span>            :     // ContextSelector m_contextSelector;
+<span class="lineNum">      62 </span>            : 
+<span class="lineNum">      63 </span>            :     BinaryArithmeticEncoder m_binaryArithmeticEncoder;
+<span class="lineNum">      64 </span>            : 
+<span class="lineNum">      65 </span>            :     std::vector&lt;ContextModel&gt; m_contextModels;
+<span class="lineNum">      66 </span>            : };
+<span class="lineNum">      67 </span>            : 
+<span class="lineNum">      68 </span>            : }  // namespace gabac
+<span class="lineNum">      69 </span>            : 
+<span class="lineNum">      70 </span>            : #endif  // GABAC_WRITER_H_
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

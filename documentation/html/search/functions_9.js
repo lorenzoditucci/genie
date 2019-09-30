@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['ibufferstream',['IBufferStream',['../classgabac_1_1_i_buffer_stream.html#a2bfcef6b82d7f2b2eff63bfe5230eaf7',1,'gabac::IBufferStream']]],
+  ['ifilestream',['IFileStream',['../classgabac_1_1_i_file_stream.html#acf3e6e03c275b13c89f8a2912a4b57d9',1,'gabac::IFileStream']]],
+  ['inc',['inc',['../structgabac_1_1_block_stepper.html#aa1f7e33abc548bb5bb49b31ddfc55824',1,'gabac::BlockStepper::inc()'],['../classspring_1_1boomphf_1_1_progress.html#ab896ff8aec48a727387011c0c8ca475d',1,'spring::boomphf::Progress::inc(uint64_t ntasks_done)'],['../classspring_1_1boomphf_1_1_progress.html#aeca80fcaa2c5d93553662f600aaed193',1,'spring::boomphf::Progress::inc(uint64_t ntasks_done, int tid)']]],
+  ['inferbinarization',['inferBinarization',['../namespaceformat.html#a41070df0c376dccaf25ee150932ba9ed',1,'format']]],
+  ['inferlut',['inferLut',['../namespacegabac.html#af1b3e405aa3cbf510891c490e3ee5294',1,'gabac']]],
+  ['infertransform',['inferTransform',['../namespaceformat.html#a97049b9a4b42ba974eabf2012f52ae45',1,'format']]],
+  ['init',['init',['../classspring_1_1boomphf_1_1_progress.html#aafc44952cde225ef4446584e2cc44d69',1,'spring::boomphf::Progress']]],
+  ['init_5fbinary_5fctx',['INIT_BINARY_CTX',['../namespacegabac_1_1contexttables.html#aec72f353e9aaf06a2cb86c024678fbec',1,'gabac::contexttables']]],
+  ['init_5fexponential_5fgolomb_5fctx',['INIT_EXPONENTIAL_GOLOMB_CTX',['../namespacegabac_1_1contexttables.html#a7d22f4600973ab6021cf6cd4ef1120ad',1,'gabac::contexttables']]],
+  ['init_5ftruncated_5funary_5fctx',['INIT_TRUNCATED_UNARY_CTX',['../namespacegabac_1_1contexttables.html#a416a17c9fafb9d18c9fcc56cc9bd0bb7',1,'gabac::contexttables']]],
+  ['insert',['insert',['../classgabac_1_1_data_block.html#a76fbf007ab6e41d3a1c4a8181f5c12bc',1,'gabac::DataBlock']]],
+  ['inversetransformdiffcoding',['inverseTransformDiffCoding',['../namespacegabac.html#a2ac06f807cf55ed2e9bb32314c59e6ba',1,'gabac']]],
+  ['inversetransformequalitycoding',['inverseTransformEqualityCoding',['../namespacegabac.html#ae1a0c6211d962d47a0113a04cace5453',1,'gabac']]],
+  ['inversetransformluttransform',['inverseTransformLutTransform',['../namespacegabac.html#a03f37f71944e27285ea2de8179e2f25b',1,'gabac']]],
+  ['inversetransformmatchcoding',['inverseTransformMatchCoding',['../namespacegabac.html#a4627575f23cfed514a6f56a26257e271',1,'gabac']]],
+  ['inversetransformrlecoding',['inverseTransformRleCoding',['../namespacegabac.html#a1d9b315f84fc24a059bb842c2c244e1b',1,'gabac']]],
+  ['is_5fpermutation',['is_permutation',['../namespacespring.html#abb560a70684436c585f34654d5ea4ba2',1,'spring']]],
+  ['isclassspecific',['isClassSpecific',['../classformat_1_1_descriptor_configuration_container.html#aa2c800fa550c4bad6f7a1867e1861d6f',1,'format::DescriptorConfigurationContainer']]],
+  ['isgeneral',['isGeneral',['../structgabac_1_1_encoding_configuration.html#abd9cb809d9bb91077f5e134d024f55e3',1,'gabac::EncodingConfiguration']]],
+  ['isidunique',['isIdUnique',['../classformat_1_1_raw_reference_sequence.html#a47d75ca9fa8dc51bdd52dfa3abc5c169',1,'format::RawReferenceSequence']]],
+  ['isoptimal',['isOptimal',['../structgabac_1_1_encoding_configuration.html#a5e312388387ac850becbe4dd5c0ce73c',1,'gabac::EncodingConfiguration']]],
+  ['issubgeneral',['isSubGeneral',['../structgabac_1_1_encoding_configuration.html#a7942e45a5ba478492be1b0b30acd3984',1,'gabac::EncodingConfiguration']]],
+  ['isvalid',['isValid',['../structgabac_1_1_block_stepper.html#ab80bd35f0c19bf55016faf94e594cdf8',1,'gabac::BlockStepper']]],
+  ['iter_5frange',['iter_range',['../structspring_1_1boomphf_1_1iter__range.html#ad5555a2492abe3e3991450e059d1a152',1,'spring::boomphf::iter_range']]],
+  ['iteratorcore',['IteratorCore',['../classgabac_1_1_data_block_1_1_iterator_core.html#af87ab7d89b1481d9f94ced755d2cab31',1,'gabac::DataBlock::IteratorCore']]]
+];

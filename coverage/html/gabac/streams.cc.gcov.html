@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - gabac/streams.cc</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">gabac</a> - streams.cc<span style="font-size: 80%;"> (source / <a href="streams.cc.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">11</td>
+            <td class="headerCovTableEntry">41</td>
+            <td class="headerCovTableEntryLo">26.8 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-09-30 12:43:08</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntry">24</td>
+            <td class="headerCovTableEntryLo">20.8 %</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /**</a>
+<span class="lineNum">       2 </span>            :  * @file
+<span class="lineNum">       3 </span>            :  * @copyright This file is part of GABAC. See LICENSE and/or
+<span class="lineNum">       4 </span>            :  * https://github.com/mitogen/gabac for more details.
+<span class="lineNum">       5 </span>            :  */
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : #include &quot;streams.h&quot;
+<span class="lineNum">       8 </span>            : 
+<span class="lineNum">       9 </span>            : #include &lt;algorithm&gt;
+<span class="lineNum">      10 </span>            : 
+<span class="lineNum">      11 </span>            : #include &quot;exceptions.h&quot;
+<span class="lineNum">      12 </span>            : 
+<a name="13"><span class="lineNum">      13 </span>            : namespace gabac {</a>
+<span class="lineNum">      14 </span>            : 
+<a name="15"><span class="lineNum">      15 </span><span class="lineNoCov">          0 : FileBuffer::FileBuffer(FILE *f) : fileptr(f) {}</span></a>
+<span class="lineNum">      16 </span>            : 
+<a name="17"><span class="lineNum">      17 </span><span class="lineNoCov">          0 : int FileBuffer::overflow(int c) { return fputc(c, fileptr); }</span></a>
+<span class="lineNum">      18 </span>            : 
+<span class="lineNum">      19 </span><span class="lineNoCov">          0 : std::streamsize FileBuffer::xsputn(const char *s, std::streamsize n) {</span>
+<span class="lineNum">      20 </span><span class="lineNoCov">          0 :     return fwrite(s, 1, static_cast&lt;size_t&gt;(n), fileptr);</span>
+<a name="21"><span class="lineNum">      21 </span>            : }</a>
+<span class="lineNum">      22 </span>            : 
+<a name="23"><span class="lineNum">      23 </span><span class="lineNoCov">          0 : int FileBuffer::sync() { return fflush(fileptr); }</span></a>
+<span class="lineNum">      24 </span>            : 
+<a name="25"><span class="lineNum">      25 </span><span class="lineNoCov">          0 : std::streamsize FileBuffer::xsgetn(char *s, std::streamsize n) { return fread(s, 1, static_cast&lt;size_t&gt;(n), fileptr); }</span></a>
+<span class="lineNum">      26 </span>            : 
+<a name="27"><span class="lineNum">      27 </span><span class="lineNoCov">          0 : int FileBuffer::underflow() { return fgetc(fileptr); }</span></a>
+<span class="lineNum">      28 </span>            : 
+<a name="29"><span class="lineNum">      29 </span><span class="lineCov">         24 : DataBlockBuffer::DataBlockBuffer(DataBlock *d, size_t pos_i) : block(0, 1), pos(pos_i) { block.swap(d); }</span></a>
+<span class="lineNum">      30 </span>            : 
+<span class="lineNum">      31 </span><span class="lineCov">      24576 : size_t DataBlockBuffer::size() const {</span>
+<span class="lineNum">      32 </span><span class="lineCov">      24576 :     return block.getRawSize();</span>
+<a name="33"><span class="lineNum">      33 </span>            : }</a>
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span><span class="lineNoCov">          0 : int DataBlockBuffer::overflow(int c) {</span>
+<span class="lineNum">      36 </span><span class="lineNoCov">          0 :     block.push_back(static_cast&lt;uint64_t&gt;(c));</span>
+<span class="lineNum">      37 </span><span class="lineNoCov">          0 :     return c;</span>
+<a name="38"><span class="lineNum">      38 </span>            : }</a>
+<span class="lineNum">      39 </span>            : 
+<span class="lineNum">      40 </span><span class="lineCov">      41875 : std::streamsize DataBlockBuffer::xsputn(const char *s, std::streamsize n) {</span>
+<span class="lineNum">      41 </span><span class="lineCov">      41875 :     if (n % block.getWordSize()) {</span>
+<span class="lineNum">      42 </span><span class="lineNoCov">          0 :         GABAC_DIE(&quot;Invalid Data length&quot;);</span>
+<span class="lineNum">      43 </span>            :     }
+<span class="lineNum">      44 </span><span class="lineCov">      41875 :     size_t oldSize = block.size();</span>
+<span class="lineNum">      45 </span><span class="lineCov">      41875 :     block.resize(block.size() + n / block.getWordSize());</span>
+<span class="lineNum">      46 </span><span class="lineCov">      41875 :     memcpy(static_cast&lt;uint8_t *&gt;(block.getData()) + oldSize * block.getWordSize(), s, static_cast&lt;size_t&gt;(n));</span>
+<span class="lineNum">      47 </span><span class="lineCov">      41875 :     return n;</span>
+<a name="48"><span class="lineNum">      48 </span>            : }</a>
+<span class="lineNum">      49 </span>            : 
+<span class="lineNum">      50 </span><span class="lineNoCov">          0 : std::streamsize DataBlockBuffer::xsgetn(char *s, std::streamsize n) {</span>
+<span class="lineNum">      51 </span><span class="lineNoCov">          0 :     if (n % block.getWordSize()) {</span>
+<span class="lineNum">      52 </span><span class="lineNoCov">          0 :         GABAC_DIE(&quot;Invalid Data length&quot;);</span>
+<span class="lineNum">      53 </span>            :     }
+<span class="lineNum">      54 </span><span class="lineNoCov">          0 :     size_t bytesRead = std::min(block.getRawSize() - pos * block.getWordSize(), size_t(n));</span>
+<span class="lineNum">      55 </span><span class="lineNoCov">          0 :     memcpy(s, static_cast&lt;uint8_t *&gt;(block.getData()) + pos * block.getWordSize(), bytesRead);</span>
+<span class="lineNum">      56 </span><span class="lineNoCov">          0 :     pos += bytesRead / block.getWordSize();</span>
+<span class="lineNum">      57 </span><span class="lineNoCov">          0 :     return bytesRead;</span>
+<a name="58"><span class="lineNum">      58 </span>            : }</a>
+<span class="lineNum">      59 </span>            : 
+<span class="lineNum">      60 </span><span class="lineNoCov">          0 : int DataBlockBuffer::underflow() {</span>
+<span class="lineNum">      61 </span><span class="lineNoCov">          0 :     if (pos == block.size()) {</span>
+<span class="lineNum">      62 </span><span class="lineNoCov">          0 :         return EOF;</span>
+<span class="lineNum">      63 </span>            :     }
+<span class="lineNum">      64 </span><span class="lineNoCov">          0 :     return static_cast&lt;int&gt;(block.get(pos));</span>
+<a name="65"><span class="lineNum">      65 </span>            : }</a>
+<span class="lineNum">      66 </span>            : 
+<span class="lineNum">      67 </span><span class="lineNoCov">          0 : int DataBlockBuffer::uflow() {</span>
+<span class="lineNum">      68 </span><span class="lineNoCov">          0 :     if (pos == block.size()) {</span>
+<span class="lineNum">      69 </span><span class="lineNoCov">          0 :         return EOF;</span>
+<span class="lineNum">      70 </span>            :     }
+<span class="lineNum">      71 </span><span class="lineNoCov">          0 :     return static_cast&lt;int&gt;(block.get(pos++));</span>
+<a name="72"><span class="lineNum">      72 </span>            : }</a>
+<span class="lineNum">      73 </span>            : 
+<a name="74"><span class="lineNum">      74 </span><span class="lineCov">         24 : void DataBlockBuffer::flush_block(gabac::DataBlock *blk) { block.swap(blk); }</span></a>
+<span class="lineNum">      75 </span>            : 
+<a name="76"><span class="lineNum">      76 </span><span class="lineNoCov">          0 : IFileStream::IFileStream(FILE *f) : FileBuffer(f), std::istream(this) {}</span></a>
+<span class="lineNum">      77 </span>            : 
+<a name="78"><span class="lineNum">      78 </span><span class="lineNoCov">          0 : OFileStream::OFileStream(FILE *f) : FileBuffer(f), std::ostream(this) {}</span></a>
+<span class="lineNum">      79 </span>            : 
+<a name="80"><span class="lineNum">      80 </span><span class="lineNoCov">          0 : IBufferStream::IBufferStream(DataBlock *d, size_t pos_i) : DataBlockBuffer(d, pos_i), std::istream(this) {}</span></a>
+<span class="lineNum">      81 </span>            : 
+<a name="82"><span class="lineNum">      82 </span><span class="lineCov">         24 : OBufferStream::OBufferStream(DataBlock *d) : DataBlockBuffer(d, 0), std::ostream(this) {}</span></a>
+<span class="lineNum">      83 </span>            : 
+<span class="lineNum">      84 </span><span class="lineNoCov">          0 : NullStream::NullStream() : std::ostream(&amp;m_sb) {}</span>
+<span class="lineNum">      85 </span>            : 
+<span class="lineNum">      86 </span>            : }  // namespace gabac
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

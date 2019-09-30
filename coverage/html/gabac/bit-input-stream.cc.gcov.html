@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - gabac/bit-input-stream.cc</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">gabac</a> - bit-input-stream.cc<span style="font-size: 80%;"> (source / <a href="bit-input-stream.cc.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">37</td>
+            <td class="headerCovTableEntry">51</td>
+            <td class="headerCovTableEntryLo">72.5 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-09-30 12:43:08</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">6</td>
+            <td class="headerCovTableEntry">6</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /**</a>
+<span class="lineNum">       2 </span>            :  * @file
+<span class="lineNum">       3 </span>            :  * @copyright This file is part of GABAC. See LICENSE and/or
+<span class="lineNum">       4 </span>            :  * https://github.com/mitogen/gabac for more details.
+<span class="lineNum">       5 </span>            :  */
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : #include &quot;bit-input-stream.h&quot;
+<span class="lineNum">       8 </span>            : #include &lt;cassert&gt;
+<span class="lineNum">       9 </span>            : #include &lt;limits&gt;
+<span class="lineNum">      10 </span>            : #include &quot;data-block.h&quot;
+<span class="lineNum">      11 </span>            : 
+<a name="12"><span class="lineNum">      12 </span>            : namespace gabac {</a>
+<span class="lineNum">      13 </span>            : 
+<span class="lineNum">      14 </span><span class="lineCov">      41876 : inline static unsigned char readIn(gabac::BlockStepper *reader) {</span>
+<span class="lineNum">      15 </span><span class="lineCov">      41876 :     if (!reader-&gt;isValid()) {</span>
+<span class="lineNum">      16 </span><span class="lineNoCov">          0 :         GABAC_DIE(&quot;Index out of bounds&quot;);</span>
+<span class="lineNum">      17 </span>            :     }
+<span class="lineNum">      18 </span><span class="lineCov">      41876 :     auto byte = static_cast&lt;unsigned char&gt;(reader-&gt;get());</span>
+<span class="lineNum">      19 </span><span class="lineCov">      41876 :     reader-&gt;inc();</span>
+<span class="lineNum">      20 </span><span class="lineCov">      41876 :     return byte;</span>
+<a name="21"><span class="lineNum">      21 </span>            : }</a>
+<span class="lineNum">      22 </span>            : 
+<span class="lineNum">      23 </span><span class="lineCov">         25 : BitInputStream::BitInputStream(DataBlock *const bitstream) : m_bitstream(bitstream), m_heldBits(0), m_numHeldBits(0) {</span>
+<span class="lineNum">      24 </span><span class="lineCov">         25 :     m_reader = m_bitstream-&gt;getReader();</span>
+<span class="lineNum">      25 </span><span class="lineCov">         25 :     reset();</span>
+<span class="lineNum">      26 </span><span class="lineCov">         25 : }</span>
+<span class="lineNum">      27 </span>            : 
+<a name="28"><span class="lineNum">      28 </span>            : BitInputStream::~BitInputStream() = default;</a>
+<span class="lineNum">      29 </span>            : 
+<a name="30"><span class="lineNum">      30 </span><span class="lineCov">         24 : unsigned int BitInputStream::getNumBitsUntilByteAligned() const { return m_numHeldBits &amp; 0x7u; }</span></a>
+<span class="lineNum">      31 </span>            : 
+<span class="lineNum">      32 </span><span class="lineCov">      41876 : unsigned char BitInputStream::readByte() {</span>
+<span class="lineNum">      33 </span><span class="lineCov">      41876 :     unsigned int result = read(8);</span>
+<span class="lineNum">      34 </span><span class="lineCov">      41876 :     assert(result &lt;= std::numeric_limits&lt;unsigned char&gt;::max());</span>
+<span class="lineNum">      35 </span><span class="lineCov">      41876 :     return static_cast&lt;unsigned char&gt;(result);</span>
+<a name="36"><span class="lineNum">      36 </span>            : }</a>
+<span class="lineNum">      37 </span>            : 
+<span class="lineNum">      38 </span><span class="lineCov">         25 : void BitInputStream::reset() {</span>
+<span class="lineNum">      39 </span><span class="lineCov">         25 :     m_heldBits = 0;</span>
+<span class="lineNum">      40 </span><span class="lineCov">         25 :     m_numHeldBits = 0;</span>
+<span class="lineNum">      41 </span><span class="lineCov">         25 :     m_reader = m_bitstream-&gt;getReader();</span>
+<a name="42"><span class="lineNum">      42 </span><span class="lineCov">         25 : }</span></a>
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span><span class="lineCov">      41876 : unsigned int BitInputStream::read(unsigned int numBits) {</span>
+<span class="lineNum">      45 </span><span class="lineCov">      41876 :     assert(numBits &lt;= 32);</span>
+<span class="lineNum">      46 </span>            : 
+<span class="lineNum">      47 </span><span class="lineCov">      41876 :     unsigned int bits = 0;</span>
+<span class="lineNum">      48 </span><span class="lineCov">      41876 :     if (numBits &lt;= m_numHeldBits) {</span>
+<span class="lineNum">      49 </span>            :         // Get numBits most significant bits from heldBits as bits
+<span class="lineNum">      50 </span><span class="lineNoCov">          0 :         bits = m_heldBits &gt;&gt; (m_numHeldBits - numBits);</span>
+<span class="lineNum">      51 </span><span class="lineNoCov">          0 :         bits &amp;= ~(0xffu &lt;&lt; numBits);</span>
+<span class="lineNum">      52 </span><span class="lineNoCov">          0 :         m_numHeldBits -= numBits;</span>
+<span class="lineNum">      53 </span><span class="lineNoCov">          0 :         return bits;</span>
+<span class="lineNum">      54 </span>            :     }
+<span class="lineNum">      55 </span>            : 
+<span class="lineNum">      56 </span>            :     // More bits requested than currently held, flush all heldBits to bits
+<span class="lineNum">      57 </span><span class="lineCov">      41876 :     numBits -= m_numHeldBits;</span>
+<span class="lineNum">      58 </span><span class="lineCov">      41876 :     bits = m_heldBits &amp; ~(0xffu &lt;&lt; m_numHeldBits);</span>
+<span class="lineNum">      59 </span><span class="lineCov">      41876 :     bits &lt;&lt;= numBits;  // make room for the bits to come</span>
+<span class="lineNum">      60 </span>            : 
+<span class="lineNum">      61 </span>            :     // Read in more bytes to satisfy the request
+<span class="lineNum">      62 </span><span class="lineCov">      41876 :     unsigned int numBytesToLoad = ((numBits - 1u) &gt;&gt; 3u) + 1;</span>
+<span class="lineNum">      63 </span><span class="lineCov">      41876 :     unsigned int alignedWord = 0;</span>
+<span class="lineNum">      64 </span><span class="lineCov">      41876 :     if (numBytesToLoad == 1) {</span>
+<span class="lineNum">      65 </span><span class="lineCov">      41876 :         goto L1;</span>
+<span class="lineNum">      66 </span><span class="lineNoCov">          0 :     } else if (numBytesToLoad == 2) {</span>
+<span class="lineNum">      67 </span><span class="lineNoCov">          0 :         goto L2;</span>
+<span class="lineNum">      68 </span><span class="lineNoCov">          0 :     } else if (numBytesToLoad == 3) {</span>
+<span class="lineNum">      69 </span><span class="lineNoCov">          0 :         goto L3;</span>
+<span class="lineNum">      70 </span><span class="lineNoCov">          0 :     } else if (numBytesToLoad != 4) {</span>
+<span class="lineNum">      71 </span><span class="lineNoCov">          0 :         goto L0;</span>
+<span class="lineNum">      72 </span>            :     }
+<span class="lineNum">      73 </span>            : 
+<span class="lineNum">      74 </span><span class="lineNoCov">          0 :     alignedWord |= (readIn(&amp;m_reader) &lt;&lt; 24u);</span>
+<span class="lineNum">      75 </span>            : L3:
+<span class="lineNum">      76 </span><span class="lineNoCov">          0 :     alignedWord |= (readIn(&amp;m_reader) &lt;&lt; 16u);</span>
+<span class="lineNum">      77 </span>            : L2:
+<span class="lineNum">      78 </span><span class="lineNoCov">          0 :     alignedWord |= (readIn(&amp;m_reader) &lt;&lt; 8u);</span>
+<span class="lineNum">      79 </span>            : L1:
+<span class="lineNum">      80 </span><span class="lineCov">      41876 :     alignedWord |= (readIn(&amp;m_reader));</span>
+<span class="lineNum">      81 </span>            : L0:
+<span class="lineNum">      82 </span>            : 
+<span class="lineNum">      83 </span>            :     // Append requested bits and hold the remaining read bits
+<span class="lineNum">      84 </span><span class="lineCov">      41876 :     unsigned int numNextHeldBits = (32 - numBits) % 8;</span>
+<span class="lineNum">      85 </span><span class="lineCov">      41876 :     bits |= alignedWord &gt;&gt; numNextHeldBits;</span>
+<span class="lineNum">      86 </span><span class="lineCov">      41876 :     m_numHeldBits = numNextHeldBits;</span>
+<span class="lineNum">      87 </span><span class="lineCov">      41876 :     assert(alignedWord &lt;= std::numeric_limits&lt;unsigned char&gt;::max());</span>
+<span class="lineNum">      88 </span><span class="lineCov">      41876 :     m_heldBits = static_cast&lt;unsigned char&gt;(alignedWord);</span>
+<span class="lineNum">      89 </span>            : 
+<span class="lineNum">      90 </span><span class="lineCov">      41876 :     return bits;</span>
+<span class="lineNum">      91 </span>            : }
+<span class="lineNum">      92 </span>            : 
+<span class="lineNum">      93 </span>            : }  // namespace gabac
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

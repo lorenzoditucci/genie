@@ -1,0 +1,23 @@
+var searchData=
+[
+  ['offset_5fbinary_5f0',['OFFSET_BINARY_0',['../namespacegabac_1_1contexttables.html#a899980ad47bc5ff5ffe156232921f946',1,'gabac::contexttables']]],
+  ['offset_5fexponential_5fgolomb_5f0',['OFFSET_EXPONENTIAL_GOLOMB_0',['../namespacegabac_1_1contexttables.html#adb0111a0f632c128db1af4107e7d76e0',1,'gabac::contexttables']]],
+  ['offset_5ftruncated_5funary_5f0',['OFFSET_TRUNCATED_UNARY_0',['../namespacegabac_1_1contexttables.html#a84d22bddf1c4c881077fb623319817bd',1,'gabac::contexttables']]],
+  ['opt',['opt',['../structutil_1_1_sam_record.html#a2a39b9160e5c118d8288839495697523',1,'util::SamRecord']]],
+  ['optional',['optional',['../structutil_1_1_fastq_record.html#a56aaf1ffaa38f73001fc8d3b3477c313',1,'util::FastqRecord']]],
+  ['order',['order',['../structspring_1_1contig__reads.html#a4179cb68243c6d7b4e7071e4533e1129',1,'spring::contig_reads']]],
+  ['order_5farr',['order_arr',['../structspring_1_1se__data.html#ac807cd5a7326aff538beee4e58fa2cbd',1,'spring::se_data']]],
+  ['outfile',['outfile',['../structspring_1_1reorder__global.html#a3fcd6bd7578ee56a47d98519e366760b',1,'spring::reorder_global']]],
+  ['outfile_5fnoise',['outfile_noise',['../structspring_1_1encoder__global.html#a5987eb2e8dc6c7540bf3a686e599eaee',1,'spring::encoder_global']]],
+  ['outfile_5fnoisepos',['outfile_noisepos',['../structspring_1_1encoder__global.html#ab5661f299cf8273d0d99f73e622436c6',1,'spring::encoder_global']]],
+  ['outfile_5fpos',['outfile_pos',['../structspring_1_1encoder__global.html#a04129deb95d556d1abe5e63b3d4adf66',1,'spring::encoder_global']]],
+  ['outfile_5fseq',['outfile_seq',['../structspring_1_1encoder__global.html#af29abce0237483fdbe9b7e118653f0a9',1,'spring::encoder_global']]],
+  ['outfile_5funaligned',['outfile_unaligned',['../structspring_1_1encoder__global.html#a74a940ff15aa8e204c0b69b84cc4a7d2',1,'spring::encoder_global']]],
+  ['outfileflag',['outfileflag',['../structspring_1_1reorder__global.html#a82713ff201fee71ca3ed80efb5fd15f8',1,'spring::reorder_global']]],
+  ['outfileorder',['outfileorder',['../structspring_1_1reorder__global.html#a2d58431ba4c868efc905a1f6193a44b0',1,'spring::reorder_global']]],
+  ['outfilepos',['outfilepos',['../structspring_1_1reorder__global.html#af69e78981cb96a14836f600cfe2362cc',1,'spring::reorder_global']]],
+  ['outfilerc',['outfileRC',['../structspring_1_1reorder__global.html#afeff0a197d86e5e929198d9a27015891',1,'spring::reorder_global']]],
+  ['outfilereadlength',['outfilereadlength',['../structspring_1_1reorder__global.html#af0ffd6bea4f80cc33b41dbc2e6918456',1,'spring::reorder_global']]],
+  ['output',['output',['../structgabac__io__config.html#a3994f004b664b6bbfabdf3da8ebe9d72',1,'gabac_io_config']]],
+  ['outputstream',['outputStream',['../structgabac_1_1_i_o_configuration.html#a28855da86c8e55579d2d2d3f70dd6c2d',1,'gabac::IOConfiguration']]]
+];

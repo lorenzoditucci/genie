@@ -1,0 +1,430 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - gabac/lut-transform.cc</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">gabac</a> - lut-transform.cc<span style="font-size: 80%;"> (source / <a href="lut-transform.cc.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">168</td>
+            <td class="headerCovTableEntry">195</td>
+            <td class="headerCovTableEntryMed">86.2 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-09-30 12:43:08</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">15</td>
+            <td class="headerCovTableEntry">15</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /**</a>
+<span class="lineNum">       2 </span>            :  * @file
+<span class="lineNum">       3 </span>            :  * @copyright This file is part of GABAC. See LICENSE and/or
+<span class="lineNum">       4 </span>            :  * https://github.com/mitogen/gabac for more details.
+<span class="lineNum">       5 </span>            :  */
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : // LUT encoding is also using a different algorithms for wordsizes 1 and 2. For these word sizes, the input values are in a small range and the algorithm can use a fast array look up when building the table. For greater word sizes this cannot be assumed so a slower hash table has to used
+<span class="lineNum">       8 </span>            : 
+<span class="lineNum">       9 </span>            : #include &quot;lut-transform.h&quot;
+<span class="lineNum">      10 </span>            : 
+<span class="lineNum">      11 </span>            : #include &lt;algorithm&gt;
+<span class="lineNum">      12 </span>            : #include &lt;cassert&gt;
+<span class="lineNum">      13 </span>            : #include &lt;iostream&gt;
+<span class="lineNum">      14 </span>            : #include &lt;limits&gt;
+<span class="lineNum">      15 </span>            : #include &lt;unordered_map&gt;
+<span class="lineNum">      16 </span>            : #include &lt;utility&gt;
+<span class="lineNum">      17 </span>            : #include &lt;vector&gt;
+<span class="lineNum">      18 </span>            : 
+<span class="lineNum">      19 </span>            : #include &quot;block-stepper.h&quot;
+<span class="lineNum">      20 </span>            : #include &quot;data-block.h&quot;
+<span class="lineNum">      21 </span>            : 
+<span class="lineNum">      22 </span>            : namespace gabac {
+<span class="lineNum">      23 </span>            : 
+<span class="lineNum">      24 </span>            : const size_t MAX_LUT_SIZE = 1u &lt;&lt; 20u;  // 8MB table
+<span class="lineNum">      25 </span>            : 
+<a name="26"><span class="lineNum">      26 </span>            : // Inplace not reasonable, because symbols stream is reused 100% of time and lut</a>
+<span class="lineNum">      27 </span>            : // is much smaller
+<span class="lineNum">      28 </span><span class="lineCov">          3 : static void inferLut0(const DataBlock&amp; symbols, std::vector&lt;std::pair&lt;uint64_t, uint64_t&gt;&gt;* const lut,</span>
+<span class="lineNum">      29 </span>            :                       DataBlock* const fastlut, DataBlock* const inverseLut) {
+<span class="lineNum">      30 </span><span class="lineCov">          3 :     uint64_t maxValue = 0;</span>
+<span class="lineNum">      31 </span>            : 
+<span class="lineNum">      32 </span>            :     // At some point it is more efficient to use an hashmap instead of an array
+<span class="lineNum">      33 </span><span class="lineCov">          3 :     const uint64_t CTR_THRESHOLD = 1000000;</span>
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            :     // Wordsize 1 and 2 are small enough to use the array every time
+<span class="lineNum">      36 </span><span class="lineCov">          3 :     if (symbols.getWordSize() == 1) {</span>
+<span class="lineNum">      37 </span><span class="lineCov">          3 :         maxValue = std::numeric_limits&lt;uint8_t&gt;::max();</span>
+<span class="lineNum">      38 </span><span class="lineNoCov">          0 :     } else if (symbols.getWordSize() == 2) {</span>
+<span class="lineNum">      39 </span><span class="lineNoCov">          0 :         maxValue = std::numeric_limits&lt;uint16_t&gt;::max();</span>
+<span class="lineNum">      40 </span>            :     } else {
+<span class="lineNum">      41 </span>            :         // For greater wordsizes: find max and check if small enough for array
+<span class="lineNum">      42 </span>            :         // counter
+<span class="lineNum">      43 </span><span class="lineNoCov">          0 :         for (size_t i = 0; i &lt; symbols.size(); ++i) {</span>
+<span class="lineNum">      44 </span><span class="lineNoCov">          0 :             uint64_t val = symbols.get(i);</span>
+<span class="lineNum">      45 </span><span class="lineNoCov">          0 :             if (val &gt; maxValue) {</span>
+<span class="lineNum">      46 </span><span class="lineNoCov">          0 :                 maxValue = val;</span>
+<span class="lineNum">      47 </span>            :             }
+<span class="lineNum">      48 </span><span class="lineNoCov">          0 :             if (val &gt;= CTR_THRESHOLD) {</span>
+<span class="lineNum">      49 </span><span class="lineNoCov">          0 :                 break;</span>
+<span class="lineNum">      50 </span>            :             }
+<span class="lineNum">      51 </span>            :         }
+<span class="lineNum">      52 </span>            :         // Step 1: basic mapping for order 0. All symbols are now in a dense
+<span class="lineNum">      53 </span>            :         // interval starting [0...N]
+<span class="lineNum">      54 </span>            :     }
+<span class="lineNum">      55 </span>            : 
+<span class="lineNum">      56 </span>            :     // Clear
+<span class="lineNum">      57 </span><span class="lineCov">          3 :     lut-&gt;clear();</span>
+<span class="lineNum">      58 </span><span class="lineCov">          3 :     inverseLut-&gt;clear();</span>
+<span class="lineNum">      59 </span><span class="lineCov">          3 :     if (symbols.empty()) {</span>
+<span class="lineNum">      60 </span><span class="lineNoCov">          0 :         return;</span>
+<span class="lineNum">      61 </span>            :     }
+<span class="lineNum">      62 </span>            : 
+<span class="lineNum">      63 </span><span class="lineCov">          6 :     std::vector&lt;std::pair&lt;uint64_t, uint64_t&gt;&gt; freqVec;</span>
+<span class="lineNum">      64 </span>            : 
+<span class="lineNum">      65 </span><span class="lineCov">          3 :     if (maxValue &lt; CTR_THRESHOLD) {</span>
+<span class="lineNum">      66 </span><span class="lineCov">          6 :         std::vector&lt;uint64_t&gt; freq(maxValue + 1);</span>
+<span class="lineNum">      67 </span><span class="lineCov">          3 :         BlockStepper r = symbols.getReader();</span>
+<span class="lineNum">      68 </span><span class="lineCov">    6291459 :         while (r.isValid()) {</span>
+<span class="lineNum">      69 </span><span class="lineCov">    3145728 :             uint64_t symbol = r.get();</span>
+<span class="lineNum">      70 </span><span class="lineCov">    3145728 :             freq[symbol]++;</span>
+<span class="lineNum">      71 </span><span class="lineCov">    3145728 :             r.inc();</span>
+<span class="lineNum">      72 </span>            :         }
+<span class="lineNum">      73 </span><span class="lineCov">        771 :         for (size_t i = 0; i &lt; freq.size(); ++i) {</span>
+<span class="lineNum">      74 </span><span class="lineCov">        768 :             if (freq[i]) {</span>
+<span class="lineNum">      75 </span><span class="lineCov">        195 :                 freqVec.emplace_back(uint64_t(i), freq[i]);</span>
+<span class="lineNum">      76 </span>            :             }
+<span class="lineNum">      77 </span>            :         }
+<span class="lineNum">      78 </span>            :     } else {
+<span class="lineNum">      79 </span><span class="lineNoCov">          0 :         std::unordered_map&lt;uint64_t, uint64_t&gt; freq;</span>
+<span class="lineNum">      80 </span><span class="lineNoCov">          0 :         BlockStepper r = symbols.getReader();</span>
+<span class="lineNum">      81 </span><span class="lineNoCov">          0 :         while (r.isValid()) {</span>
+<span class="lineNum">      82 </span><span class="lineNoCov">          0 :             uint64_t symbol = r.get();</span>
+<span class="lineNum">      83 </span><span class="lineNoCov">          0 :             freq[symbol]++;</span>
+<span class="lineNum">      84 </span><span class="lineNoCov">          0 :             if (freq.size() &gt;= MAX_LUT_SIZE) {</span>
+<span class="lineNum">      85 </span><span class="lineNoCov">          0 :                 GABAC_DIE(&quot;LUT too big&quot;);</span>
+<span class="lineNum">      86 </span>            :             }
+<span class="lineNum">      87 </span><span class="lineNoCov">          0 :             r.inc();</span>
+<span class="lineNum">      88 </span>            :         }
+<span class="lineNum">      89 </span><span class="lineNoCov">          0 :         std::copy(freq.begin(), freq.end(), std::back_inserter(freqVec));</span>
+<span class="lineNum">      90 </span>            :     }
+<span class="lineNum">      91 </span>            : 
+<a name="92"><span class="lineNum">      92 </span>            :     // Sort symbol frequencies in descending order</a>
+<span class="lineNum">      93 </span><span class="lineCov">          6 :     std::sort(freqVec.begin(), freqVec.end(),</span>
+<span class="lineNum">      94 </span><span class="lineCov">       1104 :               [](const std::pair&lt;uint64_t, uint64_t&gt;&amp; a, const std::pair&lt;uint64_t, uint64_t&gt;&amp; b) {</span>
+<span class="lineNum">      95 </span><span class="lineCov">       1104 :                   if (a.second &gt; b.second) {</span>
+<span class="lineNum">      96 </span><span class="lineCov">        747 :                       return true;</span>
+<span class="lineNum">      97 </span>            :                   }
+<span class="lineNum">      98 </span><span class="lineCov">        357 :                   if (a.second &lt; b.second) {</span>
+<span class="lineNum">      99 </span><span class="lineCov">        351 :                       return false;</span>
+<span class="lineNum">     100 </span>            :                   }
+<span class="lineNum">     101 </span><span class="lineCov">          6 :                   return a.first &lt; b.first;</span>
+<span class="lineNum">     102 </span><span class="lineCov">          3 :               });</span>
+<span class="lineNum">     103 </span>            : 
+<span class="lineNum">     104 </span><span class="lineCov">        198 :     for (const auto&amp; symbol : freqVec) {</span>
+<span class="lineNum">     105 </span><span class="lineCov">        195 :         lut-&gt;emplace_back(symbol.first, inverseLut-&gt;size());</span>
+<span class="lineNum">     106 </span><span class="lineCov">        195 :         inverseLut-&gt;emplace_back(symbol.first);</span>
+<span class="lineNum">     107 </span>            :     }
+<span class="lineNum">     108 </span>            : 
+<a name="109"><span class="lineNum">     109 </span>            :     // Sort symbols</a>
+<span class="lineNum">     110 </span><span class="lineCov">          6 :     std::sort(lut-&gt;begin(), lut-&gt;end(),</span>
+<span class="lineNum">     111 </span><span class="lineCov">       1101 :               [](const std::pair&lt;uint64_t, uint64_t&gt;&amp; a, const std::pair&lt;uint64_t, uint64_t&gt;&amp; b) {</span>
+<span class="lineNum">     112 </span><span class="lineCov">       1101 :                   if (a.first &lt; b.first) {</span>
+<span class="lineNum">     113 </span><span class="lineCov">        756 :                       return true;</span>
+<span class="lineNum">     114 </span>            :                   }
+<span class="lineNum">     115 </span><span class="lineCov">        345 :                   if (a.first &gt; b.first) {</span>
+<span class="lineNum">     116 </span><span class="lineCov">        345 :                       return false;</span>
+<span class="lineNum">     117 </span>            :                   }
+<span class="lineNum">     118 </span><span class="lineNoCov">          0 :                   return a.second &gt; b.second;</span>
+<span class="lineNum">     119 </span><span class="lineCov">          3 :               });</span>
+<span class="lineNum">     120 </span>            : 
+<span class="lineNum">     121 </span><span class="lineCov">          3 :     if (maxValue &lt; CTR_THRESHOLD) {</span>
+<span class="lineNum">     122 </span><span class="lineCov">          3 :         fastlut-&gt;resize(maxValue + 1);</span>
+<span class="lineNum">     123 </span><span class="lineCov">        198 :         for (auto p : *lut) {</span>
+<span class="lineNum">     124 </span><span class="lineCov">        195 :             (*fastlut).set(p.first, p.second);</span>
+<span class="lineNum">     125 </span>            :         }
+<span class="lineNum">     126 </span>            :     }
+<a name="127"><span class="lineNum">     127 </span>            : }</a>
+<span class="lineNum">     128 </span>            : 
+<a name="129"><span class="lineNum">     129 </span><span class="lineCov">    2097152 : static uint64_t lut0SingleTransform(const std::vector&lt;std::pair&lt;uint64_t, uint64_t&gt;&gt;&amp; lut0, uint64_t symbol) {</span></a>
+<span class="lineNum">     130 </span><span class="lineCov">    4194304 :     auto it = std::lower_bound(lut0.begin(), lut0.end(), std::make_pair(symbol, uint(0)),</span>
+<span class="lineNum">     131 </span><span class="lineCov">   12712958 :                                [](const std::pair&lt;uint64_t, uint64_t&gt;&amp; a, const std::pair&lt;uint64_t, uint64_t&gt;&amp; b) {</span>
+<span class="lineNum">     132 </span><span class="lineCov">   12712958 :                                    return a.first &lt; b.first;</span>
+<span class="lineNum">     133 </span><span class="lineCov">   16907262 :                                });</span>
+<span class="lineNum">     134 </span><span class="lineCov">    2097152 :     assert(it != lut0.end());</span>
+<span class="lineNum">     135 </span><span class="lineCov">    2097152 :     assert(it-&gt;first == symbol);</span>
+<span class="lineNum">     136 </span><span class="lineCov">    2097152 :     return it-&gt;second;</span>
+<a name="137"><span class="lineNum">     137 </span>            : }</a>
+<span class="lineNum">     138 </span>            : 
+<a name="139"><span class="lineNum">     139 </span><span class="lineCov">    3145728 : static uint64_t lut0SingleTransformFast(const DataBlock&amp; lut0, uint64_t symbol) { return lut0.get(symbol); }</span></a>
+<span class="lineNum">     140 </span>            : 
+<span class="lineNum">     141 </span><span class="lineCov">          3 : static void transformLutTransform_core(const size_t ORDER, const std::vector&lt;std::pair&lt;uint64_t, uint64_t&gt;&gt;&amp; lut0,</span>
+<span class="lineNum">     142 </span>            :                                        const DataBlock&amp; fastlut, const DataBlock&amp; lut,
+<span class="lineNum">     143 </span>            :                                        DataBlock* const transformedSymbols) {
+<span class="lineNum">     144 </span><span class="lineCov">          3 :     assert(transformedSymbols != nullptr);</span>
+<span class="lineNum">     145 </span>            : 
+<span class="lineNum">     146 </span><span class="lineCov">          3 :     if (transformedSymbols-&gt;empty()) {</span>
+<span class="lineNum">     147 </span><span class="lineNoCov">          0 :         return;</span>
+<span class="lineNum">     148 </span>            :     }
+<span class="lineNum">     149 </span>            : 
+<span class="lineNum">     150 </span><span class="lineCov">          6 :     std::vector&lt;uint64_t&gt; lastSymbols(ORDER + 1, 0);</span>
+<span class="lineNum">     151 </span>            : 
+<span class="lineNum">     152 </span><span class="lineCov">          3 :     BlockStepper r = transformedSymbols-&gt;getReader();</span>
+<span class="lineNum">     153 </span><span class="lineCov">    6291459 :     while (r.isValid()) {</span>
+<span class="lineNum">     154 </span><span class="lineCov">    3145728 :         uint64_t symbol = r.get();</span>
+<span class="lineNum">     155 </span>            :         // Update history
+<span class="lineNum">     156 </span><span class="lineCov">    6291456 :         for (size_t j = ORDER; j &gt; 0; --j) {</span>
+<span class="lineNum">     157 </span><span class="lineCov">    3145728 :             lastSymbols[j] = lastSymbols[j - 1];</span>
+<span class="lineNum">     158 </span>            :         }
+<span class="lineNum">     159 </span><span class="lineCov">    3145728 :         if (!fastlut.empty()) {</span>
+<span class="lineNum">     160 </span><span class="lineCov">    3145728 :             lastSymbols[0] = lut0SingleTransformFast(fastlut, symbol);</span>
+<span class="lineNum">     161 </span>            :         } else {
+<span class="lineNum">     162 </span><span class="lineNoCov">          0 :             lastSymbols[0] = lut0SingleTransform(lut0, symbol);</span>
+<span class="lineNum">     163 </span>            :         }
+<span class="lineNum">     164 </span>            : 
+<span class="lineNum">     165 </span>            :         // Transform
+<span class="lineNum">     166 </span><span class="lineCov">    3145728 :         uint64_t transformed = lastSymbols[0];</span>
+<span class="lineNum">     167 </span><span class="lineCov">    3145728 :         if (ORDER &gt; 0) {</span>
+<span class="lineNum">     168 </span>            :             // Compute position
+<span class="lineNum">     169 </span><span class="lineCov">    2097152 :             size_t index = 0;</span>
+<span class="lineNum">     170 </span><span class="lineCov">    5242880 :             for (size_t j = ORDER; j &gt; 0; --j) {</span>
+<span class="lineNum">     171 </span><span class="lineCov">    3145728 :                 index *= lut0.size();</span>
+<span class="lineNum">     172 </span><span class="lineCov">    3145728 :                 index += lastSymbols[j];</span>
+<span class="lineNum">     173 </span>            :             }
+<span class="lineNum">     174 </span><span class="lineCov">    2097152 :             index *= lut0.size();</span>
+<span class="lineNum">     175 </span><span class="lineCov">    2097152 :             index += lastSymbols[0];</span>
+<span class="lineNum">     176 </span><span class="lineCov">    2097152 :             transformed = lut.get(index);</span>
+<span class="lineNum">     177 </span>            :         }
+<span class="lineNum">     178 </span><span class="lineCov">    3145728 :         r.set(transformed);</span>
+<span class="lineNum">     179 </span><span class="lineCov">    3145728 :         r.inc();</span>
+<span class="lineNum">     180 </span>            :     }
+<a name="181"><span class="lineNum">     181 </span>            : }</a>
+<span class="lineNum">     182 </span>            : 
+<span class="lineNum">     183 </span><span class="lineCov">          3 : static void inverseTransformLutTransform_core(const size_t ORDER, DataBlock* const symbols,</span>
+<span class="lineNum">     184 </span>            :                                               DataBlock* const inverseLut0, DataBlock* const inverseLut) {
+<span class="lineNum">     185 </span><span class="lineCov">          3 :     assert(symbols != nullptr);</span>
+<span class="lineNum">     186 </span>            : 
+<span class="lineNum">     187 </span><span class="lineCov">          6 :     std::vector&lt;uint64_t&gt; lastSymbols(ORDER + 1, 0);</span>
+<span class="lineNum">     188 </span>            : 
+<span class="lineNum">     189 </span><span class="lineCov">          3 :     BlockStepper r = symbols-&gt;getReader();</span>
+<span class="lineNum">     190 </span>            : 
+<span class="lineNum">     191 </span>            :     // Do the LUT transform
+<span class="lineNum">     192 </span><span class="lineCov">    6291459 :     while (r.isValid()) {</span>
+<span class="lineNum">     193 </span><span class="lineCov">    3145728 :         uint64_t symbol = r.get();</span>
+<span class="lineNum">     194 </span>            :         // Update history
+<span class="lineNum">     195 </span><span class="lineCov">    6291456 :         for (size_t j = ORDER; j &gt; 0; --j) {</span>
+<span class="lineNum">     196 </span><span class="lineCov">    3145728 :             lastSymbols[j] = lastSymbols[j - 1];</span>
+<span class="lineNum">     197 </span>            :         }
+<span class="lineNum">     198 </span><span class="lineCov">    3145728 :         lastSymbols[0] = static_cast&lt;uint64_t&gt;(symbol);</span>
+<span class="lineNum">     199 </span>            : 
+<span class="lineNum">     200 </span><span class="lineCov">    3145728 :         if (ORDER == 0) {</span>
+<span class="lineNum">     201 </span><span class="lineCov">    1048576 :             r.set(inverseLut0-&gt;get(lastSymbols[0]));</span>
+<span class="lineNum">     202 </span><span class="lineCov">    1048576 :             r.inc();</span>
+<span class="lineNum">     203 </span><span class="lineCov">    1048576 :             continue;</span>
+<span class="lineNum">     204 </span>            :         }
+<span class="lineNum">     205 </span>            : 
+<span class="lineNum">     206 </span>            :         // Compute position
+<span class="lineNum">     207 </span><span class="lineCov">    2097152 :         size_t index = 0;</span>
+<span class="lineNum">     208 </span><span class="lineCov">    5242880 :         for (size_t j = ORDER; j &gt; 0; --j) {</span>
+<span class="lineNum">     209 </span><span class="lineCov">    3145728 :             index *= inverseLut0-&gt;size();</span>
+<span class="lineNum">     210 </span><span class="lineCov">    3145728 :             index += lastSymbols[j];</span>
+<span class="lineNum">     211 </span>            :         }
+<span class="lineNum">     212 </span><span class="lineCov">    2097152 :         index *= inverseLut0-&gt;size();</span>
+<span class="lineNum">     213 </span><span class="lineCov">    2097152 :         index += lastSymbols[0];</span>
+<span class="lineNum">     214 </span>            : 
+<span class="lineNum">     215 </span>            :         // Transform
+<span class="lineNum">     216 </span><span class="lineCov">    2097152 :         uint64_t unTransformed = inverseLut-&gt;get(index);</span>
+<span class="lineNum">     217 </span><span class="lineCov">    2097152 :         lastSymbols[0] = unTransformed;</span>
+<span class="lineNum">     218 </span><span class="lineCov">    2097152 :         r.set(inverseLut0-&gt;get(unTransformed));</span>
+<span class="lineNum">     219 </span><span class="lineCov">    2097152 :         r.inc();</span>
+<span class="lineNum">     220 </span>            :     }
+<a name="221"><span class="lineNum">     221 </span><span class="lineCov">          3 : }</span></a>
+<span class="lineNum">     222 </span>            : 
+<span class="lineNum">     223 </span><span class="lineCov">          3 : void inferLut(const size_t ORDER, const DataBlock&amp; symbols, std::vector&lt;std::pair&lt;uint64_t, uint64_t&gt;&gt;* const lut0,</span>
+<span class="lineNum">     224 </span>            :               DataBlock* const fastlut, DataBlock* const inverseLut0, DataBlock* const lut1,
+<span class="lineNum">     225 </span>            :               DataBlock* const inverseLut1) {
+<span class="lineNum">     226 </span>            :     // Clear
+<span class="lineNum">     227 </span><span class="lineCov">          3 :     lut1-&gt;clear();</span>
+<span class="lineNum">     228 </span><span class="lineCov">          3 :     inverseLut1-&gt;clear();</span>
+<span class="lineNum">     229 </span>            : 
+<span class="lineNum">     230 </span><span class="lineCov">          3 :     inferLut0(symbols, lut0, fastlut, inverseLut0);</span>
+<span class="lineNum">     231 </span>            : 
+<span class="lineNum">     232 </span><span class="lineCov">          3 :     if (symbols.empty()) {</span>
+<span class="lineNum">     233 </span><span class="lineCov">          1 :         return;</span>
+<span class="lineNum">     234 </span>            :     }
+<span class="lineNum">     235 </span>            : 
+<span class="lineNum">     236 </span><span class="lineCov">          3 :     if (ORDER == 0) {</span>
+<span class="lineNum">     237 </span><span class="lineCov">          1 :         return;</span>
+<span class="lineNum">     238 </span>            :     }
+<span class="lineNum">     239 </span>            : 
+<span class="lineNum">     240 </span><span class="lineCov">          2 :     size_t size = 1;</span>
+<span class="lineNum">     241 </span><span class="lineCov">          7 :     for (size_t i = 0; i &lt; ORDER + 1; ++i) {</span>
+<span class="lineNum">     242 </span><span class="lineCov">          5 :         size *= inverseLut0-&gt;size();</span>
+<span class="lineNum">     243 </span>            :     }
+<span class="lineNum">     244 </span>            : 
+<span class="lineNum">     245 </span><span class="lineCov">          2 :     if (size &gt;= MAX_LUT_SIZE) {</span>
+<span class="lineNum">     246 </span><span class="lineNoCov">          0 :         lut0-&gt;clear();</span>
+<span class="lineNum">     247 </span><span class="lineNoCov">          0 :         return;</span>
+<span class="lineNum">     248 </span>            :     }
+<span class="lineNum">     249 </span>            : 
+<span class="lineNum">     250 </span><span class="lineCov">          4 :     std::vector&lt;std::pair&lt;uint64_t, uint64_t&gt;&gt; ctr(size, {std::numeric_limits&lt;uint64_t&gt;::max(), 0});</span>
+<span class="lineNum">     251 </span><span class="lineCov">          4 :     std::vector&lt;uint64_t&gt; lastSymbols(ORDER + 1, 0);</span>
+<span class="lineNum">     252 </span>            : 
+<span class="lineNum">     253 </span><span class="lineCov">          2 :     BlockStepper r = symbols.getReader();</span>
+<span class="lineNum">     254 </span><span class="lineCov">    4194306 :     while (r.isValid()) {</span>
+<span class="lineNum">     255 </span><span class="lineCov">    2097152 :         uint64_t symbol = r.get();</span>
+<span class="lineNum">     256 </span>            :         // Update history
+<span class="lineNum">     257 </span><span class="lineCov">    5242880 :         for (size_t j = ORDER; j &gt; 0; --j) {</span>
+<span class="lineNum">     258 </span><span class="lineCov">    3145728 :             lastSymbols[j] = lastSymbols[j - 1];</span>
+<span class="lineNum">     259 </span>            :         }
+<span class="lineNum">     260 </span>            : 
+<span class="lineNum">     261 </span>            :         // Translate symbol into order1 symbol
+<span class="lineNum">     262 </span><span class="lineCov">    2097152 :         uint64_t narrowedSymbol = symbol;</span>
+<span class="lineNum">     263 </span><span class="lineCov">    2097152 :         lastSymbols[0] = lut0SingleTransform(*lut0, narrowedSymbol);</span>
+<span class="lineNum">     264 </span>            : 
+<span class="lineNum">     265 </span>            :         // Compute position
+<span class="lineNum">     266 </span><span class="lineCov">    2097152 :         size_t index = 0;</span>
+<span class="lineNum">     267 </span><span class="lineCov">    5242880 :         for (size_t j = ORDER; j &gt; 0; --j) {</span>
+<span class="lineNum">     268 </span><span class="lineCov">    3145728 :             index *= inverseLut0-&gt;size();</span>
+<span class="lineNum">     269 </span><span class="lineCov">    3145728 :             index += lastSymbols[j];</span>
+<span class="lineNum">     270 </span>            :         }
+<span class="lineNum">     271 </span><span class="lineCov">    2097152 :         index *= inverseLut0-&gt;size();</span>
+<span class="lineNum">     272 </span><span class="lineCov">    2097152 :         index += lastSymbols[0];</span>
+<span class="lineNum">     273 </span>            : 
+<span class="lineNum">     274 </span>            :         // Count
+<span class="lineNum">     275 </span><span class="lineCov">    2097152 :         ctr[index].second++;</span>
+<span class="lineNum">     276 </span><span class="lineCov">    2097152 :         r.inc();</span>
+<span class="lineNum">     277 </span>            :     }
+<span class="lineNum">     278 </span>            : 
+<span class="lineNum">     279 </span>            :     // Step through all single LUTs
+<span class="lineNum">     280 </span><span class="lineCov">       4292 :     for (size_t i = 0; i &lt; ctr.size(); i += inverseLut0-&gt;size()) {</span>
+<span class="lineNum">     281 </span><span class="lineCov">       4290 :         uint64_t counter = 0;</span>
+<span class="lineNum">     282 </span><span class="lineCov">     283140 :         for (auto it = ctr.begin() + i; it != ctr.begin() + i + inverseLut0-&gt;size(); ++it) {</span>
+<span class="lineNum">     283 </span><span class="lineCov">     278850 :             it-&gt;first = counter;</span>
+<span class="lineNum">     284 </span><span class="lineCov">     278850 :             counter++;</span>
+<span class="lineNum">     285 </span>            :         }
+<span class="lineNum">     286 </span>            : 
+<a name="287"><span class="lineNum">     287 </span>            :         // Sort single LUT for frequency</a>
+<span class="lineNum">     288 </span><span class="lineCov">       8580 :         std::sort(ctr.begin() + i, ctr.begin() + i + inverseLut0-&gt;size(),</span>
+<span class="lineNum">     289 </span><span class="lineCov">    2004744 :                   [](const std::pair&lt;uint64_t, uint64_t&gt;&amp; a, const std::pair&lt;uint64_t, uint64_t&gt;&amp; b) {</span>
+<span class="lineNum">     290 </span><span class="lineCov">    2004744 :                       if (a.second &gt; b.second) {</span>
+<span class="lineNum">     291 </span><span class="lineCov">     709160 :                           return true;</span>
+<span class="lineNum">     292 </span>            :                       }
+<span class="lineNum">     293 </span><span class="lineCov">    1295584 :                       if (a.second &lt; b.second) {</span>
+<span class="lineNum">     294 </span><span class="lineCov">     397144 :                           return false;</span>
+<span class="lineNum">     295 </span>            :                       }
+<span class="lineNum">     296 </span><span class="lineCov">     898440 :                       return a.first &lt; b.first;</span>
+<span class="lineNum">     297 </span><span class="lineCov">       4290 :                   });</span>
+<span class="lineNum">     298 </span>            : 
+<span class="lineNum">     299 </span>            :         // Fill inverseLUT and write rank into second field
+<span class="lineNum">     300 </span><span class="lineCov">       4290 :         counter = 0;</span>
+<span class="lineNum">     301 </span><span class="lineCov">       4290 :         bool placed = false;</span>
+<span class="lineNum">     302 </span><span class="lineCov">     283140 :         for (auto it = ctr.begin() + i; it != ctr.begin() + i + inverseLut0-&gt;size(); ++it) {</span>
+<span class="lineNum">     303 </span><span class="lineCov">     278850 :             if (it-&gt;second == 0 &amp;&amp; !placed) {</span>
+<span class="lineNum">     304 </span><span class="lineCov">       3225 :                 placed = true;</span>
+<span class="lineNum">     305 </span>            :             }
+<span class="lineNum">     306 </span><span class="lineCov">     278850 :             if (!placed) {</span>
+<span class="lineNum">     307 </span><span class="lineCov">     272881 :                 inverseLut1-&gt;emplace_back(it-&gt;first);</span>
+<span class="lineNum">     308 </span>            :             } else {
+<span class="lineNum">     309 </span><span class="lineCov">       5969 :                 inverseLut1-&gt;emplace_back(0);</span>
+<span class="lineNum">     310 </span>            :             }
+<span class="lineNum">     311 </span><span class="lineCov">     278850 :             it-&gt;second = counter;</span>
+<span class="lineNum">     312 </span><span class="lineCov">     278850 :             counter++;</span>
+<span class="lineNum">     313 </span>            :         }
+<span class="lineNum">     314 </span>            : 
+<a name="315"><span class="lineNum">     315 </span>            :         // Sort single LUT for symbol value</a>
+<span class="lineNum">     316 </span><span class="lineCov">       8580 :         std::sort(ctr.begin() + i, ctr.begin() + i + inverseLut0-&gt;size(),</span>
+<span class="lineNum">     317 </span><span class="lineCov">    2017781 :                   [](const std::pair&lt;uint64_t, uint64_t&gt;&amp; a, const std::pair&lt;uint64_t, uint64_t&gt;&amp; b) {</span>
+<span class="lineNum">     318 </span><span class="lineCov">    2017781 :                       if (a.first &lt; b.first) {</span>
+<span class="lineNum">     319 </span><span class="lineCov">    1298320 :                           return true;</span>
+<span class="lineNum">     320 </span>            :                       }
+<span class="lineNum">     321 </span><span class="lineCov">     719461 :                       if (a.first &gt; b.first) {</span>
+<span class="lineNum">     322 </span><span class="lineCov">     719461 :                           return false;</span>
+<span class="lineNum">     323 </span>            :                       }
+<span class="lineNum">     324 </span><span class="lineNoCov">          0 :                       return a.second &gt; b.second;</span>
+<span class="lineNum">     325 </span><span class="lineCov">       4290 :                   });</span>
+<span class="lineNum">     326 </span>            : 
+<span class="lineNum">     327 </span>            :         // Use previously set second field to fill LUT
+<span class="lineNum">     328 </span><span class="lineCov">     283140 :         for (auto it = ctr.begin() + i; it != ctr.begin() + i + inverseLut0-&gt;size(); ++it) {</span>
+<span class="lineNum">     329 </span><span class="lineCov">     278850 :             lut1-&gt;emplace_back(it-&gt;second);</span>
+<span class="lineNum">     330 </span>            :         }
+<span class="lineNum">     331 </span>            :     }
+<a name="332"><span class="lineNum">     332 </span>            : }</a>
+<span class="lineNum">     333 </span>            : 
+<span class="lineNum">     334 </span><span class="lineCov">          3 : void transformLutTransform(unsigned order, DataBlock* const transformedSymbols, DataBlock* const inverseLUT,</span>
+<span class="lineNum">     335 </span>            :                            DataBlock* const inverseLUT1) {
+<span class="lineNum">     336 </span><span class="lineCov">          6 :     std::vector&lt;std::pair&lt;uint64_t, uint64_t&gt;&gt; lut;</span>
+<span class="lineNum">     337 </span>            :     DataBlock fastlut(0,
+<span class="lineNum">     338 </span><span class="lineCov">          6 :                       transformedSymbols-&gt;getWordSize());  // For small, dense symbol spaces</span>
+<span class="lineNum">     339 </span><span class="lineCov">          6 :     DataBlock lut1(0, transformedSymbols-&gt;getWordSize());</span>
+<span class="lineNum">     340 </span><span class="lineCov">          3 :     inferLut(order, *transformedSymbols, &amp;lut, &amp;fastlut, inverseLUT, &amp;lut1, inverseLUT1);</span>
+<span class="lineNum">     341 </span><span class="lineCov">          3 :     if (lut.empty()) {</span>
+<span class="lineNum">     342 </span><span class="lineNoCov">          0 :         inverseLUT-&gt;clear();</span>
+<span class="lineNum">     343 </span><span class="lineNoCov">          0 :         inverseLUT1-&gt;clear();</span>
+<span class="lineNum">     344 </span><span class="lineNoCov">          0 :         return;</span>
+<span class="lineNum">     345 </span>            :     }
+<span class="lineNum">     346 </span><span class="lineCov">          3 :     transformLutTransform_core(order, lut, fastlut, lut1, transformedSymbols);</span>
+<a name="347"><span class="lineNum">     347 </span>            : }</a>
+<span class="lineNum">     348 </span>            : 
+<span class="lineNum">     349 </span><span class="lineCov">          3 : void inverseTransformLutTransform(unsigned order, DataBlock* const symbols, DataBlock* const inverseLUT,</span>
+<span class="lineNum">     350 </span>            :                                   DataBlock* const inverseLUT1) {
+<span class="lineNum">     351 </span><span class="lineCov">          3 :     inverseTransformLutTransform_core(order, symbols, inverseLUT, inverseLUT1);</span>
+<a name="352"><span class="lineNum">     352 </span><span class="lineCov">          3 : }</span></a>
+<span class="lineNum">     353 </span>            : 
+<span class="lineNum">     354 </span><span class="lineCov">          3 : }  // namespace gabac</span>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

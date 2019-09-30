@@ -1,0 +1,298 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - gabac/writer.cc</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">gabac</a> - writer.cc<span style="font-size: 80%;"> (source / <a href="writer.cc.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">118</td>
+            <td class="headerCovTableEntry">128</td>
+            <td class="headerCovTableEntryHi">92.2 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-09-30 12:43:08</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">19</td>
+            <td class="headerCovTableEntry">19</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /**</a>
+<span class="lineNum">       2 </span>            :  * @file
+<span class="lineNum">       3 </span>            :  * @copyright This file is part of GABAC. See LICENSE and/or
+<span class="lineNum">       4 </span>            :  * https://github.com/mitogen/gabac for more details.
+<span class="lineNum">       5 </span>            :  */
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : #include &quot;writer.h&quot;
+<span class="lineNum">       8 </span>            : 
+<span class="lineNum">       9 </span>            : #include &lt;cassert&gt;
+<span class="lineNum">      10 </span>            : #include &lt;limits&gt;
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : #include &quot;constants.h&quot;
+<span class="lineNum">      13 </span>            : #include &quot;context-selector.h&quot;
+<span class="lineNum">      14 </span>            : 
+<span class="lineNum">      15 </span>            : //
+<span class="lineNum">      16 </span>            : // #include binary-arithmetic-decoder.cc from here instead of compiling it
+<span class="lineNum">      17 </span>            : // separately, so that we may call inlined member functions of class
+<span class="lineNum">      18 </span>            : // BinaryArithmeticDecoder in this file.
+<span class="lineNum">      19 </span>            : //
+<span class="lineNum">      20 </span>            : #include &quot;binary-arithmetic-encoder.cc&quot;
+<span class="lineNum">      21 </span>            : #include &quot;gabac.h&quot;
+<span class="lineNum">      22 </span>            : 
+<a name="23"><span class="lineNum">      23 </span>            : namespace gabac {</a>
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span><span class="lineCov">       8192 : static unsigned int bitLength(uint64_t value) {</span>
+<span class="lineNum">      26 </span><span class="lineCov">       8192 :     unsigned int numBits = 0;</span>
+<span class="lineNum">      27 </span>            : 
+<span class="lineNum">      28 </span><span class="lineCov">       8192 :     if (value &gt; 0x7FFF) {</span>
+<span class="lineNum">      29 </span><span class="lineNoCov">          0 :         value &gt;&gt;= 16;</span>
+<span class="lineNum">      30 </span><span class="lineNoCov">          0 :         numBits += 16;</span>
+<span class="lineNum">      31 </span>            :     }
+<span class="lineNum">      32 </span>            : 
+<span class="lineNum">      33 </span><span class="lineCov">       8192 :     if (value &gt; 0x7F) {</span>
+<span class="lineNum">      34 </span><span class="lineCov">       8162 :         value &gt;&gt;= 8;</span>
+<span class="lineNum">      35 </span><span class="lineCov">       8162 :         numBits += 8;</span>
+<span class="lineNum">      36 </span>            :     }
+<span class="lineNum">      37 </span>            : 
+<span class="lineNum">      38 </span><span class="lineCov">       8192 :     if (value &gt; 0x7) {</span>
+<span class="lineNum">      39 </span><span class="lineCov">       7712 :         value &gt;&gt;= 4;</span>
+<span class="lineNum">      40 </span><span class="lineCov">       7712 :         numBits += 4;</span>
+<span class="lineNum">      41 </span>            :     }
+<span class="lineNum">      42 </span>            : 
+<span class="lineNum">      43 </span><span class="lineCov">       8192 :     if (value &gt; 0x1) {</span>
+<span class="lineNum">      44 </span><span class="lineCov">       6496 :         value &gt;&gt;= 2;</span>
+<span class="lineNum">      45 </span><span class="lineCov">       6496 :         numBits += 2;</span>
+<span class="lineNum">      46 </span>            :     }
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span><span class="lineCov">       8192 :     if (value &gt; 0x0) {</span>
+<span class="lineNum">      49 </span><span class="lineCov">       5449 :         numBits += 1;</span>
+<span class="lineNum">      50 </span>            :     }
+<span class="lineNum">      51 </span>            : 
+<span class="lineNum">      52 </span><span class="lineCov">       8192 :     return numBits;</span>
+<a name="53"><span class="lineNum">      53 </span>            : }</a>
+<span class="lineNum">      54 </span>            : 
+<span class="lineNum">      55 </span><span class="lineCov">         24 : Writer::Writer(OBufferStream *const bitstream)</span>
+<span class="lineNum">      56 </span>            :     : m_bitOutputStream(bitstream),
+<span class="lineNum">      57 </span>            :       m_binaryArithmeticEncoder(m_bitOutputStream),
+<span class="lineNum">      58 </span><span class="lineCov">         24 :       m_contextModels(contexttables::buildContextTable()) {}</span>
+<span class="lineNum">      59 </span>            : 
+<a name="60"><span class="lineNum">      60 </span>            : Writer::~Writer() = default;</a>
+<span class="lineNum">      61 </span>            : 
+<span class="lineNum">      62 </span><span class="lineCov">         24 : void Writer::start(size_t numSymbols) {</span>
+<span class="lineNum">      63 </span><span class="lineCov">         24 :     assert(numSymbols &lt;= std::numeric_limits&lt;unsigned&gt;::max());</span>
+<span class="lineNum">      64 </span><span class="lineCov">         24 :     writeNumSymbols(static_cast&lt;unsigned&gt;(numSymbols));</span>
+<a name="65"><span class="lineNum">      65 </span><span class="lineCov">         24 : }</span></a>
+<span class="lineNum">      66 </span>            : 
+<span class="lineNum">      67 </span><span class="lineCov">         24 : void Writer::reset() {</span>
+<span class="lineNum">      68 </span><span class="lineCov">         24 :     m_binaryArithmeticEncoder.flush();</span>
+<span class="lineNum">      69 </span><span class="lineCov">         24 :     m_contextModels = contexttables::buildContextTable();</span>
+<a name="70"><span class="lineNum">      70 </span><span class="lineCov">         24 : }</span></a>
+<span class="lineNum">      71 </span>            : 
+<span class="lineNum">      72 </span><span class="lineCov">       1562 : void Writer::writeAsBIbypass(uint64_t input, unsigned int cLength) {</span>
+<span class="lineNum">      73 </span><span class="lineCov">       1562 :     assert(getBinarization(BinarizationId::BI).sbCheck(input, input, cLength));</span>
+<span class="lineNum">      74 </span><span class="lineCov">       1562 :     m_binaryArithmeticEncoder.encodeBinsEP(static_cast&lt;unsigned int&gt;(input), cLength);</span>
+<a name="75"><span class="lineNum">      75 </span><span class="lineCov">       1562 : }</span></a>
+<span class="lineNum">      76 </span>            : 
+<span class="lineNum">      77 </span><span class="lineCov">       4574 : void Writer::writeAsBIcabac(uint64_t input, unsigned int cLength, unsigned int offset) {</span>
+<span class="lineNum">      78 </span><span class="lineCov">       4574 :     assert(getBinarization(BinarizationId::BI).sbCheck(input, input, cLength));</span>
+<span class="lineNum">      79 </span>            : 
+<span class="lineNum">      80 </span><span class="lineCov">       4574 :     unsigned int cm = ContextSelector::getContextForBi(offset, 0);</span>
+<span class="lineNum">      81 </span><span class="lineCov">       4574 :     auto scan = m_contextModels.begin() + cm;</span>
+<span class="lineNum">      82 </span><span class="lineCov">     104380 :     for (int i = cLength - 1; i &gt;= 0; i--)  // i must be signed</span>
+<span class="lineNum">      83 </span>            :     {
+<span class="lineNum">      84 </span><span class="lineCov">      99806 :         unsigned int bin = static_cast&lt;unsigned int&gt;(static_cast&lt;uint64_t&gt;(input) &gt;&gt; static_cast&lt;uint8_t&gt;(i)) &amp; 0x1u;</span>
+<span class="lineNum">      85 </span><span class="lineCov">      99806 :         m_binaryArithmeticEncoder.encodeBin(bin, &amp;*(scan++));</span>
+<span class="lineNum">      86 </span>            :     }
+<a name="87"><span class="lineNum">      87 </span><span class="lineCov">       4574 : }</span></a>
+<span class="lineNum">      88 </span>            : 
+<span class="lineNum">      89 </span><span class="lineCov">       3072 : void Writer::writeAsTUbypass(uint64_t input, unsigned int cMax) {</span>
+<span class="lineNum">      90 </span><span class="lineCov">       3072 :     assert(getBinarization(BinarizationId::TU).sbCheck(input, input, cMax));</span>
+<span class="lineNum">      91 </span>            : 
+<span class="lineNum">      92 </span><span class="lineCov">      20494 :     for (uint64_t i = 0; i &lt; input; i++) {</span>
+<span class="lineNum">      93 </span><span class="lineCov">      17422 :         m_binaryArithmeticEncoder.encodeBinEP(1);</span>
+<span class="lineNum">      94 </span>            :     }
+<span class="lineNum">      95 </span><span class="lineCov">       3072 :     if (input != cMax) {</span>
+<span class="lineNum">      96 </span><span class="lineCov">       3045 :         m_binaryArithmeticEncoder.encodeBinEP(0);</span>
+<span class="lineNum">      97 </span>            :     }
+<a name="98"><span class="lineNum">      98 </span><span class="lineCov">       3072 : }</span></a>
+<span class="lineNum">      99 </span>            : 
+<span class="lineNum">     100 </span><span class="lineCov">       9216 : void Writer::writeAsTUcabac(uint64_t input, unsigned int cMax, unsigned int offset) {</span>
+<span class="lineNum">     101 </span><span class="lineCov">       9216 :     assert(getBinarization(BinarizationId::TU).sbCheck(input, input, cMax));</span>
+<span class="lineNum">     102 </span>            : 
+<span class="lineNum">     103 </span><span class="lineCov">       9216 :     unsigned int cm = ContextSelector::getContextForTu(offset, 0);</span>
+<span class="lineNum">     104 </span>            : 
+<span class="lineNum">     105 </span><span class="lineCov">       9216 :     auto scan = m_contextModels.begin() + cm;</span>
+<span class="lineNum">     106 </span>            : 
+<span class="lineNum">     107 </span><span class="lineCov">       9216 :     if (input == cMax) {</span>
+<span class="lineNum">     108 </span><span class="lineCov">       4680 :         for (; input &gt; 0; input--) {</span>
+<span class="lineNum">     109 </span><span class="lineCov">       2304 :             m_binaryArithmeticEncoder.encodeBin(1, &amp;*(scan++));</span>
+<span class="lineNum">     110 </span>            :         }
+<span class="lineNum">     111 </span>            :     } else {
+<span class="lineNum">     112 </span><span class="lineCov">     107246 :         for (; input &gt; 0; input--) {</span>
+<span class="lineNum">     113 </span><span class="lineCov">      49051 :             m_binaryArithmeticEncoder.encodeBin(1, &amp;*(scan++));</span>
+<span class="lineNum">     114 </span>            :         }
+<span class="lineNum">     115 </span><span class="lineCov">       9144 :         m_binaryArithmeticEncoder.encodeBin(0, &amp;*scan);</span>
+<span class="lineNum">     116 </span>            :     }
+<a name="117"><span class="lineNum">     117 </span><span class="lineCov">       9216 : }</span></a>
+<span class="lineNum">     118 </span>            : 
+<span class="lineNum">     119 </span><span class="lineCov">       2048 : void Writer::writeAsEGbypass(uint64_t input, unsigned int) {</span>
+<span class="lineNum">     120 </span><span class="lineCov">       2048 :     assert(getBinarization(BinarizationId::EG).sbCheck(input, input, 0));</span>
+<span class="lineNum">     121 </span>            : 
+<span class="lineNum">     122 </span><span class="lineCov">       2048 :     input++;</span>
+<span class="lineNum">     123 </span><span class="lineCov">       2048 :     unsigned int length = ((bitLength(static_cast&lt;uint64_t&gt;(input)) - 1) &lt;&lt; 1u) + 1;</span>
+<span class="lineNum">     124 </span><span class="lineCov">       2048 :     assert(input &lt;= std::numeric_limits&lt;unsigned&gt;::max());</span>
+<span class="lineNum">     125 </span><span class="lineCov">       2048 :     m_binaryArithmeticEncoder.encodeBinsEP(static_cast&lt;unsigned&gt;(input), length);</span>
+<a name="126"><span class="lineNum">     126 </span><span class="lineCov">       2048 : }</span></a>
+<span class="lineNum">     127 </span>            : 
+<span class="lineNum">     128 </span><span class="lineCov">       6144 : void Writer::writeAsEGcabac(uint64_t input, unsigned int, unsigned int offset) {</span>
+<span class="lineNum">     129 </span><span class="lineCov">       6144 :     assert(getBinarization(BinarizationId::EG).sbCheck(input, input, 0));</span>
+<span class="lineNum">     130 </span>            : 
+<span class="lineNum">     131 </span><span class="lineCov">       6144 :     input++;</span>
+<span class="lineNum">     132 </span><span class="lineCov">       6144 :     unsigned int i = 0;</span>
+<span class="lineNum">     133 </span>            : 
+<span class="lineNum">     134 </span><span class="lineCov">       6144 :     unsigned int cm = ContextSelector::getContextForEg(offset, i);</span>
+<span class="lineNum">     135 </span><span class="lineCov">       6144 :     auto scan = m_contextModels.begin() + cm;</span>
+<span class="lineNum">     136 </span><span class="lineCov">       6144 :     unsigned int length = ((bitLength(static_cast&lt;uint64_t&gt;(input)) - 1) &lt;&lt; 1u) + 1;</span>
+<span class="lineNum">     137 </span>            : 
+<span class="lineNum">     138 </span><span class="lineCov">      86013 :     for (i = static_cast&lt;uint8_t&gt;(length) &gt;&gt; 1u; i &gt; 0; i--) {</span>
+<span class="lineNum">     139 </span><span class="lineCov">      79869 :         m_binaryArithmeticEncoder.encodeBin(0, &amp;*(scan++));</span>
+<span class="lineNum">     140 </span>            :     }
+<span class="lineNum">     141 </span><span class="lineCov">       6144 :     m_binaryArithmeticEncoder.encodeBin(1, &amp;*scan);</span>
+<span class="lineNum">     142 </span>            : 
+<span class="lineNum">     143 </span><span class="lineCov">       6144 :     length -= ((static_cast&lt;uint8_t&gt;(length) &gt;&gt; 1u) + 1);</span>
+<span class="lineNum">     144 </span><span class="lineCov">       6144 :     if (length != 0) {</span>
+<span class="lineNum">     145 </span><span class="lineCov">       6144 :         input -= (1u &lt;&lt; length);</span>
+<span class="lineNum">     146 </span><span class="lineCov">       6144 :         assert(input &lt;= std::numeric_limits&lt;unsigned&gt;::max());</span>
+<span class="lineNum">     147 </span><span class="lineCov">       6144 :         m_binaryArithmeticEncoder.encodeBinsEP(static_cast&lt;unsigned&gt;(input), length);</span>
+<span class="lineNum">     148 </span>            :     }
+<a name="149"><span class="lineNum">     149 </span><span class="lineCov">       6144 : }</span></a>
+<span class="lineNum">     150 </span>            : 
+<span class="lineNum">     151 </span><span class="lineCov">       1024 : void Writer::writeAsSEGbypass(uint64_t input, unsigned int) {</span>
+<span class="lineNum">     152 </span><span class="lineCov">       1024 :     assert(getBinarization(BinarizationId::SEG).sbCheck(input, input, 0));</span>
+<span class="lineNum">     153 </span><span class="lineCov">       1024 :     if (int64_t(input) &lt;= 0) {</span>
+<span class="lineNum">     154 </span><span class="lineCov">        527 :         writeAsEGbypass(static_cast&lt;unsigned int&gt;(-int64_t(input)) &lt;&lt; 1u, 0);</span>
+<span class="lineNum">     155 </span>            :     } else {
+<span class="lineNum">     156 </span><span class="lineCov">        497 :         writeAsEGbypass(static_cast&lt;unsigned int&gt;(static_cast&lt;uint64_t&gt;(input) &lt;&lt; 1u) - 1, 0);</span>
+<span class="lineNum">     157 </span>            :     }
+<a name="158"><span class="lineNum">     158 </span><span class="lineCov">       1024 : }</span></a>
+<span class="lineNum">     159 </span>            : 
+<span class="lineNum">     160 </span><span class="lineCov">       3072 : void Writer::writeAsSEGcabac(uint64_t input, unsigned int, unsigned int offset) {</span>
+<span class="lineNum">     161 </span><span class="lineCov">       3072 :     assert(getBinarization(BinarizationId::SEG).sbCheck(uint64_t(input), uint64_t(input), 0));</span>
+<span class="lineNum">     162 </span>            : 
+<span class="lineNum">     163 </span><span class="lineCov">       3072 :     if (int64_t(input) &lt;= 0) {</span>
+<span class="lineNum">     164 </span><span class="lineCov">       1499 :         writeAsEGcabac(static_cast&lt;unsigned int&gt;(-int64_t(input)) &lt;&lt; 1u, 0, offset);</span>
+<span class="lineNum">     165 </span>            :     } else {
+<span class="lineNum">     166 </span><span class="lineCov">       1573 :         writeAsEGcabac(static_cast&lt;unsigned int&gt;(static_cast&lt;uint64_t&gt;(input) &lt;&lt; 1u) - 1, 0, offset);</span>
+<span class="lineNum">     167 </span>            :     }
+<a name="168"><span class="lineNum">     168 </span><span class="lineCov">       3072 : }</span></a>
+<span class="lineNum">     169 </span>            : 
+<span class="lineNum">     170 </span><span class="lineCov">       2048 : void Writer::writeAsTEGbypass(uint64_t input, unsigned int cTruncExpGolParam) {</span>
+<span class="lineNum">     171 </span><span class="lineCov">       2048 :     assert(getBinarization(BinarizationId::TEG).sbCheck(input, input, cTruncExpGolParam));</span>
+<span class="lineNum">     172 </span>            : 
+<span class="lineNum">     173 </span><span class="lineCov">       2048 :     if (input &lt; cTruncExpGolParam) {</span>
+<span class="lineNum">     174 </span><span class="lineCov">       2048 :         writeAsTUbypass(input, cTruncExpGolParam);</span>
+<span class="lineNum">     175 </span>            :     } else {
+<span class="lineNum">     176 </span><span class="lineNoCov">          0 :         writeAsTUbypass(cTruncExpGolParam, cTruncExpGolParam);</span>
+<span class="lineNum">     177 </span><span class="lineNoCov">          0 :         writeAsEGbypass(input - cTruncExpGolParam, 0);</span>
+<span class="lineNum">     178 </span>            :     }
+<a name="179"><span class="lineNum">     179 </span><span class="lineCov">       2048 : }</span></a>
+<span class="lineNum">     180 </span>            : 
+<span class="lineNum">     181 </span><span class="lineCov">       6144 : void Writer::writeAsTEGcabac(uint64_t input, unsigned int cTruncExpGolParam, unsigned int offset) {</span>
+<span class="lineNum">     182 </span><span class="lineCov">       6144 :     assert(getBinarization(BinarizationId::TEG).sbCheck(input, input, cTruncExpGolParam));</span>
+<span class="lineNum">     183 </span>            : 
+<span class="lineNum">     184 </span><span class="lineCov">       6144 :     if (input &lt; cTruncExpGolParam) {</span>
+<span class="lineNum">     185 </span><span class="lineCov">       6144 :         writeAsTUcabac(input, cTruncExpGolParam, offset);</span>
+<span class="lineNum">     186 </span>            :     } else {
+<span class="lineNum">     187 </span><span class="lineNoCov">          0 :         writeAsTUcabac(cTruncExpGolParam, cTruncExpGolParam, offset);</span>
+<span class="lineNum">     188 </span><span class="lineNoCov">          0 :         writeAsEGcabac(input - cTruncExpGolParam, 0, offset);</span>
+<span class="lineNum">     189 </span>            :     }
+<a name="190"><span class="lineNum">     190 </span><span class="lineCov">       6144 : }</span></a>
+<span class="lineNum">     191 </span>            : 
+<span class="lineNum">     192 </span><span class="lineCov">       1024 : void Writer::writeAsSTEGbypass(uint64_t input, unsigned int cSignedTruncExpGolParam) {</span>
+<span class="lineNum">     193 </span><span class="lineCov">       1024 :     assert(getBinarization(BinarizationId::STEG).sbCheck(uint64_t(input), uint64_t(input), cSignedTruncExpGolParam));</span>
+<span class="lineNum">     194 </span>            : 
+<span class="lineNum">     195 </span><span class="lineCov">       1024 :     if (int64_t(input) &lt; 0) {</span>
+<span class="lineNum">     196 </span><span class="lineNoCov">          0 :         writeAsTEGbypass(uint64_t(-int64_t(input)), cSignedTruncExpGolParam);</span>
+<span class="lineNum">     197 </span><span class="lineNoCov">          0 :         writeAsBIbypass(1, 1);</span>
+<span class="lineNum">     198 </span><span class="lineCov">       1024 :     } else if (input &gt; 0) {</span>
+<span class="lineNum">     199 </span><span class="lineCov">        514 :         writeAsTEGbypass(uint64_t(input), cSignedTruncExpGolParam);</span>
+<span class="lineNum">     200 </span><span class="lineCov">        514 :         writeAsBIbypass(0, 1);</span>
+<span class="lineNum">     201 </span>            :     } else {
+<span class="lineNum">     202 </span><span class="lineCov">        510 :         writeAsTEGbypass(0, cSignedTruncExpGolParam);</span>
+<span class="lineNum">     203 </span>            :     }
+<a name="204"><span class="lineNum">     204 </span><span class="lineCov">       1024 : }</span></a>
+<span class="lineNum">     205 </span>            : 
+<span class="lineNum">     206 </span><span class="lineCov">       3072 : void Writer::writeAsSTEGcabac(uint64_t input, unsigned int cSignedTruncExpGolParam, unsigned int offset) {</span>
+<span class="lineNum">     207 </span><span class="lineCov">       3072 :     assert(getBinarization(BinarizationId::STEG).sbCheck(uint64_t(input), uint64_t(input), cSignedTruncExpGolParam));</span>
+<span class="lineNum">     208 </span>            : 
+<span class="lineNum">     209 </span><span class="lineCov">       3072 :     if (int64_t(input) &lt; 0) {</span>
+<span class="lineNum">     210 </span><span class="lineNoCov">          0 :         writeAsTEGcabac(uint64_t(-int64_t(input)), cSignedTruncExpGolParam, offset);</span>
+<span class="lineNum">     211 </span><span class="lineNoCov">          0 :         writeAsBIcabac(1, 1, offset);</span>
+<span class="lineNum">     212 </span><span class="lineCov">       3072 :     } else if (input &gt; 0) {</span>
+<span class="lineNum">     213 </span><span class="lineCov">       1502 :         writeAsTEGcabac(uint64_t(input), cSignedTruncExpGolParam, offset);</span>
+<span class="lineNum">     214 </span><span class="lineCov">       1502 :         writeAsBIcabac(0, 1, offset);</span>
+<span class="lineNum">     215 </span>            :     } else {
+<span class="lineNum">     216 </span><span class="lineCov">       1570 :         writeAsTEGcabac(0, cSignedTruncExpGolParam, offset);</span>
+<span class="lineNum">     217 </span>            :     }
+<a name="218"><span class="lineNum">     218 </span><span class="lineCov">       3072 : }</span></a>
+<span class="lineNum">     219 </span>            : 
+<a name="220"><span class="lineNum">     220 </span><span class="lineCov">         24 : void Writer::writeNumSymbols(unsigned int numSymbols) { writeAsBIbypass(numSymbols, 32); }</span></a>
+<span class="lineNum">     221 </span>            : 
+<span class="lineNum">     222 </span><span class="lineCov">          3 : }  // namespace gabac</span>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>
