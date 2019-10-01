@@ -41,7 +41,7 @@ var searchData=
   ['bitwriter_2ecc',['bitwriter.cc',['../bitwriter_8cc.html',1,'']]],
   ['bitwriter_2eh',['bitwriter.h',['../bitwriter_8h.html',1,'']]],
   ['block',['Block',['../classformat_1_1_block.html',1,'format']]],
-  ['block',['Block',['../classformat_1_1_block.html#a8e8edbfcbb1e419d59b8a011a1f35ea6',1,'format::Block::Block(uint8_t _descriptor_ID, std::vector&lt; uint8_t &gt; *_payload)'],['../classformat_1_1_block.html#ad9fd59d79ad7c4190e1d88436ed49183',1,'format::Block::Block()']]],
+  ['block',['Block',['../classformat_1_1_block.html#ad9fd59d79ad7c4190e1d88436ed49183',1,'format::Block::Block()'],['../classformat_1_1_block.html#a8e8edbfcbb1e419d59b8a011a1f35ea6',1,'format::Block::Block(uint8_t _descriptor_ID, std::vector&lt; uint8_t &gt; *_payload)']]],
   ['block_2dstepper_2eh',['block-stepper.h',['../block-stepper_8h.html',1,'']]],
   ['block_2ecc',['block.cc',['../block_8cc.html',1,'']]],
   ['block_2eh',['block.h',['../block_8h.html',1,'']]],

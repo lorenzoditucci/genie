@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-09-30 12:43:53</td>
+            <td class="headerValue">2019-10-01 09:56:26</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">4</td>
@@ -96,30 +96,30 @@
 <span class="lineNum">      34 </span>            : 
 <span class="lineNum">      35 </span>            :     // Do the match libs
 <span class="lineNum">      36 </span><span class="lineCov">          5 :     const uint64_t symbolsSize = symbols-&gt;size();</span>
-<span class="lineNum">      37 </span><span class="lineCov">      30593 :     for (uint64_t i = 0; i &lt; symbolsSize; i++) {</span>
-<span class="lineNum">      38 </span><span class="lineCov">      30588 :         uint64_t pointer = 0;</span>
-<span class="lineNum">      39 </span><span class="lineCov">      30588 :         uint64_t length = 0;</span>
-<span class="lineNum">      40 </span><span class="lineCov">      30588 :         uint64_t windowStartIdx = i - windowSize;</span>
-<span class="lineNum">      41 </span><span class="lineCov">      30588 :         uint64_t windowEndIdx = i;</span>
+<span class="lineNum">      37 </span><span class="lineCov">      30586 :     for (uint64_t i = 0; i &lt; symbolsSize; i++) {</span>
+<span class="lineNum">      38 </span><span class="lineCov">      30581 :         uint64_t pointer = 0;</span>
+<span class="lineNum">      39 </span><span class="lineCov">      30581 :         uint64_t length = 0;</span>
+<span class="lineNum">      40 </span><span class="lineCov">      30581 :         uint64_t windowStartIdx = i - windowSize;</span>
+<span class="lineNum">      41 </span><span class="lineCov">      30581 :         uint64_t windowEndIdx = i;</span>
 <span class="lineNum">      42 </span>            : 
-<span class="lineNum">      43 </span><span class="lineCov">   28200836 :         for (uint64_t w = windowStartIdx; w &lt; windowEndIdx; w++) {</span>
-<span class="lineNum">      44 </span><span class="lineCov">   28170248 :             uint64_t offset = i;</span>
-<span class="lineNum">      45 </span><span class="lineCov">   28243658 :             while ((offset &lt; symbolsSize) &amp;&amp; (symbols-&gt;get(offset) == (symbols-&gt;get(w + offset - i)))) {</span>
-<span class="lineNum">      46 </span><span class="lineCov">      36705 :                 offset++;</span>
+<span class="lineNum">      43 </span><span class="lineCov">   28193661 :         for (uint64_t w = windowStartIdx; w &lt; windowEndIdx; w++) {</span>
+<span class="lineNum">      44 </span><span class="lineCov">   28163080 :             uint64_t offset = i;</span>
+<span class="lineNum">      45 </span><span class="lineCov">   28236288 :             while ((offset &lt; symbolsSize) &amp;&amp; (symbols-&gt;get(offset) == (symbols-&gt;get(w + offset - i)))) {</span>
+<span class="lineNum">      46 </span><span class="lineCov">      36604 :                 offset++;</span>
 <span class="lineNum">      47 </span>            :             }
-<span class="lineNum">      48 </span><span class="lineCov">   28170248 :             offset -= i;</span>
-<span class="lineNum">      49 </span><span class="lineCov">   28170248 :             if (offset &gt;= length) {</span>
-<span class="lineNum">      50 </span><span class="lineCov">   21096570 :                 length = offset;</span>
-<span class="lineNum">      51 </span><span class="lineCov">   21096570 :                 pointer = w;</span>
+<span class="lineNum">      48 </span><span class="lineCov">   28163080 :             offset -= i;</span>
+<span class="lineNum">      49 </span><span class="lineCov">   28163080 :             if (offset &gt;= length) {</span>
+<span class="lineNum">      50 </span><span class="lineCov">   21083335 :                 length = offset;</span>
+<span class="lineNum">      51 </span><span class="lineCov">   21083335 :                 pointer = w;</span>
 <span class="lineNum">      52 </span>            :             }
 <span class="lineNum">      53 </span>            :         }
-<span class="lineNum">      54 </span><span class="lineCov">      30588 :         if (length &lt; 2) {</span>
-<span class="lineNum">      55 </span><span class="lineCov">      30449 :             lengths-&gt;push_back(0);</span>
-<span class="lineNum">      56 </span><span class="lineCov">      30449 :             rawValues.push_back(symbols-&gt;get(i));</span>
+<span class="lineNum">      54 </span><span class="lineCov">      30581 :         if (length &lt; 2) {</span>
+<span class="lineNum">      55 </span><span class="lineCov">      30435 :             lengths-&gt;push_back(0);</span>
+<span class="lineNum">      56 </span><span class="lineCov">      30435 :             rawValues.push_back(symbols-&gt;get(i));</span>
 <span class="lineNum">      57 </span>            :         } else {
-<span class="lineNum">      58 </span><span class="lineCov">        139 :             pointers-&gt;push_back(i - pointer);</span>
-<span class="lineNum">      59 </span><span class="lineCov">        139 :             lengths-&gt;push_back(length);</span>
-<span class="lineNum">      60 </span><span class="lineCov">        139 :             i += (length - 1);</span>
+<span class="lineNum">      58 </span><span class="lineCov">        146 :             pointers-&gt;push_back(i - pointer);</span>
+<span class="lineNum">      59 </span><span class="lineCov">        146 :             lengths-&gt;push_back(length);</span>
+<span class="lineNum">      60 </span><span class="lineCov">        146 :             i += (length - 1);</span>
 <span class="lineNum">      61 </span>            :         }
 <span class="lineNum">      62 </span>            :     }
 <span class="lineNum">      63 </span>            : 
@@ -138,19 +138,19 @@
 <span class="lineNum">      76 </span><span class="lineCov">          5 :     BlockStepper t0 = pointers-&gt;getReader();</span>
 <span class="lineNum">      77 </span><span class="lineCov">          5 :     BlockStepper t1 = lengths-&gt;getReader();</span>
 <span class="lineNum">      78 </span><span class="lineCov">          5 :     BlockStepper t2 = rawValues-&gt;getReader();</span>
-<span class="lineNum">      79 </span><span class="lineCov">      61181 :     while (t1.isValid()) {</span>
-<span class="lineNum">      80 </span><span class="lineCov">      30588 :         uint64_t length = t1.get();</span>
-<span class="lineNum">      81 </span><span class="lineCov">      30588 :         t1.inc();</span>
-<span class="lineNum">      82 </span><span class="lineCov">      30588 :         if (length == 0) {</span>
-<span class="lineNum">      83 </span><span class="lineCov">      30449 :             symbols.push_back(t2.get());</span>
-<span class="lineNum">      84 </span><span class="lineCov">      30449 :             t2.inc();</span>
-<span class="lineNum">      85 </span><span class="lineCov">      30449 :             n++;</span>
+<span class="lineNum">      79 </span><span class="lineCov">      61167 :     while (t1.isValid()) {</span>
+<span class="lineNum">      80 </span><span class="lineCov">      30581 :         uint64_t length = t1.get();</span>
+<span class="lineNum">      81 </span><span class="lineCov">      30581 :         t1.inc();</span>
+<span class="lineNum">      82 </span><span class="lineCov">      30581 :         if (length == 0) {</span>
+<span class="lineNum">      83 </span><span class="lineCov">      30435 :             symbols.push_back(t2.get());</span>
+<span class="lineNum">      84 </span><span class="lineCov">      30435 :             t2.inc();</span>
+<span class="lineNum">      85 </span><span class="lineCov">      30435 :             n++;</span>
 <span class="lineNum">      86 </span>            :         } else {
-<span class="lineNum">      87 </span><span class="lineCov">        139 :             uint64_t pointer = t0.get();</span>
-<span class="lineNum">      88 </span><span class="lineCov">        139 :             t0.inc();</span>
-<span class="lineNum">      89 </span><span class="lineCov">        418 :             for (uint64_t l = 0; l &lt; length; l++) {</span>
-<span class="lineNum">      90 </span><span class="lineCov">        279 :                 symbols.push_back(symbols.get(n - pointer));</span>
-<span class="lineNum">      91 </span><span class="lineCov">        279 :                 n++;</span>
+<span class="lineNum">      87 </span><span class="lineCov">        146 :             uint64_t pointer = t0.get();</span>
+<span class="lineNum">      88 </span><span class="lineCov">        146 :             t0.inc();</span>
+<span class="lineNum">      89 </span><span class="lineCov">        439 :             for (uint64_t l = 0; l &lt; length; l++) {</span>
+<span class="lineNum">      90 </span><span class="lineCov">        293 :                 symbols.push_back(symbols.get(n - pointer));</span>
+<span class="lineNum">      91 </span><span class="lineCov">        293 :                 n++;</span>
 <span class="lineNum">      92 </span>            :             }
 <span class="lineNum">      93 </span>            :         }
 <span class="lineNum">      94 </span>            :     }

@@ -57,7 +57,7 @@ var searchData=
   ['ref_5ftransform',['REF_TRANSFORM',['../classformat_1_1_parameter_set_crps.html#aa7eceedfa59fb13df2ba6c4f46d031cea5ca64b8973fd5acf800028cd75369416',1,'format::ParameterSetCrps']]],
   ['refcfg',['RefCfg',['../classformat_1_1_ref_cfg.html',1,'format']]],
   ['refcfg',['RefCfg',['../classformat_1_1_ref_cfg.html#afcc7bde3ba04a58e5a7b994f8d212f92',1,'format::RefCfg::RefCfg(uint16_t _ref_sequence_ID, uint64_t _ref_start_position, uint64_t _ref_end_position, uint8_t _posSize)'],['../classformat_1_1_ref_cfg.html#a0286e6f580666e6fa779a71749c65f5b',1,'format::RefCfg::RefCfg(uint8_t _posSize)']]],
-  ['reference',['REFERENCE',['../classformat_1_1_data_unit.html#a3085e240c9845a85d2ffde167361290badcd320d017d7f3c317bc8b234287bc9f',1,'format::DataUnit::REFERENCE()'],['../classgabac_1_1_data_block_1_1_iterator_core.html#ad4ed9676259301e4cc465c08f5f2c045',1,'gabac::DataBlock::IteratorCore::reference()']]],
+  ['reference',['reference',['../classgabac_1_1_data_block_1_1_iterator_core.html#ad4ed9676259301e4cc465c08f5f2c045',1,'gabac::DataBlock::IteratorCore::reference()'],['../classformat_1_1_data_unit.html#a3085e240c9845a85d2ffde167361290badcd320d017d7f3c317bc8b234287bc9f',1,'format::DataUnit::REFERENCE()']]],
   ['remove',['remove',['../classspring_1_1bbhashdict.html#a5aac07bb5b00015d63c48357d16f128b',1,'spring::bbhashdict']]],
   ['renormtable',['renormTable',['../namespacegabac_1_1cabactables.html#ab0a1d491542eab4a26b88d9155cb794f',1,'gabac::cabactables']]],
   ['reorder',['reorder',['../namespacespring.html#ab300e79ede266a98863004b42d127d64',1,'spring']]],
