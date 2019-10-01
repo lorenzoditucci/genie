@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-10-01 16:32:45</td>
+            <td class="headerValue">2019-10-01 16:58:50</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">18</td>
@@ -90,24 +90,24 @@
 <span class="lineNum">      28 </span>            : 
 <a name="29"><span class="lineNum">      29 </span>            : Reader::~Reader() = default;</a>
 <span class="lineNum">      30 </span>            : 
-<a name="31"><span class="lineNum">      31 </span><span class="lineCov">      50632 : uint64_t Reader::readAsBIbypass(unsigned int cLength) { return m_decBinCabac.decodeBinsEP(cLength); }</span></a>
+<a name="31"><span class="lineNum">      31 </span><span class="lineCov">      50825 : uint64_t Reader::readAsBIbypass(unsigned int cLength) { return m_decBinCabac.decodeBinsEP(cLength); }</span></a>
 <span class="lineNum">      32 </span>            : 
-<span class="lineNum">      33 </span><span class="lineCov">       4598 : uint64_t Reader::readAsBIcabac(unsigned int cLength, unsigned int offset) {</span>
-<span class="lineNum">      34 </span><span class="lineCov">       4598 :     unsigned int bins = 0;</span>
-<span class="lineNum">      35 </span><span class="lineCov">       4598 :     unsigned int cm = ContextSelector::getContextForBi(offset, 0);</span>
-<span class="lineNum">      36 </span><span class="lineCov">       4598 :     auto scan = m_contextModels.begin() + cm;</span>
-<span class="lineNum">      37 </span><span class="lineCov">     104428 :     for (size_t i = cLength; i &gt; 0; i--) {</span>
-<span class="lineNum">      38 </span><span class="lineCov">      99830 :         bins = (bins &lt;&lt; 1u) | m_decBinCabac.decodeBin(&amp;*(scan++));</span>
+<span class="lineNum">      33 </span><span class="lineCov">       4543 : uint64_t Reader::readAsBIcabac(unsigned int cLength, unsigned int offset) {</span>
+<span class="lineNum">      34 </span><span class="lineCov">       4543 :     unsigned int bins = 0;</span>
+<span class="lineNum">      35 </span><span class="lineCov">       4543 :     unsigned int cm = ContextSelector::getContextForBi(offset, 0);</span>
+<span class="lineNum">      36 </span><span class="lineCov">       4543 :     auto scan = m_contextModels.begin() + cm;</span>
+<span class="lineNum">      37 </span><span class="lineCov">     104318 :     for (size_t i = cLength; i &gt; 0; i--) {</span>
+<span class="lineNum">      38 </span><span class="lineCov">      99775 :         bins = (bins &lt;&lt; 1u) | m_decBinCabac.decodeBin(&amp;*(scan++));</span>
 <span class="lineNum">      39 </span>            :     }
-<span class="lineNum">      40 </span><span class="lineCov">       4598 :     return static_cast&lt;uint64_t&gt;(bins);</span>
+<span class="lineNum">      40 </span><span class="lineCov">       4543 :     return static_cast&lt;uint64_t&gt;(bins);</span>
 <a name="41"><span class="lineNum">      41 </span>            : }</a>
 <span class="lineNum">      42 </span>            : 
 <span class="lineNum">      43 </span><span class="lineCov">       3072 : uint64_t Reader::readAsTUbypass(unsigned int cMax) {</span>
 <span class="lineNum">      44 </span><span class="lineCov">       3072 :     unsigned int i = 0;</span>
-<span class="lineNum">      45 </span><span class="lineCov">      37648 :     while (readAsBIbypass(1) == 1) {</span>
-<span class="lineNum">      46 </span><span class="lineCov">      17321 :         i++;</span>
-<span class="lineNum">      47 </span><span class="lineCov">      17321 :         if (i == cMax) {</span>
-<span class="lineNum">      48 </span><span class="lineCov">         33 :             break;</span>
+<span class="lineNum">      45 </span><span class="lineCov">      38090 :     while (readAsBIbypass(1) == 1) {</span>
+<span class="lineNum">      46 </span><span class="lineCov">      17541 :         i++;</span>
+<span class="lineNum">      47 </span><span class="lineCov">      17541 :         if (i == cMax) {</span>
+<span class="lineNum">      48 </span><span class="lineCov">         32 :             break;</span>
 <span class="lineNum">      49 </span>            :         }
 <span class="lineNum">      50 </span>            :     }
 <span class="lineNum">      51 </span><span class="lineCov">       3072 :     return static_cast&lt;uint64_t&gt;(i);</span>
@@ -117,12 +117,12 @@
 <span class="lineNum">      55 </span><span class="lineCov">       9216 :     unsigned int i = 0;</span>
 <span class="lineNum">      56 </span><span class="lineCov">       9216 :     unsigned int cm = ContextSelector::getContextForTu(offset, i);</span>
 <span class="lineNum">      57 </span><span class="lineCov">       9216 :     auto scan = m_contextModels.begin() + cm;</span>
-<span class="lineNum">      58 </span><span class="lineCov">     114526 :     while (m_decBinCabac.decodeBin(&amp;*scan) == 1) {</span>
-<span class="lineNum">      59 </span><span class="lineCov">      52761 :         i++;</span>
-<span class="lineNum">      60 </span><span class="lineCov">      52761 :         if (cMax == i) {</span>
-<span class="lineNum">      61 </span><span class="lineCov">        106 :             break;</span>
+<span class="lineNum">      58 </span><span class="lineCov">     114080 :     while (m_decBinCabac.decodeBin(&amp;*scan) == 1) {</span>
+<span class="lineNum">      59 </span><span class="lineCov">      52535 :         i++;</span>
+<span class="lineNum">      60 </span><span class="lineCov">      52535 :         if (cMax == i) {</span>
+<span class="lineNum">      61 </span><span class="lineCov">        103 :             break;</span>
 <span class="lineNum">      62 </span>            :         } else {
-<span class="lineNum">      63 </span><span class="lineCov">      52655 :             scan++;</span>
+<span class="lineNum">      63 </span><span class="lineCov">      52432 :             scan++;</span>
 <span class="lineNum">      64 </span>            :         }
 <span class="lineNum">      65 </span>            :     }
 <span class="lineNum">      66 </span><span class="lineCov">       9216 :     return static_cast&lt;uint64_t&gt;(i);</span>
@@ -131,8 +131,8 @@
 <span class="lineNum">      69 </span><span class="lineCov">       2048 : uint64_t Reader::readAsEGbypass(unsigned int) {</span>
 <span class="lineNum">      70 </span><span class="lineCov">       2048 :     unsigned int bins = 0;</span>
 <span class="lineNum">      71 </span><span class="lineCov">       2048 :     unsigned int i = 0;</span>
-<span class="lineNum">      72 </span><span class="lineCov">      55368 :     while (readAsBIbypass(1) == 0) {</span>
-<span class="lineNum">      73 </span><span class="lineCov">      26660 :         i++;</span>
+<span class="lineNum">      72 </span><span class="lineCov">      55342 :     while (readAsBIbypass(1) == 0) {</span>
+<span class="lineNum">      73 </span><span class="lineCov">      26647 :         i++;</span>
 <span class="lineNum">      74 </span>            :     }
 <span class="lineNum">      75 </span><span class="lineCov">       2048 :     if (i != 0) {</span>
 <span class="lineNum">      76 </span><span class="lineCov">       2048 :         bins = (1u &lt;&lt; i) | m_decBinCabac.decodeBinsEP(i);</span>
@@ -146,9 +146,9 @@
 <span class="lineNum">      84 </span><span class="lineCov">       6144 :     unsigned int cm = ContextSelector::getContextForEg(offset, 0);</span>
 <span class="lineNum">      85 </span><span class="lineCov">       6144 :     auto scan = m_contextModels.begin() + cm;</span>
 <span class="lineNum">      86 </span><span class="lineCov">       6144 :     unsigned int i = 0;</span>
-<span class="lineNum">      87 </span><span class="lineCov">     165502 :     while (m_decBinCabac.decodeBin(&amp;*scan) == 0) {</span>
-<span class="lineNum">      88 </span><span class="lineCov">      79679 :         scan++;</span>
-<span class="lineNum">      89 </span><span class="lineCov">      79679 :         i++;</span>
+<span class="lineNum">      87 </span><span class="lineCov">     166236 :     while (m_decBinCabac.decodeBin(&amp;*scan) == 0) {</span>
+<span class="lineNum">      88 </span><span class="lineCov">      80046 :         scan++;</span>
+<span class="lineNum">      89 </span><span class="lineCov">      80046 :         i++;</span>
 <span class="lineNum">      90 </span>            :     }
 <span class="lineNum">      91 </span><span class="lineCov">       6144 :     unsigned int bins = 0;</span>
 <span class="lineNum">      92 </span><span class="lineCov">       6144 :     if (i != 0) {</span>
@@ -163,26 +163,26 @@
 <span class="lineNum">     101 </span><span class="lineCov">       1024 :     uint64_t tmp = readAsEGbypass(0);</span>
 <span class="lineNum">     102 </span>            :     // Save, only last bit
 <span class="lineNum">     103 </span><span class="lineCov">       1024 :     if ((static_cast&lt;uint64_t&gt;(tmp) &amp; 0x1u) == 0) {</span>
-<span class="lineNum">     104 </span><span class="lineCov">        514 :         if (tmp == 0) {</span>
+<span class="lineNum">     104 </span><span class="lineCov">        503 :         if (tmp == 0) {</span>
 <span class="lineNum">     105 </span><span class="lineNoCov">          0 :             return 0;</span>
 <span class="lineNum">     106 </span>            :         } else {
-<span class="lineNum">     107 </span><span class="lineCov">        514 :             return static_cast&lt;uint64_t&gt;(-1 * static_cast&lt;int64_t&gt;(tmp &gt;&gt; 1u));</span>
+<span class="lineNum">     107 </span><span class="lineCov">        503 :             return static_cast&lt;uint64_t&gt;(-1 * static_cast&lt;int64_t&gt;(tmp &gt;&gt; 1u));</span>
 <span class="lineNum">     108 </span>            :         }
 <span class="lineNum">     109 </span>            :     } else {
-<span class="lineNum">     110 </span><span class="lineCov">        510 :         return (static_cast&lt;uint64_t&gt;(tmp + 1) &gt;&gt; 1u);</span>
+<span class="lineNum">     110 </span><span class="lineCov">        521 :         return (static_cast&lt;uint64_t&gt;(tmp + 1) &gt;&gt; 1u);</span>
 <span class="lineNum">     111 </span>            :     }
 <a name="112"><span class="lineNum">     112 </span>            : }</a>
 <span class="lineNum">     113 </span>            : 
 <span class="lineNum">     114 </span><span class="lineCov">       3072 : uint64_t Reader::readAsSEGcabac(unsigned int, unsigned int offset) {</span>
 <span class="lineNum">     115 </span><span class="lineCov">       3072 :     uint64_t tmp = readAsEGcabac(0, offset);</span>
 <span class="lineNum">     116 </span><span class="lineCov">       3072 :     if ((static_cast&lt;uint64_t&gt;(tmp) &amp; 0x1u) == 0) {</span>
-<span class="lineNum">     117 </span><span class="lineCov">       1532 :         if (tmp == 0) {</span>
+<span class="lineNum">     117 </span><span class="lineCov">       1538 :         if (tmp == 0) {</span>
 <span class="lineNum">     118 </span><span class="lineNoCov">          0 :             return 0;</span>
 <span class="lineNum">     119 </span>            :         } else {
-<span class="lineNum">     120 </span><span class="lineCov">       1532 :             return (static_cast&lt;uint64_t&gt;(-1 * static_cast&lt;int64_t&gt;(tmp &gt;&gt; 1u)));</span>
+<span class="lineNum">     120 </span><span class="lineCov">       1538 :             return (static_cast&lt;uint64_t&gt;(-1 * static_cast&lt;int64_t&gt;(tmp &gt;&gt; 1u)));</span>
 <span class="lineNum">     121 </span>            :         }
 <span class="lineNum">     122 </span>            :     } else {
-<span class="lineNum">     123 </span><span class="lineCov">       1540 :         return (tmp + 1) &gt;&gt; 1u;</span>
+<span class="lineNum">     123 </span><span class="lineCov">       1534 :         return (tmp + 1) &gt;&gt; 1u;</span>
 <span class="lineNum">     124 </span>            :     }
 <a name="125"><span class="lineNum">     125 </span>            : }</a>
 <span class="lineNum">     126 </span>            : 
@@ -205,25 +205,25 @@
 <span class="lineNum">     143 </span><span class="lineCov">       1024 : uint64_t Reader::readAsSTEGbypass(unsigned int treshold) {</span>
 <span class="lineNum">     144 </span><span class="lineCov">       1024 :     uint64_t value = readAsTEGbypass(treshold);</span>
 <span class="lineNum">     145 </span><span class="lineCov">       1024 :     if (value != 0) {</span>
-<span class="lineNum">     146 </span><span class="lineCov">        516 :         if (readAsBIbypass(1) == 1) {</span>
+<span class="lineNum">     146 </span><span class="lineCov">        501 :         if (readAsBIbypass(1) == 1) {</span>
 <span class="lineNum">     147 </span><span class="lineNoCov">          0 :             return uint64_t(-1 * int64_t(value));</span>
 <span class="lineNum">     148 </span>            :         } else {
-<span class="lineNum">     149 </span><span class="lineCov">        516 :             return value;</span>
+<span class="lineNum">     149 </span><span class="lineCov">        501 :             return value;</span>
 <span class="lineNum">     150 </span>            :         }
 <span class="lineNum">     151 </span>            :     }
-<span class="lineNum">     152 </span><span class="lineCov">        508 :     return value;</span>
+<span class="lineNum">     152 </span><span class="lineCov">        523 :     return value;</span>
 <a name="153"><span class="lineNum">     153 </span>            : }</a>
 <span class="lineNum">     154 </span>            : 
 <span class="lineNum">     155 </span><span class="lineCov">       3072 : uint64_t Reader::readAsSTEGcabac(unsigned int treshold, unsigned int offset) {</span>
 <span class="lineNum">     156 </span><span class="lineCov">       3072 :     uint64_t value = readAsTEGcabac(treshold, offset);</span>
 <span class="lineNum">     157 </span><span class="lineCov">       3072 :     if (value != 0) {</span>
-<span class="lineNum">     158 </span><span class="lineCov">       1526 :         if (readAsBIcabac(1, offset) == 1) {</span>
+<span class="lineNum">     158 </span><span class="lineCov">       1471 :         if (readAsBIcabac(1, offset) == 1) {</span>
 <span class="lineNum">     159 </span><span class="lineNoCov">          0 :             return uint64_t(-1 * int64_t(value));</span>
 <span class="lineNum">     160 </span>            :         } else {
-<span class="lineNum">     161 </span><span class="lineCov">       1526 :             return value;</span>
+<span class="lineNum">     161 </span><span class="lineCov">       1471 :             return value;</span>
 <span class="lineNum">     162 </span>            :         }
 <span class="lineNum">     163 </span>            :     }
-<span class="lineNum">     164 </span><span class="lineCov">       1546 :     return value;</span>
+<span class="lineNum">     164 </span><span class="lineCov">       1601 :     return value;</span>
 <a name="165"><span class="lineNum">     165 </span>            : }</a>
 <span class="lineNum">     166 </span>            : 
 <span class="lineNum">     167 </span><span class="lineCov">         24 : size_t Reader::readNumSymbols() {</span>

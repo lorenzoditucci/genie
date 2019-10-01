@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-10-01 16:32:45</td>
+            <td class="headerValue">2019-10-01 16:58:50</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">4</td>
@@ -104,13 +104,13 @@
 <span class="lineNum">      42 </span>            : 
 <span class="lineNum">      43 </span><span class="lineCov">   28214161 :         for (uint64_t w = windowStartIdx; w &lt; windowEndIdx; w++) {</span>
 <span class="lineNum">      44 </span><span class="lineCov">   28183560 :             uint64_t offset = i;</span>
-<span class="lineNum">      45 </span><span class="lineCov">   28256368 :             while ((offset &lt; symbolsSize) &amp;&amp; (symbols-&gt;get(offset) == (symbols-&gt;get(w + offset - i)))) {</span>
-<span class="lineNum">      46 </span><span class="lineCov">      36404 :                 offset++;</span>
+<span class="lineNum">      45 </span><span class="lineCov">   28256408 :             while ((offset &lt; symbolsSize) &amp;&amp; (symbols-&gt;get(offset) == (symbols-&gt;get(w + offset - i)))) {</span>
+<span class="lineNum">      46 </span><span class="lineCov">      36424 :                 offset++;</span>
 <span class="lineNum">      47 </span>            :             }
 <span class="lineNum">      48 </span><span class="lineCov">   28183560 :             offset -= i;</span>
 <span class="lineNum">      49 </span><span class="lineCov">   28183560 :             if (offset &gt;= length) {</span>
-<span class="lineNum">      50 </span><span class="lineCov">   21127701 :                 length = offset;</span>
-<span class="lineNum">      51 </span><span class="lineCov">   21127701 :                 pointer = w;</span>
+<span class="lineNum">      50 </span><span class="lineCov">   21130021 :                 length = offset;</span>
+<span class="lineNum">      51 </span><span class="lineCov">   21130021 :                 pointer = w;</span>
 <span class="lineNum">      52 </span>            :             }
 <span class="lineNum">      53 </span>            :         }
 <span class="lineNum">      54 </span><span class="lineCov">      30601 :         if (length &lt; 2) {</span>

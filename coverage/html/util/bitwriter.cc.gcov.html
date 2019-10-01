@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-10-01 16:32:45</td>
+            <td class="headerValue">2019-10-01 16:58:50</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">7</td>
@@ -73,42 +73,42 @@
 <span class="lineNum">      11 </span>            : 
 <a name="12"><span class="lineNum">      12 </span>            : // -----------------------------------------------------------------------------------------------------------------</a>
 <span class="lineNum">      13 </span>            : 
-<span class="lineNum">      14 </span><span class="lineCov">      41930 : inline void BitWriter::writeOut(uint8_t byte) {</span>
-<span class="lineNum">      15 </span><span class="lineCov">      41930 :     stream-&gt;write(reinterpret_cast&lt;char *&gt;(&amp;byte), 1);</span>
-<span class="lineNum">      16 </span><span class="lineCov">      41930 :     m_bitsWritten += 8;</span>
-<span class="lineNum">      17 </span><span class="lineCov">      41930 : }</span>
+<span class="lineNum">      14 </span><span class="lineCov">      41977 : inline void BitWriter::writeOut(uint8_t byte) {</span>
+<span class="lineNum">      15 </span><span class="lineCov">      41977 :     stream-&gt;write(reinterpret_cast&lt;char *&gt;(&amp;byte), 1);</span>
+<span class="lineNum">      16 </span><span class="lineCov">      41977 :     m_bitsWritten += 8;</span>
+<span class="lineNum">      17 </span><span class="lineCov">      41977 : }</span>
 <span class="lineNum">      18 </span>            : 
 <a name="19"><span class="lineNum">      19 </span>            : // -----------------------------------------------------------------------------------------------------------------</a>
 <span class="lineNum">      20 </span>            : 
-<span class="lineNum">      21 </span><span class="lineCov">      41961 : void BitWriter::write(uint64_t bits, uint8_t numBits) {</span>
+<span class="lineNum">      21 </span><span class="lineCov">      42005 : void BitWriter::write(uint64_t bits, uint8_t numBits) {</span>
 <span class="lineNum">      22 </span>            :     // Any modulo-8 remainder of numTotalBits cannot be written this time,
 <span class="lineNum">      23 </span>            :     // and will be held until next time
-<span class="lineNum">      24 </span><span class="lineCov">      41961 :     uint8_t numTotalBits = numBits + m_numHeldBits;</span>
-<span class="lineNum">      25 </span><span class="lineCov">      41961 :     uint8_t numNextHeldBits = numTotalBits % 8;</span>
+<span class="lineNum">      24 </span><span class="lineCov">      42005 :     uint8_t numTotalBits = numBits + m_numHeldBits;</span>
+<span class="lineNum">      25 </span><span class="lineCov">      42005 :     uint8_t numNextHeldBits = numTotalBits % 8;</span>
 <span class="lineNum">      26 </span>            : 
 <span class="lineNum">      27 </span>            :     // Next steps: form a byte-ALIGNED word by concatenating any held bits
 <span class="lineNum">      28 </span>            :     // with the new bits, discarding the bits that will form the nextheldBits
 <span class="lineNum">      29 </span>            : 
 <span class="lineNum">      30 </span>            :     // Determine the nextHeldBits
-<span class="lineNum">      31 </span><span class="lineCov">      41961 :     auto nextHeldBits = static_cast&lt;uint8_t&gt;((bits &lt;&lt; (8u - numNextHeldBits)) &amp; static_cast&lt;uint8_t&gt;(0xff));</span>
-<span class="lineNum">      32 </span><span class="lineCov">      41961 :     if (numTotalBits &lt; 8) {</span>
+<span class="lineNum">      31 </span><span class="lineCov">      42005 :     auto nextHeldBits = static_cast&lt;uint8_t&gt;((bits &lt;&lt; (8u - numNextHeldBits)) &amp; static_cast&lt;uint8_t&gt;(0xff));</span>
+<span class="lineNum">      32 </span><span class="lineCov">      42005 :     if (numTotalBits &lt; 8) {</span>
 <span class="lineNum">      33 </span>            :         // Insufficient bits accumulated to write out, append nextHeldBits to
 <span class="lineNum">      34 </span>            :         // current heldBits
-<span class="lineNum">      35 </span><span class="lineCov">         31 :         m_heldBits |= nextHeldBits;</span>
-<span class="lineNum">      36 </span><span class="lineCov">         31 :         m_numHeldBits = numNextHeldBits;</span>
+<span class="lineNum">      35 </span><span class="lineCov">         28 :         m_heldBits |= nextHeldBits;</span>
+<span class="lineNum">      36 </span><span class="lineCov">         28 :         m_numHeldBits = numNextHeldBits;</span>
 <span class="lineNum">      37 </span>            : 
-<span class="lineNum">      38 </span><span class="lineCov">         31 :         return;</span>
+<span class="lineNum">      38 </span><span class="lineCov">         28 :         return;</span>
 <span class="lineNum">      39 </span>            :     }
 <span class="lineNum">      40 </span>            : 
 <span class="lineNum">      41 </span>            :     // topword serves to justify heldBits to align with the MSB of bits
-<span class="lineNum">      42 </span><span class="lineCov">      41930 :     uint64_t topword = (numBits - numNextHeldBits) &amp; ~((1u &lt;&lt; 3u) - 1u);</span>
-<span class="lineNum">      43 </span><span class="lineCov">      41930 :     uint64_t writeBits = (m_heldBits &lt;&lt; topword);</span>
-<span class="lineNum">      44 </span><span class="lineCov">      41930 :     writeBits |= (bits &gt;&gt; numNextHeldBits);</span>
+<span class="lineNum">      42 </span><span class="lineCov">      41977 :     uint64_t topword = (numBits - numNextHeldBits) &amp; ~((1u &lt;&lt; 3u) - 1u);</span>
+<span class="lineNum">      43 </span><span class="lineCov">      41977 :     uint64_t writeBits = (m_heldBits &lt;&lt; topword);</span>
+<span class="lineNum">      44 </span><span class="lineCov">      41977 :     writeBits |= (bits &gt;&gt; numNextHeldBits);</span>
 <span class="lineNum">      45 </span>            : 
 <span class="lineNum">      46 </span>            :     // Write everything
 <span class="lineNum">      47 </span>            :     // 1 byte / L1 is the most common case, check for it first
-<span class="lineNum">      48 </span><span class="lineCov">      41930 :     if ((numTotalBits &gt;&gt; 3u) == 1) {</span>
-<span class="lineNum">      49 </span><span class="lineCov">      41930 :         goto L1;</span>
+<span class="lineNum">      48 </span><span class="lineCov">      41977 :     if ((numTotalBits &gt;&gt; 3u) == 1) {</span>
+<span class="lineNum">      49 </span><span class="lineCov">      41977 :         goto L1;</span>
 <span class="lineNum">      50 </span><span class="lineNoCov">          0 :     } else if ((numTotalBits &gt;&gt; 3u) == 2) {</span>
 <span class="lineNum">      51 </span><span class="lineNoCov">          0 :         goto L2;</span>
 <span class="lineNum">      52 </span><span class="lineNoCov">          0 :     } else if ((numTotalBits &gt;&gt; 3u) == 3) {</span>
@@ -139,12 +139,12 @@
 <span class="lineNum">      77 </span>            : L2:
 <span class="lineNum">      78 </span><span class="lineNoCov">          0 :     writeOut(static_cast&lt;char&gt;((writeBits &gt;&gt; 8u) &amp; 0xffu));</span>
 <span class="lineNum">      79 </span>            : L1:
-<span class="lineNum">      80 </span><span class="lineCov">      41930 :     writeOut(static_cast&lt;char&gt;(writeBits &amp; 0xffu));</span>
+<span class="lineNum">      80 </span><span class="lineCov">      41977 :     writeOut(static_cast&lt;char&gt;(writeBits &amp; 0xffu));</span>
 <span class="lineNum">      81 </span>            : L0:
 <span class="lineNum">      82 </span>            : 
 <span class="lineNum">      83 </span>            :     // Update output bitstream state
-<span class="lineNum">      84 </span><span class="lineCov">      41930 :     m_heldBits = nextHeldBits;</span>
-<span class="lineNum">      85 </span><span class="lineCov">      41930 :     m_numHeldBits = numNextHeldBits;</span>
+<span class="lineNum">      84 </span><span class="lineCov">      41977 :     m_heldBits = nextHeldBits;</span>
+<span class="lineNum">      85 </span><span class="lineCov">      41977 :     m_numHeldBits = numNextHeldBits;</span>
 <span class="lineNum">      86 </span>            : }
 <span class="lineNum">      87 </span>            : 
 <a name="88"><span class="lineNum">      88 </span>            : // -----------------------------------------------------------------------------------------------------------------</a>
@@ -164,12 +164,12 @@
 <span class="lineNum">     102 </span>            : 
 <span class="lineNum">     103 </span><span class="lineCov">         72 : void BitWriter::flush() {</span>
 <span class="lineNum">     104 </span><span class="lineCov">         72 :     if (m_numHeldBits == 0) {</span>
-<span class="lineNum">     105 </span><span class="lineCov">         49 :         return;</span>
+<span class="lineNum">     105 </span><span class="lineCov">         50 :         return;</span>
 <span class="lineNum">     106 </span>            :     }
 <span class="lineNum">     107 </span>            : 
-<span class="lineNum">     108 </span><span class="lineCov">         23 :     write(m_heldBits, (8 - m_numHeldBits));</span>
-<span class="lineNum">     109 </span><span class="lineCov">         23 :     m_heldBits = 0x00;</span>
-<span class="lineNum">     110 </span><span class="lineCov">         23 :     m_numHeldBits = 0;</span>
+<span class="lineNum">     108 </span><span class="lineCov">         22 :     write(m_heldBits, (8 - m_numHeldBits));</span>
+<span class="lineNum">     109 </span><span class="lineCov">         22 :     m_heldBits = 0x00;</span>
+<span class="lineNum">     110 </span><span class="lineCov">         22 :     m_numHeldBits = 0;</span>
 <span class="lineNum">     111 </span>            : }
 <span class="lineNum">     112 </span>            : 
 <a name="113"><span class="lineNum">     113 </span>            : // -----------------------------------------------------------------------------------------------------------------</a>

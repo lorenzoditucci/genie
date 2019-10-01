@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-10-01 16:32:45</td>
+            <td class="headerValue">2019-10-01 16:58:50</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -98,17 +98,17 @@
 <span class="lineNum">      36 </span><span class="lineCov">    1048585 :         uint64_t tmp = r.get();</span>
 <span class="lineNum">      37 </span><span class="lineCov">    1048585 :         r.inc();</span>
 <span class="lineNum">      38 </span><span class="lineCov">    1048585 :         if (tmp == cur) {</span>
-<span class="lineNum">      39 </span><span class="lineCov">      26542 :             ++lengthValue;</span>
+<span class="lineNum">      39 </span><span class="lineCov">      26973 :             ++lengthValue;</span>
 <span class="lineNum">      40 </span>            :         } else {
-<span class="lineNum">      41 </span><span class="lineCov">    1022043 :             w.set(cur);</span>
-<span class="lineNum">      42 </span><span class="lineCov">    1022043 :             w.inc();</span>
-<span class="lineNum">      43 </span><span class="lineCov">    1022043 :             cur = tmp;</span>
-<span class="lineNum">      44 </span><span class="lineCov">    1022043 :             while (lengthValue &gt; guard) {</span>
+<span class="lineNum">      41 </span><span class="lineCov">    1021612 :             w.set(cur);</span>
+<span class="lineNum">      42 </span><span class="lineCov">    1021612 :             w.inc();</span>
+<span class="lineNum">      43 </span><span class="lineCov">    1021612 :             cur = tmp;</span>
+<span class="lineNum">      44 </span><span class="lineCov">    1021612 :             while (lengthValue &gt; guard) {</span>
 <span class="lineNum">      45 </span><span class="lineNoCov">          0 :                 lengths-&gt;push_back(guard);</span>
 <span class="lineNum">      46 </span><span class="lineNoCov">          0 :                 lengthValue -= guard;</span>
 <span class="lineNum">      47 </span>            :             }
-<span class="lineNum">      48 </span><span class="lineCov">    1022043 :             lengths-&gt;push_back(lengthValue - 1);</span>
-<span class="lineNum">      49 </span><span class="lineCov">    1022043 :             lengthValue = 1;</span>
+<span class="lineNum">      48 </span><span class="lineCov">    1021612 :             lengths-&gt;push_back(lengthValue - 1);</span>
+<span class="lineNum">      49 </span><span class="lineCov">    1021612 :             lengthValue = 1;</span>
 <span class="lineNum">      50 </span>            :         }
 <span class="lineNum">      51 </span>            :     }
 <span class="lineNum">      52 </span>            : 
@@ -137,22 +137,22 @@
 <span class="lineNum">      75 </span><span class="lineCov">          4 :     BlockStepper rVal = rawValues-&gt;getReader();</span>
 <span class="lineNum">      76 </span><span class="lineCov">          4 :     BlockStepper rLen = lengths-&gt;getReader();</span>
 <span class="lineNum">      77 </span>            :     // Re-compute the symbol sequence
-<span class="lineNum">      78 </span><span class="lineCov">    2044098 :     while (rVal.isValid()) {</span>
-<span class="lineNum">      79 </span><span class="lineCov">    1022047 :         uint64_t rawValue = rVal.get();</span>
-<span class="lineNum">      80 </span><span class="lineCov">    1022047 :         uint64_t lengthValue = rLen.get();</span>
-<span class="lineNum">      81 </span><span class="lineCov">    1022047 :         rLen.inc();</span>
-<span class="lineNum">      82 </span><span class="lineCov">    1022047 :         uint64_t totalLengthValue = lengthValue;</span>
-<span class="lineNum">      83 </span><span class="lineCov">    1022047 :         while (lengthValue == guard) {</span>
+<span class="lineNum">      78 </span><span class="lineCov">    2043236 :     while (rVal.isValid()) {</span>
+<span class="lineNum">      79 </span><span class="lineCov">    1021616 :         uint64_t rawValue = rVal.get();</span>
+<span class="lineNum">      80 </span><span class="lineCov">    1021616 :         uint64_t lengthValue = rLen.get();</span>
+<span class="lineNum">      81 </span><span class="lineCov">    1021616 :         rLen.inc();</span>
+<span class="lineNum">      82 </span><span class="lineCov">    1021616 :         uint64_t totalLengthValue = lengthValue;</span>
+<span class="lineNum">      83 </span><span class="lineCov">    1021616 :         while (lengthValue == guard) {</span>
 <span class="lineNum">      84 </span><span class="lineNoCov">          0 :             lengthValue = rLen.get();</span>
 <span class="lineNum">      85 </span><span class="lineNoCov">          0 :             rLen.inc();</span>
 <span class="lineNum">      86 </span><span class="lineNoCov">          0 :             totalLengthValue += lengthValue;</span>
 <span class="lineNum">      87 </span>            :         }
-<span class="lineNum">      88 </span><span class="lineCov">    1022047 :         totalLengthValue++;</span>
-<span class="lineNum">      89 </span><span class="lineCov">    3119221 :         while (totalLengthValue &gt; 0) {</span>
+<span class="lineNum">      88 </span><span class="lineCov">    1021616 :         totalLengthValue++;</span>
+<span class="lineNum">      89 </span><span class="lineCov">    3118790 :         while (totalLengthValue &gt; 0) {</span>
 <span class="lineNum">      90 </span><span class="lineCov">    1048587 :             totalLengthValue--;</span>
 <span class="lineNum">      91 </span><span class="lineCov">    1048587 :             symbols.push_back(rawValue);</span>
 <span class="lineNum">      92 </span>            :         }
-<span class="lineNum">      93 </span><span class="lineCov">    1022047 :         rVal.inc();</span>
+<span class="lineNum">      93 </span><span class="lineCov">    1021616 :         rVal.inc();</span>
 <span class="lineNum">      94 </span>            :     }
 <span class="lineNum">      95 </span>            : 
 <span class="lineNum">      96 </span><span class="lineCov">          4 :     symbols.swap(rawValues);</span>
