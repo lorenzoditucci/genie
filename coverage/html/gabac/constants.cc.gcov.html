@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-10-01 09:56:26</td>
+            <td class="headerValue">2019-10-01 12:56:53</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">14</td>
@@ -83,15 +83,15 @@
 <span class="lineNum">      21 </span>            : 
 <a name="22"><span class="lineNum">      22 </span>            : namespace gabac {</a>
 <span class="lineNum">      23 </span>            : 
-<span class="lineNum">      24 </span><span class="lineCov">      43062 : const BinarizationProperties &amp;getBinarization(const gabac::BinarizationId &amp;id) {</span>
+<span class="lineNum">      24 </span><span class="lineCov">      43025 : const BinarizationProperties &amp;getBinarization(const gabac::BinarizationId &amp;id) {</span>
 <span class="lineNum">      25 </span>            :     static const std::vector&lt;BinarizationProperties&gt; binarizationInformation = {
 <span class="lineNum">      26 </span>            :         {
 <span class="lineNum">      27 </span>            :             &quot;BI&quot;,
 <span class="lineNum">      28 </span>            :             1,
 <a name="29"><span class="lineNum">      29 </span>            :             32,</a>
 <a name="30"><span class="lineNum">      30 </span>            :             false,</a>
-<span class="lineNum">      31 </span><span class="lineCov">       6198 :             [](uint64_t) -&gt; int64_t { return 0; },</span>
-<span class="lineNum">      32 </span><span class="lineCov">       6198 :             [](uint64_t parameter) -&gt; int64_t { return uint64_t((1ull &lt;&lt; (parameter)) - 1u); },</span>
+<span class="lineNum">      31 </span><span class="lineCov">       6161 :             [](uint64_t) -&gt; int64_t { return 0; },</span>
+<span class="lineNum">      32 </span><span class="lineCov">       6161 :             [](uint64_t parameter) -&gt; int64_t { return uint64_t((1ull &lt;&lt; (parameter)) - 1u); },</span>
 <span class="lineNum">      33 </span>            :         },
 <span class="lineNum">      34 </span>            :         {
 <span class="lineNum">      35 </span>            :             &quot;TU&quot;,
@@ -132,8 +132,8 @@
 <a name="70"><span class="lineNum">      70 </span>            :             true,</a>
 <span class="lineNum">      71 </span><span class="lineCov">       4096 :             [](uint64_t param) -&gt; int64_t { return std::numeric_limits&lt;int32_t&gt;::min() / 2ll - param; },</span>
 <span class="lineNum">      72 </span><span class="lineCov">       4096 :             [](uint64_t param) -&gt; int64_t { return std::numeric_limits&lt;int32_t&gt;::max() / 2ll + param; },</span>
-<span class="lineNum">      73 </span><span class="lineCov">      43062 :         }};</span>
-<span class="lineNum">      74 </span><span class="lineCov">      43062 :     return binarizationInformation[unsigned(id)];</span>
+<span class="lineNum">      73 </span><span class="lineCov">      43025 :         }};</span>
+<span class="lineNum">      74 </span><span class="lineCov">      43025 :     return binarizationInformation[unsigned(id)];</span>
 <span class="lineNum">      75 </span>            : }
 <span class="lineNum">      76 </span>            : 
 <a name="77"><span class="lineNum">      77 </span>            : // ------------------------------------------------------------------------------</a>
@@ -239,11 +239,11 @@
 <span class="lineNum">     177 </span><span class="lineNoCov">          0 :     return transformationInformation[unsigned(id)];</span>
 <a name="178"><span class="lineNum">     178 </span>            : }</a>
 <span class="lineNum">     179 </span>            : 
-<span class="lineNum">     180 </span><span class="lineCov">      43062 : bool BinarizationProperties::sbCheck(uint64_t minv, uint64_t maxv, uint64_t parameter) const {</span>
-<span class="lineNum">     181 </span><span class="lineCov">      43062 :     if (isSigned) {</span>
+<span class="lineNum">     180 </span><span class="lineCov">      43025 : bool BinarizationProperties::sbCheck(uint64_t minv, uint64_t maxv, uint64_t parameter) const {</span>
+<span class="lineNum">     181 </span><span class="lineCov">      43025 :     if (isSigned) {</span>
 <span class="lineNum">     182 </span><span class="lineCov">       8192 :         return int64_t(minv) &gt;= int64_t(this-&gt;min(parameter)) &amp;&amp; int64_t(maxv) &lt;= int64_t(this-&gt;max(parameter));</span>
 <span class="lineNum">     183 </span>            :     }
-<span class="lineNum">     184 </span><span class="lineCov">      34870 :     return minv &gt;= this-&gt;min(parameter) &amp;&amp; maxv &lt;= this-&gt;max(parameter);</span>
+<span class="lineNum">     184 </span><span class="lineCov">      34833 :     return minv &gt;= this-&gt;min(parameter) &amp;&amp; maxv &lt;= this-&gt;max(parameter);</span>
 <span class="lineNum">     185 </span>            : }
 <span class="lineNum">     186 </span>            : 
 <span class="lineNum">     187 </span>            : }  // namespace gabac

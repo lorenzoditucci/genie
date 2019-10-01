@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-10-01 09:56:26</td>
+            <td class="headerValue">2019-10-01 12:56:53</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">21</td>
@@ -450,8 +450,8 @@
 <span class="lineNum">     388 </span>            :     explicit DataBlock(const uint8_t *d, size_t size, uint8_t word_size);
 <a name="389"><span class="lineNum">     389 </span>            : };</a>
 <span class="lineNum">     390 </span>            : 
-<span class="lineNum">     391 </span><span class="lineCov">   66915870 : inline uint64_t DataBlock::get(size_t index) const {</span>
-<span class="lineNum">     392 </span><span class="lineCov">   66915870 :     switch (wordSize) {</span>
+<span class="lineNum">     391 </span><span class="lineCov">   66897226 : inline uint64_t DataBlock::get(size_t index) const {</span>
+<span class="lineNum">     392 </span><span class="lineCov">   66897226 :     switch (wordSize) {</span>
 <span class="lineNum">     393 </span>            :         case 1:
 <span class="lineNum">     394 </span><span class="lineCov">   10485761 :             return *(data.data() + index);</span>
 <span class="lineNum">     395 </span>            :         case 2:
@@ -459,7 +459,7 @@
 <span class="lineNum">     397 </span>            :         case 4:
 <span class="lineNum">     398 </span><span class="lineNoCov">          0 :             return *reinterpret_cast&lt;const uint32_t *&gt;(data.data() + (index &lt;&lt; 2u));</span>
 <span class="lineNum">     399 </span>            :         case 8:
-<span class="lineNum">     400 </span><span class="lineCov">   56430109 :             return *reinterpret_cast&lt;const uint64_t *&gt;(data.data() + (index &lt;&lt; 3u));</span>
+<span class="lineNum">     400 </span><span class="lineCov">   56411465 :             return *reinterpret_cast&lt;const uint64_t *&gt;(data.data() + (index &lt;&lt; 3u));</span>
 <span class="lineNum">     401 </span>            :         default:
 <span class="lineNum">     402 </span><span class="lineNoCov">          0 :             return 0;</span>
 <span class="lineNum">     403 </span>            :     }
@@ -492,11 +492,11 @@
 <span class="lineNum">     430 </span>            : 
 <a name="431"><span class="lineNum">     431 </span><span class="lineCov">         33 : inline DataBlock::Iterator DataBlock::end() { return {this, data.size() / wordSize}; }</span></a>
 <span class="lineNum">     432 </span>            : 
-<span class="lineNum">     433 </span><span class="lineCov">    3768747 : inline void DataBlock::push_back(uint64_t val) {</span>
+<span class="lineNum">     433 </span><span class="lineCov">    3768398 : inline void DataBlock::push_back(uint64_t val) {</span>
 <span class="lineNum">     434 </span>            :     /*
 <span class="lineNum">     435 </span>            :       set(data.size() / wordSize - 1, val);*/
-<span class="lineNum">     436 </span><span class="lineCov">    3768747 :     data.resize(data.size() + wordSize);</span>
-<span class="lineNum">     437 </span><span class="lineCov">    3768747 :     switch (wordSize) {</span>
+<span class="lineNum">     436 </span><span class="lineCov">    3768398 :     data.resize(data.size() + wordSize);</span>
+<span class="lineNum">     437 </span><span class="lineCov">    3768398 :     switch (wordSize) {</span>
 <span class="lineNum">     438 </span>            :         case 1:
 <span class="lineNum">     439 </span><span class="lineCov">    1606479 :             *reinterpret_cast&lt;uint8_t *&gt;(data.end().base() - 1) = static_cast&lt;uint8_t&gt;(val);</span>
 <span class="lineNum">     440 </span><span class="lineCov">    1606479 :             return;</span>
@@ -504,11 +504,11 @@
 <span class="lineNum">     442 </span><span class="lineNoCov">          0 :             *reinterpret_cast&lt;uint16_t *&gt;(data.end().base() - 2) = static_cast&lt;uint16_t&gt;(val);</span>
 <span class="lineNum">     443 </span><span class="lineNoCov">          0 :             return;</span>
 <span class="lineNum">     444 </span>            :         case 4:
-<span class="lineNum">     445 </span><span class="lineCov">      30727 :             *reinterpret_cast&lt;uint32_t *&gt;(data.end().base() - 4) = static_cast&lt;uint32_t&gt;(val);</span>
-<span class="lineNum">     446 </span><span class="lineCov">      30727 :             return;</span>
+<span class="lineNum">     445 </span><span class="lineCov">      30726 :             *reinterpret_cast&lt;uint32_t *&gt;(data.end().base() - 4) = static_cast&lt;uint32_t&gt;(val);</span>
+<span class="lineNum">     446 </span><span class="lineCov">      30726 :             return;</span>
 <span class="lineNum">     447 </span>            :         case 8:
-<span class="lineNum">     448 </span><span class="lineCov">    2131541 :             *reinterpret_cast&lt;uint64_t *&gt;(data.end().base() - 8) = static_cast&lt;uint64_t&gt;(val);</span>
-<span class="lineNum">     449 </span><span class="lineCov">    2131541 :             return;</span>
+<span class="lineNum">     448 </span><span class="lineCov">    2131193 :             *reinterpret_cast&lt;uint64_t *&gt;(data.end().base() - 8) = static_cast&lt;uint64_t&gt;(val);</span>
+<span class="lineNum">     449 </span><span class="lineCov">    2131193 :             return;</span>
 <span class="lineNum">     450 </span>            :         default:
 <span class="lineNum">     451 </span><span class="lineNoCov">          0 :             break;</span>
 <span class="lineNum">     452 </span>            :     }
@@ -518,9 +518,9 @@
 <span class="lineNum">     456 </span>            : 
 <a name="457"><span class="lineNum">     457 </span>            : inline const void *DataBlock::getData() const { return data.data(); }</a>
 <span class="lineNum">     458 </span>            : 
-<a name="459"><span class="lineNum">     459 </span><span class="lineCov">      41884 : inline void *DataBlock::getData() { return data.data(); }</span></a>
+<a name="459"><span class="lineNum">     459 </span><span class="lineCov">      41901 : inline void *DataBlock::getData() { return data.data(); }</span></a>
 <span class="lineNum">     460 </span>            : 
-<span class="lineNum">     461 </span><span class="lineCov">     150300 : inline uint8_t DataBlock::getWordSize() const { return wordSize; }</span>
+<span class="lineNum">     461 </span><span class="lineCov">     150351 : inline uint8_t DataBlock::getWordSize() const { return wordSize; }</span>
 <span class="lineNum">     462 </span>            : 
 <span class="lineNum">     463 </span>            : inline void DataBlock::setWordSize(uint8_t size) {
 <span class="lineNum">     464 </span>            :     wordSize = size;

@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-10-01 09:56:26</td>
+            <td class="headerValue">2019-10-01 12:56:53</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">6</td>
@@ -79,75 +79,75 @@
 <span class="lineNum">      17 </span><span class="lineCov">         24 :     start();</span>
 <a name="18"><span class="lineNum">      18 </span><span class="lineCov">         24 : }</span></a>
 <span class="lineNum">      19 </span>            : 
-<span class="lineNum">      20 </span><span class="lineCov">     247975 : inline unsigned int BinaryArithmeticDecoder::decodeBin(ContextModel* const contextModel) {</span>
-<span class="lineNum">      21 </span><span class="lineCov">     247975 :     assert(contextModel != nullptr);</span>
+<span class="lineNum">      20 </span><span class="lineCov">     246455 : inline unsigned int BinaryArithmeticDecoder::decodeBin(ContextModel* const contextModel) {</span>
+<span class="lineNum">      21 </span><span class="lineCov">     246455 :     assert(contextModel != nullptr);</span>
 <span class="lineNum">      22 </span>            : 
 <span class="lineNum">      23 </span>            :     unsigned int decodedByte;
-<span class="lineNum">      24 </span><span class="lineCov">     247975 :     unsigned int lps = cabactables::lpsTable[contextModel-&gt;getState()][(m_range &gt;&gt; 6u) - 4];</span>
-<span class="lineNum">      25 </span><span class="lineCov">     247975 :     m_range -= lps;</span>
-<span class="lineNum">      26 </span><span class="lineCov">     247975 :     unsigned int scaledRange = m_range &lt;&lt; 7u;</span>
-<span class="lineNum">      27 </span><span class="lineCov">     247975 :     if (m_value &lt; scaledRange) {</span>
-<span class="lineNum">      28 </span><span class="lineCov">     186029 :         decodedByte = contextModel-&gt;getMps();</span>
-<span class="lineNum">      29 </span><span class="lineCov">     186029 :         contextModel-&gt;updateMps();</span>
-<span class="lineNum">      30 </span><span class="lineCov">     186029 :         if (scaledRange &gt;= (256u &lt;&lt; 7u)) {</span>
-<span class="lineNum">      31 </span><span class="lineCov">     129174 :             return decodedByte;</span>
+<span class="lineNum">      24 </span><span class="lineCov">     246455 :     unsigned int lps = cabactables::lpsTable[contextModel-&gt;getState()][(m_range &gt;&gt; 6u) - 4];</span>
+<span class="lineNum">      25 </span><span class="lineCov">     246455 :     m_range -= lps;</span>
+<span class="lineNum">      26 </span><span class="lineCov">     246455 :     unsigned int scaledRange = m_range &lt;&lt; 7u;</span>
+<span class="lineNum">      27 </span><span class="lineCov">     246455 :     if (m_value &lt; scaledRange) {</span>
+<span class="lineNum">      28 </span><span class="lineCov">     184275 :         decodedByte = contextModel-&gt;getMps();</span>
+<span class="lineNum">      29 </span><span class="lineCov">     184275 :         contextModel-&gt;updateMps();</span>
+<span class="lineNum">      30 </span><span class="lineCov">     184275 :         if (scaledRange &gt;= (256u &lt;&lt; 7u)) {</span>
+<span class="lineNum">      31 </span><span class="lineCov">     127133 :             return decodedByte;</span>
 <span class="lineNum">      32 </span>            :         }
-<span class="lineNum">      33 </span><span class="lineCov">      56855 :         m_range = scaledRange &gt;&gt; 6u;</span>
-<span class="lineNum">      34 </span><span class="lineCov">      56855 :         m_value &lt;&lt;= 1;</span>
+<span class="lineNum">      33 </span><span class="lineCov">      57142 :         m_range = scaledRange &gt;&gt; 6u;</span>
+<span class="lineNum">      34 </span><span class="lineCov">      57142 :         m_value &lt;&lt;= 1;</span>
 <span class="lineNum">      35 </span>            : 
-<span class="lineNum">      36 </span><span class="lineCov">      56855 :         if (++m_numBitsNeeded == 0) {</span>
-<span class="lineNum">      37 </span><span class="lineCov">       7222 :             m_numBitsNeeded = -8;</span>
-<span class="lineNum">      38 </span><span class="lineCov">       7222 :             m_value += m_bitInputStream.readByte();</span>
+<span class="lineNum">      36 </span><span class="lineCov">      57142 :         if (++m_numBitsNeeded == 0) {</span>
+<span class="lineNum">      37 </span><span class="lineCov">       7156 :             m_numBitsNeeded = -8;</span>
+<span class="lineNum">      38 </span><span class="lineCov">       7156 :             m_value += m_bitInputStream.readByte();</span>
 <span class="lineNum">      39 </span>            :         }
 <span class="lineNum">      40 </span>            :     } else {
-<span class="lineNum">      41 </span><span class="lineCov">      61946 :         unsigned int numBits = cabactables::renormTable[(lps &gt;&gt; 3u)];</span>
-<span class="lineNum">      42 </span><span class="lineCov">      61946 :         m_value = (m_value - scaledRange) &lt;&lt; numBits;</span>
-<span class="lineNum">      43 </span><span class="lineCov">      61946 :         m_range = (lps &lt;&lt; numBits);</span>
-<span class="lineNum">      44 </span><span class="lineCov">      61946 :         decodedByte = 1 - static_cast&lt;unsigned&gt;(contextModel-&gt;getMps());</span>
-<span class="lineNum">      45 </span><span class="lineCov">      61946 :         contextModel-&gt;updateLps();</span>
-<span class="lineNum">      46 </span><span class="lineCov">      61946 :         m_numBitsNeeded += numBits;</span>
-<span class="lineNum">      47 </span><span class="lineCov">      61946 :         if (m_numBitsNeeded &gt;= 0) {</span>
-<span class="lineNum">      48 </span><span class="lineCov">      10887 :             m_value += m_bitInputStream.readByte() &lt;&lt; static_cast&lt;unsigned int&gt;(m_numBitsNeeded);</span>
-<span class="lineNum">      49 </span><span class="lineCov">      10887 :             m_numBitsNeeded -= 8;</span>
+<span class="lineNum">      41 </span><span class="lineCov">      62180 :         unsigned int numBits = cabactables::renormTable[(lps &gt;&gt; 3u)];</span>
+<span class="lineNum">      42 </span><span class="lineCov">      62180 :         m_value = (m_value - scaledRange) &lt;&lt; numBits;</span>
+<span class="lineNum">      43 </span><span class="lineCov">      62180 :         m_range = (lps &lt;&lt; numBits);</span>
+<span class="lineNum">      44 </span><span class="lineCov">      62180 :         decodedByte = 1 - static_cast&lt;unsigned&gt;(contextModel-&gt;getMps());</span>
+<span class="lineNum">      45 </span><span class="lineCov">      62180 :         contextModel-&gt;updateLps();</span>
+<span class="lineNum">      46 </span><span class="lineCov">      62180 :         m_numBitsNeeded += numBits;</span>
+<span class="lineNum">      47 </span><span class="lineCov">      62180 :         if (m_numBitsNeeded &gt;= 0) {</span>
+<span class="lineNum">      48 </span><span class="lineCov">      11094 :             m_value += m_bitInputStream.readByte() &lt;&lt; static_cast&lt;unsigned int&gt;(m_numBitsNeeded);</span>
+<span class="lineNum">      49 </span><span class="lineCov">      11094 :             m_numBitsNeeded -= 8;</span>
 <span class="lineNum">      50 </span>            :         }
 <span class="lineNum">      51 </span>            :     }
 <span class="lineNum">      52 </span>            : 
-<span class="lineNum">      53 </span><span class="lineCov">     118801 :     return decodedByte;</span>
+<span class="lineNum">      53 </span><span class="lineCov">     119322 :     return decodedByte;</span>
 <a name="54"><span class="lineNum">      54 </span>            : }</a>
 <span class="lineNum">      55 </span>            : 
-<span class="lineNum">      56 </span><span class="lineCov">      58910 : unsigned int BinaryArithmeticDecoder::decodeBinsEP(unsigned int numBins) {</span>
-<span class="lineNum">      57 </span><span class="lineCov">      58910 :     unsigned int bins = 0;</span>
+<span class="lineNum">      56 </span><span class="lineCov">      58420 : unsigned int BinaryArithmeticDecoder::decodeBinsEP(unsigned int numBins) {</span>
+<span class="lineNum">      57 </span><span class="lineCov">      58420 :     unsigned int bins = 0;</span>
 <span class="lineNum">      58 </span>            :     unsigned int scaledRange;
-<span class="lineNum">      59 </span><span class="lineCov">      81332 :     while (numBins &gt; 8) {</span>
-<span class="lineNum">      60 </span><span class="lineCov">      11211 :         m_value = (m_value &lt;&lt; 8u) + (m_bitInputStream.readByte() &lt;&lt; (8u + m_numBitsNeeded));</span>
-<span class="lineNum">      61 </span><span class="lineCov">      11211 :         scaledRange = m_range &lt;&lt; 15u;</span>
-<span class="lineNum">      62 </span><span class="lineCov">     100899 :         for (int i = 0; i &lt; 8; i++) {</span>
-<span class="lineNum">      63 </span><span class="lineCov">      89688 :             bins &lt;&lt;= 1;</span>
-<span class="lineNum">      64 </span><span class="lineCov">      89688 :             scaledRange &gt;&gt;= 1;</span>
-<span class="lineNum">      65 </span><span class="lineCov">      89688 :             if (m_value &gt;= scaledRange) {</span>
-<span class="lineNum">      66 </span><span class="lineCov">      44556 :                 bins++;</span>
-<span class="lineNum">      67 </span><span class="lineCov">      44556 :                 m_value -= scaledRange;</span>
+<span class="lineNum">      59 </span><span class="lineCov">      80834 :     while (numBins &gt; 8) {</span>
+<span class="lineNum">      60 </span><span class="lineCov">      11207 :         m_value = (m_value &lt;&lt; 8u) + (m_bitInputStream.readByte() &lt;&lt; (8u + m_numBitsNeeded));</span>
+<span class="lineNum">      61 </span><span class="lineCov">      11207 :         scaledRange = m_range &lt;&lt; 15u;</span>
+<span class="lineNum">      62 </span><span class="lineCov">     100863 :         for (int i = 0; i &lt; 8; i++) {</span>
+<span class="lineNum">      63 </span><span class="lineCov">      89656 :             bins &lt;&lt;= 1;</span>
+<span class="lineNum">      64 </span><span class="lineCov">      89656 :             scaledRange &gt;&gt;= 1;</span>
+<span class="lineNum">      65 </span><span class="lineCov">      89656 :             if (m_value &gt;= scaledRange) {</span>
+<span class="lineNum">      66 </span><span class="lineCov">      44562 :                 bins++;</span>
+<span class="lineNum">      67 </span><span class="lineCov">      44562 :                 m_value -= scaledRange;</span>
 <span class="lineNum">      68 </span>            :             }
 <span class="lineNum">      69 </span>            :         }
-<span class="lineNum">      70 </span><span class="lineCov">      11211 :         numBins -= 8;</span>
+<span class="lineNum">      70 </span><span class="lineCov">      11207 :         numBins -= 8;</span>
 <span class="lineNum">      71 </span>            :     }
-<span class="lineNum">      72 </span><span class="lineCov">      58910 :     m_numBitsNeeded += numBins;</span>
-<span class="lineNum">      73 </span><span class="lineCov">      58910 :     m_value &lt;&lt;= numBins;</span>
-<span class="lineNum">      74 </span><span class="lineCov">      58910 :     if (m_numBitsNeeded &gt;= 0) {</span>
-<span class="lineNum">      75 </span><span class="lineCov">      12516 :         m_value += m_bitInputStream.readByte() &lt;&lt; static_cast&lt;unsigned int&gt;(m_numBitsNeeded);</span>
-<span class="lineNum">      76 </span><span class="lineCov">      12516 :         m_numBitsNeeded -= 8;</span>
+<span class="lineNum">      72 </span><span class="lineCov">      58420 :     m_numBitsNeeded += numBins;</span>
+<span class="lineNum">      73 </span><span class="lineCov">      58420 :     m_value &lt;&lt;= numBins;</span>
+<span class="lineNum">      74 </span><span class="lineCov">      58420 :     if (m_numBitsNeeded &gt;= 0) {</span>
+<span class="lineNum">      75 </span><span class="lineCov">      12396 :         m_value += m_bitInputStream.readByte() &lt;&lt; static_cast&lt;unsigned int&gt;(m_numBitsNeeded);</span>
+<span class="lineNum">      76 </span><span class="lineCov">      12396 :         m_numBitsNeeded -= 8;</span>
 <span class="lineNum">      77 </span>            :     }
-<span class="lineNum">      78 </span><span class="lineCov">      58910 :     scaledRange = m_range &lt;&lt; (numBins + 7);</span>
-<span class="lineNum">      79 </span><span class="lineCov">     159048 :     for (unsigned int i = 0; i &lt; numBins; i++) {</span>
-<span class="lineNum">      80 </span><span class="lineCov">     100138 :         bins &lt;&lt;= 1;</span>
-<span class="lineNum">      81 </span><span class="lineCov">     100138 :         scaledRange &gt;&gt;= 1;</span>
-<span class="lineNum">      82 </span><span class="lineCov">     100138 :         if (m_value &gt;= scaledRange) {</span>
-<span class="lineNum">      83 </span><span class="lineCov">      44720 :             bins++;</span>
-<span class="lineNum">      84 </span><span class="lineCov">      44720 :             m_value -= scaledRange;</span>
+<span class="lineNum">      78 </span><span class="lineCov">      58420 :     scaledRange = m_range &lt;&lt; (numBins + 7);</span>
+<span class="lineNum">      79 </span><span class="lineCov">     157780 :     for (unsigned int i = 0; i &lt; numBins; i++) {</span>
+<span class="lineNum">      80 </span><span class="lineCov">      99360 :         bins &lt;&lt;= 1;</span>
+<span class="lineNum">      81 </span><span class="lineCov">      99360 :         scaledRange &gt;&gt;= 1;</span>
+<span class="lineNum">      82 </span><span class="lineCov">      99360 :         if (m_value &gt;= scaledRange) {</span>
+<span class="lineNum">      83 </span><span class="lineCov">      43918 :             bins++;</span>
+<span class="lineNum">      84 </span><span class="lineCov">      43918 :             m_value -= scaledRange;</span>
 <span class="lineNum">      85 </span>            :         }
 <span class="lineNum">      86 </span>            :     }
 <span class="lineNum">      87 </span>            : 
-<span class="lineNum">      88 </span><span class="lineCov">      58910 :     return bins;</span>
+<span class="lineNum">      88 </span><span class="lineCov">      58420 :     return bins;</span>
 <a name="89"><span class="lineNum">      89 </span>            : }</a>
 <span class="lineNum">      90 </span>            : 
 <span class="lineNum">      91 </span><span class="lineCov">         24 : void BinaryArithmeticDecoder::decodeBinTrm() {</span>
