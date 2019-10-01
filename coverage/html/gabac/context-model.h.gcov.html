@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-10-01 12:56:53</td>
+            <td class="headerValue">2019-10-01 15:56:14</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">5</td>
@@ -103,13 +103,13 @@
 <span class="lineNum">      41 </span>            :     unsigned char m_state;
 <a name="42"><span class="lineNum">      42 </span>            : };</a>
 <span class="lineNum">      43 </span>            : 
-<a name="44"><span class="lineNum">      44 </span><span class="lineCov">     492910 : inline unsigned char ContextModel::getState() const { return m_state &gt;&gt; 1u; }</span></a>
+<a name="44"><span class="lineNum">      44 </span><span class="lineCov">     494550 : inline unsigned char ContextModel::getState() const { return m_state &gt;&gt; 1u; }</span></a>
 <span class="lineNum">      45 </span>            : 
-<a name="46"><span class="lineNum">      46 </span><span class="lineCov">     492910 : inline unsigned char ContextModel::getMps() const { return m_state &amp; static_cast&lt;unsigned char&gt;(0x1u); }</span></a>
+<a name="46"><span class="lineNum">      46 </span><span class="lineCov">     494550 : inline unsigned char ContextModel::getMps() const { return m_state &amp; static_cast&lt;unsigned char&gt;(0x1u); }</span></a>
 <span class="lineNum">      47 </span>            : 
-<a name="48"><span class="lineNum">      48 </span><span class="lineCov">     124360 : inline void ContextModel::updateLps() { m_state = cabactables::nextStateLps[m_state]; }</span></a>
+<a name="48"><span class="lineNum">      48 </span><span class="lineCov">     123876 : inline void ContextModel::updateLps() { m_state = cabactables::nextStateLps[m_state]; }</span></a>
 <span class="lineNum">      49 </span>            : 
-<span class="lineNum">      50 </span><span class="lineCov">     368550 : inline void ContextModel::updateMps() { m_state = cabactables::nextStateMps[m_state]; }</span>
+<span class="lineNum">      50 </span><span class="lineCov">     370674 : inline void ContextModel::updateMps() { m_state = cabactables::nextStateMps[m_state]; }</span>
 <span class="lineNum">      51 </span>            : 
 <span class="lineNum">      52 </span>            : }  // namespace gabac
 <span class="lineNum">      53 </span>            : 
