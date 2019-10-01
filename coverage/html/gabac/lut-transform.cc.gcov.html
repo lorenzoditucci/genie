@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-10-01 16:58:50</td>
+            <td class="headerValue">2019-10-01 17:01:23</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">15</td>
@@ -153,14 +153,14 @@
 <span class="lineNum">      91 </span>            : 
 <a name="92"><span class="lineNum">      92 </span>            :     // Sort symbol frequencies in descending order</a>
 <span class="lineNum">      93 </span><span class="lineCov">          6 :     std::sort(freqVec.begin(), freqVec.end(),</span>
-<span class="lineNum">      94 </span><span class="lineCov">       1081 :               [](const std::pair&lt;uint64_t, uint64_t&gt;&amp; a, const std::pair&lt;uint64_t, uint64_t&gt;&amp; b) {</span>
-<span class="lineNum">      95 </span><span class="lineCov">       1081 :                   if (a.second &gt; b.second) {</span>
-<span class="lineNum">      96 </span><span class="lineCov">        727 :                       return true;</span>
+<span class="lineNum">      94 </span><span class="lineCov">       1050 :               [](const std::pair&lt;uint64_t, uint64_t&gt;&amp; a, const std::pair&lt;uint64_t, uint64_t&gt;&amp; b) {</span>
+<span class="lineNum">      95 </span><span class="lineCov">       1050 :                   if (a.second &gt; b.second) {</span>
+<span class="lineNum">      96 </span><span class="lineCov">        685 :                       return true;</span>
 <span class="lineNum">      97 </span>            :                   }
-<span class="lineNum">      98 </span><span class="lineCov">        354 :                   if (a.second &lt; b.second) {</span>
-<span class="lineNum">      99 </span><span class="lineCov">        338 :                       return false;</span>
+<span class="lineNum">      98 </span><span class="lineCov">        365 :                   if (a.second &lt; b.second) {</span>
+<span class="lineNum">      99 </span><span class="lineCov">        348 :                       return false;</span>
 <span class="lineNum">     100 </span>            :                   }
-<span class="lineNum">     101 </span><span class="lineCov">         16 :                   return a.first &lt; b.first;</span>
+<span class="lineNum">     101 </span><span class="lineCov">         17 :                   return a.first &lt; b.first;</span>
 <span class="lineNum">     102 </span><span class="lineCov">          3 :               });</span>
 <span class="lineNum">     103 </span>            : 
 <span class="lineNum">     104 </span><span class="lineCov">        198 :     for (const auto&amp; symbol : freqVec) {</span>
@@ -170,12 +170,12 @@
 <span class="lineNum">     108 </span>            : 
 <a name="109"><span class="lineNum">     109 </span>            :     // Sort symbols</a>
 <span class="lineNum">     110 </span><span class="lineCov">          6 :     std::sort(lut-&gt;begin(), lut-&gt;end(),</span>
-<span class="lineNum">     111 </span><span class="lineCov">       1080 :               [](const std::pair&lt;uint64_t, uint64_t&gt;&amp; a, const std::pair&lt;uint64_t, uint64_t&gt;&amp; b) {</span>
-<span class="lineNum">     112 </span><span class="lineCov">       1080 :                   if (a.first &lt; b.first) {</span>
-<span class="lineNum">     113 </span><span class="lineCov">        724 :                       return true;</span>
+<span class="lineNum">     111 </span><span class="lineCov">       1045 :               [](const std::pair&lt;uint64_t, uint64_t&gt;&amp; a, const std::pair&lt;uint64_t, uint64_t&gt;&amp; b) {</span>
+<span class="lineNum">     112 </span><span class="lineCov">       1045 :                   if (a.first &lt; b.first) {</span>
+<span class="lineNum">     113 </span><span class="lineCov">        699 :                       return true;</span>
 <span class="lineNum">     114 </span>            :                   }
-<span class="lineNum">     115 </span><span class="lineCov">        356 :                   if (a.first &gt; b.first) {</span>
-<span class="lineNum">     116 </span><span class="lineCov">        356 :                       return false;</span>
+<span class="lineNum">     115 </span><span class="lineCov">        346 :                   if (a.first &gt; b.first) {</span>
+<span class="lineNum">     116 </span><span class="lineCov">        346 :                       return false;</span>
 <span class="lineNum">     117 </span>            :                   }
 <span class="lineNum">     118 </span><span class="lineNoCov">          0 :                   return a.second &gt; b.second;</span>
 <span class="lineNum">     119 </span><span class="lineCov">          3 :               });</span>
@@ -190,9 +190,9 @@
 <span class="lineNum">     128 </span>            : 
 <a name="129"><span class="lineNum">     129 </span><span class="lineCov">    2097152 : static uint64_t lut0SingleTransform(const std::vector&lt;std::pair&lt;uint64_t, uint64_t&gt;&gt;&amp; lut0, uint64_t symbol) {</span></a>
 <span class="lineNum">     130 </span><span class="lineCov">    4194304 :     auto it = std::lower_bound(lut0.begin(), lut0.end(), std::make_pair(symbol, uint(0)),</span>
-<span class="lineNum">     131 </span><span class="lineCov">   12712922 :                                [](const std::pair&lt;uint64_t, uint64_t&gt;&amp; a, const std::pair&lt;uint64_t, uint64_t&gt;&amp; b) {</span>
-<span class="lineNum">     132 </span><span class="lineCov">   12712922 :                                    return a.first &lt; b.first;</span>
-<span class="lineNum">     133 </span><span class="lineCov">   16907226 :                                });</span>
+<span class="lineNum">     131 </span><span class="lineCov">   12712808 :                                [](const std::pair&lt;uint64_t, uint64_t&gt;&amp; a, const std::pair&lt;uint64_t, uint64_t&gt;&amp; b) {</span>
+<span class="lineNum">     132 </span><span class="lineCov">   12712808 :                                    return a.first &lt; b.first;</span>
+<span class="lineNum">     133 </span><span class="lineCov">   16907112 :                                });</span>
 <span class="lineNum">     134 </span><span class="lineCov">    2097152 :     assert(it != lut0.end());</span>
 <span class="lineNum">     135 </span><span class="lineCov">    2097152 :     assert(it-&gt;first == symbol);</span>
 <span class="lineNum">     136 </span><span class="lineCov">    2097152 :     return it-&gt;second;</span>
@@ -348,14 +348,14 @@
 <span class="lineNum">     286 </span>            : 
 <a name="287"><span class="lineNum">     287 </span>            :         // Sort single LUT for frequency</a>
 <span class="lineNum">     288 </span><span class="lineCov">       8580 :         std::sort(ctr.begin() + i, ctr.begin() + i + inverseLut0-&gt;size(),</span>
-<span class="lineNum">     289 </span><span class="lineCov">    2001415 :                   [](const std::pair&lt;uint64_t, uint64_t&gt;&amp; a, const std::pair&lt;uint64_t, uint64_t&gt;&amp; b) {</span>
-<span class="lineNum">     290 </span><span class="lineCov">    2001415 :                       if (a.second &gt; b.second) {</span>
-<span class="lineNum">     291 </span><span class="lineCov">     707912 :                           return true;</span>
+<span class="lineNum">     289 </span><span class="lineCov">    2001288 :                   [](const std::pair&lt;uint64_t, uint64_t&gt;&amp; a, const std::pair&lt;uint64_t, uint64_t&gt;&amp; b) {</span>
+<span class="lineNum">     290 </span><span class="lineCov">    2001288 :                       if (a.second &gt; b.second) {</span>
+<span class="lineNum">     291 </span><span class="lineCov">     705979 :                           return true;</span>
 <span class="lineNum">     292 </span>            :                       }
-<span class="lineNum">     293 </span><span class="lineCov">    1293503 :                       if (a.second &lt; b.second) {</span>
-<span class="lineNum">     294 </span><span class="lineCov">     398299 :                           return false;</span>
+<span class="lineNum">     293 </span><span class="lineCov">    1295309 :                       if (a.second &lt; b.second) {</span>
+<span class="lineNum">     294 </span><span class="lineCov">     397936 :                           return false;</span>
 <span class="lineNum">     295 </span>            :                       }
-<span class="lineNum">     296 </span><span class="lineCov">     895204 :                       return a.first &lt; b.first;</span>
+<span class="lineNum">     296 </span><span class="lineCov">     897373 :                       return a.first &lt; b.first;</span>
 <span class="lineNum">     297 </span><span class="lineCov">       4290 :                   });</span>
 <span class="lineNum">     298 </span>            : 
 <span class="lineNum">     299 </span>            :         // Fill inverseLUT and write rank into second field
@@ -363,12 +363,12 @@
 <span class="lineNum">     301 </span><span class="lineCov">       4290 :         bool placed = false;</span>
 <span class="lineNum">     302 </span><span class="lineCov">     283140 :         for (auto it = ctr.begin() + i; it != ctr.begin() + i + inverseLut0-&gt;size(); ++it) {</span>
 <span class="lineNum">     303 </span><span class="lineCov">     278850 :             if (it-&gt;second == 0 &amp;&amp; !placed) {</span>
-<span class="lineNum">     304 </span><span class="lineCov">       3291 :                 placed = true;</span>
+<span class="lineNum">     304 </span><span class="lineCov">       3233 :                 placed = true;</span>
 <span class="lineNum">     305 </span>            :             }
 <span class="lineNum">     306 </span><span class="lineCov">     278850 :             if (!placed) {</span>
-<span class="lineNum">     307 </span><span class="lineCov">     272600 :                 inverseLut1-&gt;emplace_back(it-&gt;first);</span>
+<span class="lineNum">     307 </span><span class="lineCov">     272819 :                 inverseLut1-&gt;emplace_back(it-&gt;first);</span>
 <span class="lineNum">     308 </span>            :             } else {
-<span class="lineNum">     309 </span><span class="lineCov">       6250 :                 inverseLut1-&gt;emplace_back(0);</span>
+<span class="lineNum">     309 </span><span class="lineCov">       6031 :                 inverseLut1-&gt;emplace_back(0);</span>
 <span class="lineNum">     310 </span>            :             }
 <span class="lineNum">     311 </span><span class="lineCov">     278850 :             it-&gt;second = counter;</span>
 <span class="lineNum">     312 </span><span class="lineCov">     278850 :             counter++;</span>
@@ -376,12 +376,12 @@
 <span class="lineNum">     314 </span>            : 
 <a name="315"><span class="lineNum">     315 </span>            :         // Sort single LUT for symbol value</a>
 <span class="lineNum">     316 </span><span class="lineCov">       8580 :         std::sort(ctr.begin() + i, ctr.begin() + i + inverseLut0-&gt;size(),</span>
-<span class="lineNum">     317 </span><span class="lineCov">    2022853 :                   [](const std::pair&lt;uint64_t, uint64_t&gt;&amp; a, const std::pair&lt;uint64_t, uint64_t&gt;&amp; b) {</span>
-<span class="lineNum">     318 </span><span class="lineCov">    2022853 :                       if (a.first &lt; b.first) {</span>
-<span class="lineNum">     319 </span><span class="lineCov">    1304026 :                           return true;</span>
+<span class="lineNum">     317 </span><span class="lineCov">    2025519 :                   [](const std::pair&lt;uint64_t, uint64_t&gt;&amp; a, const std::pair&lt;uint64_t, uint64_t&gt;&amp; b) {</span>
+<span class="lineNum">     318 </span><span class="lineCov">    2025519 :                       if (a.first &lt; b.first) {</span>
+<span class="lineNum">     319 </span><span class="lineCov">    1304874 :                           return true;</span>
 <span class="lineNum">     320 </span>            :                       }
-<span class="lineNum">     321 </span><span class="lineCov">     718827 :                       if (a.first &gt; b.first) {</span>
-<span class="lineNum">     322 </span><span class="lineCov">     718827 :                           return false;</span>
+<span class="lineNum">     321 </span><span class="lineCov">     720645 :                       if (a.first &gt; b.first) {</span>
+<span class="lineNum">     322 </span><span class="lineCov">     720645 :                           return false;</span>
 <span class="lineNum">     323 </span>            :                       }
 <span class="lineNum">     324 </span><span class="lineNoCov">          0 :                       return a.second &gt; b.second;</span>
 <span class="lineNum">     325 </span><span class="lineCov">       4290 :                   });</span>
